@@ -8,10 +8,10 @@ namespace Domain.Enums
     {
         UpdateStatus,
         SetOtdrValue,
-        NewProject,
-        EditProject,
-        FinishProject,
-        CancelProject,
+        NewMission,
+        EditMission,
+        FinishMission,
+        CancelMission,
         SetSetting
     }
 }

@@ -11,7 +11,6 @@ namespace Domain.ValueObjects
     {
         public double Latitude { get; protected set; }
         public double Longitude { get; protected set; }
-        public DateTime CreatedAt { get; protected set; }
 
         public Location(double latitude, double longitude, DateTime date)
         {
@@ -19,7 +18,6 @@ namespace Domain.ValueObjects
                 "latitude", "longitude");
             Latitude = latitude;
             Longitude = longitude;
-            CreatedAt = date;
         }
         public Location(double latitude, double longitude)
             : this(latitude, longitude, DateTime.Now) { }
@@ -28,18 +26,17 @@ namespace Domain.ValueObjects
 
         public Location NewLongitude(double longitude)
         {
-            return new Location(Latitude, longitude, CreatedAt);
+            return new Location(Latitude, longitude);
         }
 
         public Location NewLatitude(double latitude)
         {
-            return new Location(latitude, Longitude, CreatedAt);
+            return new Location(latitude, Longitude);
         }
 
         public override bool IsEmpty() =>
             default(double) == Latitude &&
-            default(double) == Longitude &&
-            default(DateTime) == CreatedAt;
+            default(double) == Longitude;
 
         public static Location CreateEmpty() =>
             new Location();
@@ -94,7 +91,7 @@ namespace Domain.ValueObjects
     public class NewProjectCommandRequest : CommandRequest
     {
         protected NewProjectCommandRequest()
-            : base(CommandType.NewProject, Dic.CommandNames.NewProject)
+            : base(CommandType.NewMission, Dic.CommandNames.NewProject)
         {
 
         }
@@ -103,7 +100,7 @@ namespace Domain.ValueObjects
     public class EditProjectCommandRequest : CommandRequest
     {
         protected EditProjectCommandRequest() 
-            : base(CommandType.EditProject, Dic.CommandNames.EditProject)
+            : base(CommandType.EditMission, Dic.CommandNames.EditProject)
         {
 
         }
@@ -111,7 +108,7 @@ namespace Domain.ValueObjects
     public class FinishProjectCommandRequest : CommandRequest
     {
         protected FinishProjectCommandRequest() 
-            : base(CommandType.FinishProject, Dic.CommandNames.FinishProject)
+            : base(CommandType.FinishMission, Dic.CommandNames.FinishProject)
         {
 
         }
@@ -119,7 +116,7 @@ namespace Domain.ValueObjects
     public class CancelProjectCommandRequest : CommandRequest
     {
         protected CancelProjectCommandRequest() 
-            : base(CommandType.CancelProject, Dic.CommandNames.CancelProject)
+            : base(CommandType.CancelMission, Dic.CommandNames.CancelProject)
         {
 
         }

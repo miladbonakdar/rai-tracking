@@ -1,8 +1,9 @@
-﻿using SharedKernel;
+﻿using System;
+using SharedKernel;
 
 namespace Domain
 {
-    public class AgentEvent : Entity
+    public class AgentEvent : Event
     {
     }
 }
