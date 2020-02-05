@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Autofac;
 
 namespace SharedKernel.Interfaces
 {
