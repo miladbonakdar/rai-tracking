@@ -34,7 +34,6 @@ namespace Persistence
             _organizationsLazy = new Lazy<IOrganizationRepository>(() => new OrganizationRepository(Context));
             _stationsLazy = new Lazy<IStationRepository>(() => new StationRepository(Context));
             _usersLazy = new Lazy<IUserRepository>(() => new UserRepository(Context));
-
         }
     }
 }
