@@ -9,6 +9,10 @@ namespace Persistence
 {
     class AppDbContext : DbContext
     {
+        public AppDbContext(DbContextOptions options) : base(options)
+        {
+        }
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseLazyLoadingProxies();
@@ -26,5 +30,12 @@ namespace Persistence
         private DbSet<Organization> Organizations { set; get; }
         private DbSet<Station> Stations { set; get; }
         private DbSet<User> Users { set; get; }
+
+        public static DbContextOptions<AppDbContext> DbContextOptionsFactory()
+        {
+            var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();
+            optionsBuilder.UseNpgsql(PersistenceModule.PgConnectionString);
+            return optionsBuilder.Options;
+        }
     }
 }

@@ -8,6 +8,7 @@ using Application.Configurations;
 using Application.Interfaces;
 using Autofac;
 using Infrastructure;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Serilog;
@@ -21,7 +22,9 @@ namespace RaiTracking.Extensions
             builder.RegisterApplicationModules();
             builder.RegisterConfigurationSetting();
             
+            builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.Register(s => Log.Logger).SingleInstance();
+            builder.RegisterType<UserHub>().AsSelf().AsImplementedInterfaces().ExternallyOwned();
         }
 
         private static void RegisterConfigurationSetting(this ContainerBuilder builder)
@@ -38,14 +41,12 @@ namespace RaiTracking.Extensions
                 (s => s.Resolve<IOptions<SerilogSetting>>().Value).SingleInstance();
         }
 
-        private static void RegisterApplicationModules(this ContainerBuilder builder)
-        {
+        private static void RegisterApplicationModules(this ContainerBuilder builder) =>
             builder.RegisterAssemblyModules(new[]
             {
                 Assembly.GetAssembly(typeof(InfrastructureModule)),
                 Assembly.GetAssembly(typeof(PersistenceModule)),
                 Assembly.GetAssembly(typeof(ApplicationModule)),
             });
-        }
     }
 }
