@@ -29,7 +29,7 @@ namespace SharedKernel
                 throw new ArgumentOutOfRangeException(parameterName);
             }
         }
-        public static void ValidateCoordinate(double latitude, double longitude, 
+        public static void ValidateCoordinate(double latitude, double longitude,
             string latitudeParamName, string longitudeParamName)
         {
             if (latitude < -90 || latitude > 90)
