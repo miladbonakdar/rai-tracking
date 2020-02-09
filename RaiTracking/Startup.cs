@@ -58,7 +58,7 @@ namespace RaiTracking
 
         private static void RegisterMiddleware(IApplicationBuilder app)
         {
-            app.UseMiddleware<UserProviderMiddleware>();
+            app.UseMiddleware<AdminProviderMiddleware>();
             app.UseMiddleware<AgentProviderMiddleware>();
         }
 

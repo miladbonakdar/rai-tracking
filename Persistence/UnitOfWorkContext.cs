@@ -1,6 +1,7 @@
 ﻿using System;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Persistence.Repositories;
 
 namespace Persistence
 {
@@ -14,7 +15,7 @@ namespace Persistence
         public IMissionRepository Missions => _missionsLazy.Value;
         public IOrganizationRepository Organizations => _organizationsLazy.Value;
         public IStationRepository Stations => _stationsLazy.Value;
-        public IUserRepository Users => _usersLazy.Value;
+        public IAdminRepository Admins => _usersLazy.Value;
 
         private readonly Lazy<IAgentRepository> _agentsLazy;
         private readonly Lazy<ICommandRepository> _commandsLazy;
@@ -22,7 +23,7 @@ namespace Persistence
         private readonly Lazy<IMissionRepository> _missionsLazy;
         private readonly Lazy<IOrganizationRepository> _organizationsLazy;
         private readonly Lazy<IStationRepository> _stationsLazy;
-        private readonly Lazy<IUserRepository> _usersLazy;
+        private readonly Lazy<IAdminRepository> _usersLazy;
 
         public UnitOfWorkContext(DbContext context)
         {
@@ -33,7 +34,7 @@ namespace Persistence
             _missionsLazy = new Lazy<IMissionRepository>(() => new MissionRepository(Context));
             _organizationsLazy = new Lazy<IOrganizationRepository>(() => new OrganizationRepository(Context));
             _stationsLazy = new Lazy<IStationRepository>(() => new StationRepository(Context));
-            _usersLazy = new Lazy<IUserRepository>(() => new UserRepository(Context));
+            _usersLazy = new Lazy<IAdminRepository>(() => new AdminRepository(Context));
         }
     }
 }

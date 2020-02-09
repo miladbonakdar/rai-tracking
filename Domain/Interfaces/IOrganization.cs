@@ -6,12 +6,7 @@ namespace Domain.Interfaces
 {
     public interface IOrganizationTenant
     {
-        Guid OrganizationId { set; get; }
+        int OrganizationId { set; get; }
         Organization Organization { set; get; }
-    }
-    public interface IMission
-    {
-        Guid MissionId { set; get; }
-        Mission Mission { set; get; }
     }
 }

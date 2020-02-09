@@ -5,11 +5,11 @@ namespace SharedKernel
 {
     public abstract class Entity : IEquatable<Entity> , IEntity
     {
-        public Guid Id { get; protected set; }
+        public int Id { get; protected set; }
 
-        protected Entity(Guid id)
+        protected Entity(int id)
         {
-            if (Equals(id, default(Guid)))
+            if (Equals(id, default(int)))
                 throw new ArgumentException("The ID cannot be the type's default value.", "id");
             Id = id;
         }

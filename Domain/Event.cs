@@ -7,7 +7,7 @@ using SharedKernel;
 
 namespace Domain
 {
-    public class Event : Entity, IAgentTenant
+    public abstract class Event : Entity, IAgentTenant
     {
         public DateTime OccurredAt { get; set; }
         public EventType EventType { get; set; }
@@ -16,7 +16,7 @@ namespace Domain
         public bool HasSeen { get; set; }
         public string EventData { get; set; }
 
-        public Guid AgentId { get; set; }
+        public int AgentId { get; set; }
         public virtual Agent Agent { get; set; }
     }
 }

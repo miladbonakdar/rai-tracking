@@ -1,9 +1,11 @@
-﻿using SharedKernel.Enums;
+﻿using System;
+using SharedKernel.Enums;
 
 namespace SharedKernel.Interfaces
 {
-    public interface IApplicationEvent : IDomainEvent
+    public interface IApplicationEvent
     {
-        ApplicationEventType ApplicationEventType { get; }
+        DateTime OccurredAt { get; }
+        string Name { get; }
     }
 }

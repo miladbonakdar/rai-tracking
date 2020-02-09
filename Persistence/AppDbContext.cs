@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Text;
 using Domain;
+using Domain.ValueObjects;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+using Persistence.EntityConfigurations;
+using Persistence.Extensions;
 
 namespace Persistence
 {
@@ -20,7 +22,16 @@ namespace Persistence
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            modelBuilder.Configure<AgentConfiguration, Agent>();
+            modelBuilder.Configure<AgentEventConfiguration, AgentEvent>();
+            modelBuilder.Configure<CommandConfiguration, Command>();
+            modelBuilder.Configure<DepoConfiguration, Depo>();
+            modelBuilder.Configure<MissionConfiguration, Mission>();
+            modelBuilder.Configure<MissionLocationConfiguration, MissionLocation>();
+            modelBuilder.Configure<MissionEventConfiguration, MissionEvent>();
+            modelBuilder.Configure<OrganizationConfiguration, Organization>();
+            modelBuilder.Configure<StationConfiguration, Station>();
+            modelBuilder.Configure<AdminConfiguration, Admin>();
         }
 
         private DbSet<Agent> Agents { set; get; }
@@ -29,7 +40,7 @@ namespace Persistence
         private DbSet<Mission> Missions { set; get; }
         private DbSet<Organization> Organizations { set; get; }
         private DbSet<Station> Stations { set; get; }
-        private DbSet<User> Users { set; get; }
+        private DbSet<Admin> Users { set; get; }
 
         public static DbContextOptions<AppDbContext> DbContextOptionsFactory()
         {

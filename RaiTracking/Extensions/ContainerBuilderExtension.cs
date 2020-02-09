@@ -24,7 +24,7 @@ namespace RaiTracking.Extensions
             
             builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
             builder.Register(s => Log.Logger).SingleInstance();
-            builder.RegisterType<UserHub>().AsSelf().AsImplementedInterfaces().ExternallyOwned();
+            builder.RegisterType<AdminHub>().AsSelf().AsImplementedInterfaces().ExternallyOwned();
         }
 
         private static void RegisterConfigurationSetting(this ContainerBuilder builder)
