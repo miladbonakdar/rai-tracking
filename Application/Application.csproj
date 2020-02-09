@@ -19,4 +19,9 @@
     <ProjectReference Include="..\SharedKernel\SharedKernel.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ApplicationEvents" />
+    <Folder Include="Handlers" />
+  </ItemGroup>
+
 </Project>

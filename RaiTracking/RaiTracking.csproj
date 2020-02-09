@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\Agent\" />
-    <Folder Include="Controllers\User\" />
+    <Folder Include="Controllers\Admin\" />
   </ItemGroup>
 
 

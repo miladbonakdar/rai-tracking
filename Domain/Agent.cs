@@ -7,7 +7,7 @@ namespace Domain
 {
     public class Agent : AggregateRoot
     {
-
+        
         public string PhoneNumber { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
@@ -18,7 +18,7 @@ namespace Domain
         public AgentSetting AgentSetting { get; set; }
 
         //navigation properties
-        public Guid DepoId { get; set; }
+        public int DepoId { get; set; }
         public virtual Depo Depo { get; set; }
     }
 }

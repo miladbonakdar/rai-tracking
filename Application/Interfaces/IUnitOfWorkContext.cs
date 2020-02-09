@@ -12,6 +12,6 @@ namespace Application.Interfaces
         IMissionRepository Missions { get; }
         IOrganizationRepository Organizations { get; }
         IStationRepository Stations { get; }
-        IUserRepository Users { get; }
+        IAdminRepository Admins { get; }
     }
 }

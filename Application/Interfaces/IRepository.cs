@@ -10,14 +10,14 @@ namespace Application.Interfaces
         where TAggregateRoot : class , IAggregateRoot
     {
 
-        Guid Add(TAggregateRoot entity);
-        Task<Guid> AddAsync(TAggregateRoot entity);
+        int Add(TAggregateRoot entity);
+        Task<int> AddAsync(TAggregateRoot entity);
 
         void AddRange(IEnumerable<TAggregateRoot> entities);
         Task AddRangeAsync(IEnumerable<TAggregateRoot> entities);
 
-        TAggregateRoot Find(Guid id);
-        Task<TAggregateRoot> FindAsync(Guid id);
+        TAggregateRoot Find(int id);
+        Task<TAggregateRoot> FindAsync(int id);
 
         TAggregateRoot First(Expression<Func<TAggregateRoot, bool>> where);
         Task<TAggregateRoot> FirstAsync(Expression<Func<TAggregateRoot, bool>> where);

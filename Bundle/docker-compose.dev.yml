@@ -30,15 +30,6 @@ services:
       - PG_net
     restart: always
 
-  redis:
-    container_name: redis
-    image: redis
-    ports:
-      - "6379:6379"
-    volumes:
-      - ../data/redis:/data
-    restart: always
-
 volumes:
   postgres:
   pgadmin:

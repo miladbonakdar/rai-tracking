@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using SharedKernel;
 
 namespace Persistence
 {
@@ -14,6 +16,11 @@ namespace Persistence
         public int Complete(Action<IUnitOfWorkContext> beforeComplete = null)
         {
             beforeComplete?.Invoke(this);
+            // foreach (var entry in Context.ChangeTracker.Entries().Where(e => e.State == EntityState.Added))
+            // {
+            //     entry.Property(ShadowPropertyKeys.CreatedAt).CurrentValue = DateTime.Now;
+            //     entry.Property(ShadowPropertyKeys.CreatedBy).CurrentValue = ;
+            // }
             return Context.SaveChanges();
         }
 
