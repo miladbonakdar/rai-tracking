@@ -9,7 +9,6 @@ using SharedKernel.Interfaces;
 
 namespace Persistence.Repositories
 {
-
     abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
         protected readonly AppDbContext Context;
@@ -43,62 +42,62 @@ namespace Persistence.Repositories
             return DbSet.AddRangeAsync(entities);
         }
 
-        public T Find(int id)
+        public virtual T Find(int id)
         {
             return DbSet.Find(id);
         }
 
-        public async Task<T> FindAsync(int id)
+        public virtual async Task<T> FindAsync(int id)
         {
             return await DbSet.FindAsync(id);
         }
 
-        public T First(Expression<Func<T, bool>> @where)
+        public virtual T First(Expression<Func<T, bool>> @where)
         {
             return DbSet.First(where);
         }
 
-        public Task<T> FirstAsync(Expression<Func<T, bool>> @where)
+        public virtual Task<T> FirstAsync(Expression<Func<T, bool>> @where)
         {
             return DbSet.FirstAsync(where);
         }
 
-        public T FirstOrDefault(Expression<Func<T, bool>> @where)
+        public virtual T FirstOrDefault(Expression<Func<T, bool>> @where)
         {
             return DbSet.FirstOrDefault(where);
         }
 
-        public Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> @where)
+        public virtual Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> @where)
         {
             return DbSet.FirstOrDefaultAsync(where);
         }
 
-        public T Single(Expression<Func<T, bool>> @where)
+        public virtual T Single(Expression<Func<T, bool>> @where)
         {
             return DbSet.Single(where);
         }
 
-        public Task<T> SingleAsync(Expression<Func<T, bool>> @where)
+        public virtual Task<T> SingleAsync(Expression<Func<T, bool>> @where)
         {
             return DbSet.SingleAsync(where);
         }
 
-        public T SingleOrDefault(Expression<Func<T, bool>> @where)
+        public virtual T SingleOrDefault(Expression<Func<T, bool>> @where)
         {
             return DbSet.SingleOrDefault(where);
         }
 
-        public Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> @where)
+        public virtual Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> @where)
         {
             return DbSet.SingleOrDefaultAsync(where);
         }
 
-        public IList<T> Get(Expression<Func<T, bool>> @where)
+        public virtual IList<T> Get(Expression<Func<T, bool>> @where)
         {
             return DbSet.Where(where).ToList();
         }
 
-        public async Task<IList<T>> GetAsync(Expression<Func<T, bool>> @where)
+        public virtual async Task<IList<T>> GetAsync(Expression<Func<T, bool>> @where)
         {
             return await DbSet.Where(where).ToListAsync();
         }

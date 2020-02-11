@@ -6,7 +6,7 @@ using SharedKernel.Interfaces;
 
 namespace Infrastructure
 {
-    public class EventDispatcher : IEventDispatcher
+    class EventDispatcher : IEventDispatcher
     {
         private readonly ILifetimeScope _container;
 

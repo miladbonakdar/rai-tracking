@@ -3,7 +3,7 @@ using Domain.Interfaces;
 
 namespace Infrastructure
 {
-    public class ApplicationCommandFactory : IApplicationCommandFactory
+    class ApplicationCommandFactory : IApplicationCommandFactory
     {
         public IApplicationCommand Create()
         {

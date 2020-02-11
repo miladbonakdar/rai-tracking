@@ -6,7 +6,7 @@ using SharedKernel;
 
 namespace Infrastructure
 {
-    public class SmsService : ISmsService
+    class SmsService : ISmsService
     {
         public Task<Result<bool>> SendAsync(string number, string content)
         {

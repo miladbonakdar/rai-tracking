@@ -4,7 +4,7 @@ using StackExchange.Redis;
 
 namespace Infrastructure
 {
-    public class CacheMultiplexer : ICacheMultiplexer
+    class CacheMultiplexer : ICacheMultiplexer
     {
         private readonly Lazy<ConnectionMultiplexer> _lazyConnection;
         

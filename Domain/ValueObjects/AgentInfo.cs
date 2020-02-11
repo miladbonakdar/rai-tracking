@@ -17,10 +17,6 @@ namespace Domain.ValueObjects
             UpdatedAt = DateTime.Now;
         }
 
-        public override bool IsEmpty()
-        {
-            return false;
-        }
-
+        public override bool IsEmpty() => false;
     }
 }

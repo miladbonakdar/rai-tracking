@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
 using Domain.Interfaces;
 using Domain.ValueObjects;
@@ -10,10 +11,10 @@ namespace Domain
     {
         public CommandType Type { get; set; }
         public DateTime SentAt { get; set; }
+        [Required]
         public string CommandData { get; set; }
-        public string Number { get; set; }
 
         public int AgentId { get; set; }
-        public virtual Agent Agent { get; set; }
+        public Agent Agent { get; set; }
     }
 }

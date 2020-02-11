@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
 using Domain.Enums;
 using Domain.Interfaces;
@@ -13,10 +14,11 @@ namespace Domain
         public EventType EventType { get; set; }
         public Location AgentLocation { get; set; }
         public bool IsValidLocation { get; set; }
-        public bool HasSeen { get; set; }
+        public bool Seen { get; set; }
+        [Required]
         public string EventData { get; set; }
 
         public int AgentId { get; set; }
-        public virtual Agent Agent { get; set; }
+        public Agent Agent { get; set; }
     }
 }

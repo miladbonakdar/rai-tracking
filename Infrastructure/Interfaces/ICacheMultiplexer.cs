@@ -2,7 +2,7 @@
 
 namespace Infrastructure.Interfaces
 {
-    public interface ICacheMultiplexer
+    internal interface ICacheMultiplexer
     {
         ConnectionMultiplexer Connection { get; }
 

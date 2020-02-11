@@ -30,15 +30,9 @@ namespace Domain.ValueObjects
         {
         }
 
-        public Location NewLongitude(double longitude)
-        {
-            return new Location(Latitude, longitude);
-        }
+        public Location NewLongitude(double longitude) => new Location(Latitude, longitude);
 
-        public Location NewLatitude(double latitude)
-        {
-            return new Location(latitude, Longitude);
-        }
+        public Location NewLatitude(double latitude) => new Location(latitude, Longitude);
 
         public override bool IsEmpty() =>
             default(double) == Latitude &&

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Domain.Interfaces;
 using Domain.ValueObjects;
 using SharedKernel;
@@ -22,5 +23,8 @@ namespace Domain
 
         public int AgentId { get; set; }
         public Agent Agent { get; set; }
+
+        public ICollection<MissionLocation> Locations { set; get; }
+        public ICollection<MissionEvent> Events { set; get; }
     }
 }

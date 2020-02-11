@@ -8,7 +8,7 @@ using Serilog;
 
 namespace Infrastructure
 {
-    public class CacheStore : ICacheStore
+    class CacheStore : ICacheStore
     {
         private readonly ICacheMultiplexer _multiplexer;
         private readonly ILogger _logger;
@@ -19,7 +19,7 @@ namespace Infrastructure
             _logger = logger;
         }
 
-        public async Task<TCache> StoreAndGet<TCache>(string key, Func<Task<TCache>> cacheFactory,
+        public async Task<TCache> StoreAndGetAsync<TCache>(string key, Func<Task<TCache>> cacheFactory,
             int duration = CacheDuration.Eternal)
         {
             string oldCache = await _multiplexer.Db.StringGetAsync(key);
@@ -30,7 +30,7 @@ namespace Infrastructure
                 try
                 {
                     var toBeCached = await cacheFactory();
-                    var result = await Store(key, toBeCached, duration);
+                    var result = await StoreAsync(key, toBeCached, duration);
                     return result;
                 }
                 catch (Exception e)
@@ -44,7 +44,7 @@ namespace Infrastructure
             return JsonConvert.DeserializeObject<TCache>(oldCache);
         }
 
-        public async Task<TCache> Store<TCache>(string key, TCache toBeCached,
+        public async Task<TCache> StoreAsync<TCache>(string key, TCache toBeCached,
             int duration = CacheDuration.Eternal)
         {
             try

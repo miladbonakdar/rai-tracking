@@ -7,7 +7,7 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<AgentEvent> builder)
         {
-            
+            builder.OwnsOne(e => e.AgentLocation);
         }
     }
 }

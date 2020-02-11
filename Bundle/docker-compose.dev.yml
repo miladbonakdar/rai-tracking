@@ -34,18 +34,26 @@ services:
     restart: always
     image: redis:5.0.7-alpine
     command: ["redis-server", "--appendonly", "yes"]
-    hostname: redis
     networks:
-      - redis-net
+      - redis_net
     ports:
       - "${REDIS_PORT:-6379}:6379"
     volumes:
       - redis-data:/data
 
+  redis_ui:
+    restart: always
+    image: marian/rebrow
+    networks:
+      - redis_net
+    ports:
+      - "8887:5001"
+  
 volumes:
   postgres:
   pgadmin:
-
+  redis-data:
+    
 networks:
   PG_net:
   redis_net:

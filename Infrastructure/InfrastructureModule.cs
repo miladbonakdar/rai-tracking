@@ -41,6 +41,9 @@ namespace Infrastructure
 
             builder.RegisterType<Commander>().As<ICommander>()
                 .InstancePerLifetimeScope();
+
+            builder.RegisterType<PasswordService>().As<IPasswordService>().As<IHasher>()
+                .InstancePerDependency();
         }
     }
 }

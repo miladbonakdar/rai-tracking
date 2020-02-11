@@ -6,7 +6,7 @@ using SharedKernel;
 
 namespace Infrastructure
 {
-    public class Commander : ICommander
+    class Commander : ICommander
     {
         private readonly IApplicationCommandFactory _factory;
         private readonly ICommandRepository _commandRepository;
