@@ -1,4 +1,5 @@
-﻿using SharedKernel.Interfaces;
+﻿using Domain.Interfaces;
+using SharedKernel.Interfaces;
 
 namespace Application.Interfaces
 {

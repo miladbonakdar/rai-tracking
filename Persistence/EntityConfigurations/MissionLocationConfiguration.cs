@@ -7,7 +7,7 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<MissionLocation> builder)
         {
-            
+            builder.OwnsOne(m => m.Location);
         }
     }
 }

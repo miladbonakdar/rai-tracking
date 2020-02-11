@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.5"
 
 services:
   postgres:
@@ -30,9 +30,30 @@ services:
       - PG_net
     restart: always
 
+  redis:
+    restart: always
+    image: redis:5.0.7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - redis_net
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+
+  redis_ui:
+    restart: always
+    image: marian/rebrow
+    networks:
+      - redis_net
+    ports:
+      - "8887:5001"
+  
 volumes:
   postgres:
   pgadmin:
-
+  redis-data:
+    
 networks:
   PG_net:
+  redis_net:

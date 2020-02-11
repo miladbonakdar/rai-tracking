@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Application.Interfaces;
 using Autofac;
+using Domain.Interfaces;
 using SharedKernel.Interfaces;
 
 namespace Infrastructure
 {
-    public class EventDispatcher : IEventDispatcher
+    class EventDispatcher : IEventDispatcher
     {
         private readonly ILifetimeScope _container;
 

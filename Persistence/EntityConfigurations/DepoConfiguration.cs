@@ -7,7 +7,8 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Depo> builder)
         {
-            
+            builder.Property(d => d.Name).IsUnicode();
+            builder.OwnsOne(d => d.Location);
         }
     }
 }

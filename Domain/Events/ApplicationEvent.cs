@@ -1,7 +1,8 @@
 ﻿using System;
+using Domain.Interfaces;
 using SharedKernel.Interfaces;
 
-namespace SharedKernel
+namespace Domain.Events
 {
     public abstract class ApplicationEvent : IApplicationEvent
     {
