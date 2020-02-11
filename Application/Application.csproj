@@ -20,7 +20,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="ApplicationEvents" />
     <Folder Include="Handlers" />
   </ItemGroup>
 

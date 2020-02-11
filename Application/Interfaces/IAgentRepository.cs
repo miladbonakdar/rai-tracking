@@ -6,9 +6,4 @@ namespace Application.Interfaces
     {
 
     }
-
-    public interface ICommander
-    {
-
-    }
 }

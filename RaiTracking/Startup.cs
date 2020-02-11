@@ -35,7 +35,9 @@ namespace RaiTracking
             services.ConfigureSerilog(Configuration);
             services.AddSwaggerGen(c => c.SwaggerDoc("v1"
                 , new OpenApiInfo {Title = "Rai Tracking API", Version = "v1"}));
+            
             Persistence.PersistenceModule.PgConnectionString = Configuration.GetConnectionString("postgres");
+            Infrastructure.InfrastructureModule.RedisConnectionString = Configuration.GetConnectionString("redis");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

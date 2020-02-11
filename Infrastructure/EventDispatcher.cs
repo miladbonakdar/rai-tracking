@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using Application.Interfaces;
 using Autofac;
+using Domain.Interfaces;
 using SharedKernel.Interfaces;
 
 namespace Infrastructure

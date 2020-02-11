@@ -1,7 +1,6 @@
 ﻿using System;
-using SharedKernel.Enums;
 
-namespace SharedKernel.Interfaces
+namespace Domain.Interfaces
 {
     public interface IApplicationEvent
     {
