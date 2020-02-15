@@ -11,7 +11,7 @@ namespace Domain
     public abstract class Event : Entity, IAgentTenant
     {
         public DateTime OccurredAt { get; set; }
-        public EventType EventType { get; set; }
+        public TrackingEventType EventType { get; set; }
         public Location AgentLocation { get; set; }
         public bool IsValidLocation { get; set; }
         public bool Seen { get; set; }

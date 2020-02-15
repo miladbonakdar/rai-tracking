@@ -4,6 +4,6 @@ namespace Application.DTO
 {
     public interface IModelDto
     {
-        Guid Id { get; }
+        int Id { get; }
     }
 }

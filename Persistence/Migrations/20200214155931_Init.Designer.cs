@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200211164721_init")]
-    partial class init
+    [Migration("20200214155931_Init")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -31,6 +31,11 @@ namespace Persistence.Migrations
                     b.Property<string>("About")
                         .HasColumnType("text");
 
+                    b.Property<string>("AdminType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("text")
+                        .HasDefaultValue("AdminType.Agent");
+
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
 
@@ -43,8 +48,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .IsUnicode(true);
+                        .HasColumnType("text");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -55,8 +59,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("PhoneNumber")
                         .HasColumnType("character varying(13)")
-                        .HasMaxLength(13)
-                        .IsUnicode(true);
+                        .HasMaxLength(13);
 
                     b.Property<string>("Telephone")
                         .HasColumnType("character varying(13)")
@@ -74,9 +77,12 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Email")
+                        .IsUnique();
+
                     b.HasIndex("OrganizationId");
 
-                    b.ToTable("Users");
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("Domain.Agent", b =>
@@ -100,9 +106,7 @@ namespace Persistence.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Email")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .IsUnicode(true);
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("LastUpdate")
                         .HasColumnType("timestamp without time zone");
@@ -112,9 +116,9 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("PhoneNumber")
+                        .IsRequired()
                         .HasColumnType("character varying(13)")
-                        .HasMaxLength(13)
-                        .IsUnicode(true);
+                        .HasMaxLength(13);
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -129,6 +133,12 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("DepoId");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
+
+                    b.HasIndex("PhoneNumber")
+                        .IsUnique();
 
                     b.ToTable("Agents");
                 });
@@ -252,8 +262,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .IsUnicode(true);
+                        .HasColumnType("text");
 
                     b.Property<int>("OrganizationId")
                         .HasColumnType("integer");
@@ -272,6 +281,9 @@ namespace Persistence.Migrations
                         .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
 
                     b.HasIndex("OrganizationId");
 
@@ -451,8 +463,7 @@ namespace Persistence.Migrations
 
                     b.Property<string>("Code")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .IsUnicode(true);
+                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -470,8 +481,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("character varying(150)")
-                        .HasMaxLength(150)
-                        .IsUnicode(true);
+                        .HasMaxLength(150);
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -485,6 +495,12 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
                     b.ToTable("Organizations");
                 });
 
@@ -496,8 +512,7 @@ namespace Persistence.Migrations
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
                     b.Property<int>("Code")
-                        .HasColumnType("integer")
-                        .IsUnicode(true);
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -536,6 +551,9 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Code")
+                        .IsUnique();
+
                     b.HasIndex("OrganizationId");
 
                     b.HasIndex("PostStationId");
@@ -568,7 +586,7 @@ namespace Persistence.Migrations
 
                             b1.HasKey("AdminId");
 
-                            b1.ToTable("Users");
+                            b1.ToTable("Admins");
 
                             b1.WithOwner()
                                 .HasForeignKey("AdminId");

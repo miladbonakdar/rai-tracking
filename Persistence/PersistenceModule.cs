@@ -1,4 +1,5 @@
 ﻿using System;
+using Application.Interfaces;
 using Autofac;
 
 namespace Persistence
@@ -20,7 +21,9 @@ namespace Persistence
             builder
                 .RegisterType<AppDbContext>()
                 .WithParameter("options", AppDbContext.DbContextOptionsFactory())
-                .InstancePerLifetimeScope();
+                .AsSelf().InstancePerLifetimeScope();
+            builder
+                .RegisterType<UnitOfWork>().As<IUnitOfWork>().InstancePerLifetimeScope();
         }
     }
 }

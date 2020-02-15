@@ -24,7 +24,7 @@ namespace Persistence
             return Context.SaveChanges();
         }
 
-        public async Task<int> Complete(Func<IUnitOfWorkContext, Task> beforeComplete = null)
+        public async Task<int> CompleteAsync(Func<IUnitOfWorkContext, Task> beforeComplete = null)
         {
             if (beforeComplete != null) await beforeComplete(this);
             return await Context.SaveChangesAsync();

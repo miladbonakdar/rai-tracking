@@ -6,5 +6,6 @@
         string ApiBaseUrl { get; }
         bool DevelopmentMode { get; }
         string AdminEmailAddress { get; }
+        string RootPassword { get; }
     }
 }

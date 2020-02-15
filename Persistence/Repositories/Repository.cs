@@ -111,5 +111,16 @@ namespace Persistence.Repositories
         {
             DbSet.RemoveRange(entities);
         }
+        
+        public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> @where)
+        {
+            return DbSet.AnyAsync(where);
+        }
+        
+        public virtual bool Any(Expression<Func<T, bool>> @where)
+        {
+            return DbSet.Any(where);
+        }
+
     }
 }

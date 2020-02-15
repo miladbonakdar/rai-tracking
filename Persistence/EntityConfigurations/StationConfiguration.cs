@@ -7,7 +7,7 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Station> builder)
         {
-            builder.Property(s => s.Code).IsUnicode();
+            builder.HasIndex(s => s.Code).IsUnique();
             builder.Property(s => s.Name).IsUnicode();
             builder.OwnsOne(l => l.Location);
             builder.HasOne(s => s.PostStation)

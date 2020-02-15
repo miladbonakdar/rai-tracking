@@ -7,8 +7,8 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Organization> builder)
         {
-            builder.Property(o => o.Code).IsUnicode();
-            builder.Property(o => o.Name).IsUnicode();
+            builder.HasIndex(o => o.Code).IsUnique();
+            builder.HasIndex(o => o.Name).IsUnique();
             builder.OwnsOne(o => o.Location);
         }
     }

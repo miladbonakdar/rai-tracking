@@ -40,7 +40,7 @@ namespace Persistence
         private DbSet<Mission> Missions { set; get; }
         private DbSet<Organization> Organizations { set; get; }
         private DbSet<Station> Stations { set; get; }
-        private DbSet<Admin> Users { set; get; }
+        private DbSet<Admin> Admins { set; get; }
 
         public static DbContextOptions<AppDbContext> DbContextOptionsFactory()
         {

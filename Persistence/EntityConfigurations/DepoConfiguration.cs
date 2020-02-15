@@ -7,7 +7,7 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Depo> builder)
         {
-            builder.Property(d => d.Name).IsUnicode();
+            builder.HasIndex(d => d.Name).IsUnique();
             builder.OwnsOne(d => d.Location);
         }
     }

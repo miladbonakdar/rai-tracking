@@ -9,11 +9,9 @@ namespace Domain
 {
     public class Agent : AggregateRoot
     {
-        [MaxLength(13)] public string PhoneNumber { get; private set; }
+        [Required] [MaxLength(13)] public string PhoneNumber { get; private set; }
 
-        [Required]
-        public string Password { get; set; }
-        [Required]
+        [Required] public string Password { get; set; }
         public string Email { get; private set; }
         public DateTime LastUpdate { get; set; }
         public Location LastLocation { get; private set; }

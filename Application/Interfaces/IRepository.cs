@@ -6,10 +6,9 @@ using SharedKernel.Interfaces;
 
 namespace Application.Interfaces
 {
-    public interface IRepository<TAggregateRoot> 
-        where TAggregateRoot : class , IAggregateRoot
+    public interface IRepository<TAggregateRoot>
+        where TAggregateRoot : class, IAggregateRoot
     {
-
         int Add(TAggregateRoot entity);
         Task<int> AddAsync(TAggregateRoot entity);
 
@@ -36,5 +35,8 @@ namespace Application.Interfaces
 
         void Remove(TAggregateRoot entity);
         void RemoveRange(IEnumerable<TAggregateRoot> entities);
+
+        Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> @where);
+        bool Any(Expression<Func<TAggregateRoot, bool>> @where);
     }
 }

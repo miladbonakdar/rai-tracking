@@ -7,7 +7,6 @@ namespace Persistence.EntityConfigurations
     {
         public void Configure(EntityTypeBuilder<Command> builder)
         {
-            
         }
     }
 }

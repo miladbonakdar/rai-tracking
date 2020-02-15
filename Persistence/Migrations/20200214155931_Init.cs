@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Persistence.Migrations
 {
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,6 +29,39 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Organizations", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Admins",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    PersonName_Firstname = table.Column<string>(maxLength: 200, nullable: true),
+                    PersonName_Lastname = table.Column<string>(maxLength: 200, nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
+                    PhoneNumber = table.Column<string>(maxLength: 13, nullable: true),
+                    Telephone = table.Column<string>(maxLength: 13, nullable: true),
+                    About = table.Column<string>(nullable: true),
+                    AdminType = table.Column<string>(nullable: true, defaultValue: "AdminType.Agent"),
+                    OrganizationId = table.Column<int>(nullable: false),
+                    CreatedAt = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<string>(maxLength: 200, nullable: true),
+                    CreatedById = table.Column<DateTime>(nullable: false),
+                    UpdatedAt = table.Column<DateTime>(nullable: false),
+                    UpdatedBy = table.Column<string>(maxLength: 200, nullable: true),
+                    UpdatedById = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Admins", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Admins_Organizations_OrganizationId",
+                        column: x => x.OrganizationId,
+                        principalTable: "Organizations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -75,38 +108,6 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PersonName_Firstname = table.Column<string>(maxLength: 200, nullable: true),
-                    PersonName_Lastname = table.Column<string>(maxLength: 200, nullable: true),
-                    Email = table.Column<string>(nullable: false),
-                    Password = table.Column<string>(nullable: false),
-                    PhoneNumber = table.Column<string>(maxLength: 13, nullable: true),
-                    Telephone = table.Column<string>(maxLength: 13, nullable: true),
-                    About = table.Column<string>(nullable: true),
-                    OrganizationId = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    CreatedById = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    UpdatedById = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Organizations_OrganizationId",
-                        column: x => x.OrganizationId,
-                        principalTable: "Organizations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Depos",
                 columns: table => new
                 {
@@ -147,9 +148,9 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    PhoneNumber = table.Column<string>(maxLength: 13, nullable: true),
+                    PhoneNumber = table.Column<string>(maxLength: 13, nullable: false),
                     Password = table.Column<string>(nullable: false),
-                    Email = table.Column<string>(nullable: false),
+                    Email = table.Column<string>(nullable: true),
                     LastUpdate = table.Column<DateTime>(nullable: false),
                     LastLocation_Latitude = table.Column<double>(nullable: true),
                     LastLocation_Longitude = table.Column<double>(nullable: true),
@@ -266,9 +267,9 @@ namespace Persistence.Migrations
                 {
                     table.PrimaryKey("PK_Missions", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Missions_Users_AdminId",
+                        name: "FK_Missions_Admins_AdminId",
                         column: x => x.AdminId,
-                        principalTable: "Users",
+                        principalTable: "Admins",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
@@ -358,6 +359,17 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Admins_Email",
+                table: "Admins",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Admins_OrganizationId",
+                table: "Admins",
+                column: "OrganizationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AgentEvent_AgentId",
                 table: "AgentEvent",
                 column: "AgentId");
@@ -368,9 +380,27 @@ namespace Persistence.Migrations
                 column: "DepoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Agents_Email",
+                table: "Agents",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Agents_PhoneNumber",
+                table: "Agents",
+                column: "PhoneNumber",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Commands_AgentId",
                 table: "Commands",
                 column: "AgentId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Depos_Name",
+                table: "Depos",
+                column: "Name",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Depos_OrganizationId",
@@ -418,6 +448,24 @@ namespace Persistence.Migrations
                 column: "StartTwoId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Organizations_Code",
+                table: "Organizations",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Organizations_Name",
+                table: "Organizations",
+                column: "Name",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Stations_Code",
+                table: "Stations",
+                column: "Code",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Stations_OrganizationId",
                 table: "Stations",
                 column: "OrganizationId");
@@ -431,11 +479,6 @@ namespace Persistence.Migrations
                 name: "IX_Stations_PreStationId",
                 table: "Stations",
                 column: "PreStationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Users_OrganizationId",
-                table: "Users",
-                column: "OrganizationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -456,7 +499,7 @@ namespace Persistence.Migrations
                 name: "Missions");
 
             migrationBuilder.DropTable(
-                name: "Users");
+                name: "Admins");
 
             migrationBuilder.DropTable(
                 name: "Agents");

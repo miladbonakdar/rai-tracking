@@ -4,7 +4,7 @@ namespace Application
 {
     public static class SignalRAdmins
     {
-        public static Dictionary<int, HashSet<string>> Users { get; }
+        public static Dictionary<int, HashSet<string>> Admins { get; }
             = new Dictionary<int, HashSet<string>>();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
+using Application.Services;
 using Autofac;
 using Domain.Interfaces;
 using DomainEvent.Extensions;
@@ -15,6 +16,8 @@ namespace Application
         {
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(GetType()))
                 .Where(t => t.IsAssignableToGenericType(typeof(IHandler<>))).AsImplementedInterfaces();
+            builder.RegisterType<AuthService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<IdentityProvider>().AsImplementedInterfaces().InstancePerMatchingLifetimeScope();
         }
     }
 }
