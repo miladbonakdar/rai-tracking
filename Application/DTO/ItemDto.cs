@@ -1,4 +1,5 @@
 ﻿using Domain.Enums;
+using SharedKernel;
 using SharedKernel.Extensions;
 
 namespace Application.DTO
@@ -20,10 +21,13 @@ namespace Application.DTO
         public string ImageUrl { get; }
         public string SmImageUrl { get; }
 
-        public static ItemDto FromEventType(TrackingEventType eventType)
-        {
-            return new ItemDto((int)eventType,eventType.ToString(),eventType.GetDescription(),
-                );
-        }
+        public static ItemDto FromEventType(TrackingEventType eventType) =>
+            new ItemDto((int)eventType,eventType.ToString(),eventType.GetDescription(),
+                EventImageUrlResolver.Resolve(eventType.ToString(),true),
+                EventImageUrlResolver.Resolve(eventType.ToString()));
+        public static ItemDto FromCommandType(CommandType commandType) =>
+            new ItemDto((int)commandType,commandType.ToString(),commandType.GetDescription(),
+                EventImageUrlResolver.Resolve(commandType.ToString(),true),
+                EventImageUrlResolver.Resolve(commandType.ToString()));
     }
 }

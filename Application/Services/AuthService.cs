@@ -68,6 +68,9 @@ namespace Application.Services
 
             if (await _unitOfWork.Admins.AnyAsync(a => a.Email == dto.Email))
                 throw new BadRequestException("Email", "این ایمیل در سیستم وجود دارد");
+            
+            if (!await _unitOfWork.Organizations.AnyAsync(a => a.Id == dto.OrganizationId))
+                throw new BadRequestException("OrganizationId", "سازمان وارد شده معتبر نمی باشد");
 
             var admin = new Admin
             {

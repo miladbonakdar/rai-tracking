@@ -9,7 +9,7 @@ namespace Persistence
 {
     class UnitOfWork : UnitOfWorkContext, IUnitOfWork
     {
-        public UnitOfWork(DbContext context) : base(context)
+        public UnitOfWork(AppDbContext context) : base(context)
         {
         }
 

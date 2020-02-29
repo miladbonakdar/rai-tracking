@@ -25,15 +25,15 @@ namespace RaiTracking.Controllers
         }
 
         [HttpPost(nameof(SignUpAdmin))]
-        public async Task<Result<AuthenticatedClientDto>> SignUpAdmin(RegisterAdminDto dto)
+        public async Task<Result<AuthenticatedClientDto>> SignUpAdmin([FromBody]RegisterAdminDto dto)
             => await _authService.SignUpAdminAsync(dto);
 
         [HttpPost(nameof(SignInAgent))]
-        public async Task<Result<AuthenticatedClientDto>> SignInAgent(SignInDto dto)
+        public async Task<Result<AuthenticatedClientDto>> SignInAgent([FromBody]SignInDto dto)
             => await _authService.SignInAgentAsync(dto);
 
         [HttpPost(nameof(SignInAdmin))]
-        public async Task<Result<AuthenticatedClientDto>> SignInAdmin(SignInDto dto)
+        public async Task<Result<AuthenticatedClientDto>> SignInAdmin([FromBody]SignInDto dto)
             => await _authService.SignInAdminAsync(dto);
 
         [Authorize(Roles = Constants.AdminType.Agent)]
