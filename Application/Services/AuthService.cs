@@ -68,22 +68,16 @@ namespace Application.Services
 
             if (await _unitOfWork.Admins.AnyAsync(a => a.Email == dto.Email))
                 throw new BadRequestException("Email", "این ایمیل در سیستم وجود دارد");
-            
+
             if (!await _unitOfWork.Organizations.AnyAsync(a => a.Id == dto.OrganizationId))
                 throw new BadRequestException("OrganizationId", "سازمان وارد شده معتبر نمی باشد");
 
-            var admin = new Admin
-            {
-                Email = dto.Email,
-                OrganizationId = dto.OrganizationId,
-                Password = _passwordService.HashPassword(dto.Password),
-                Telephone = dto.Number,
-                AdminType = dto.AdminType,
-                PersonName = new PersonName(dto.Name, dto.Lastname),
-                PhoneNumber = dto.PhoneNumber,
-            };
-
+            var admin = new Admin(new PersonName(dto.Name, dto.Lastname), dto.AdminType, dto.OrganizationId,
+                dto.PhoneNumber, dto.Number);
+            admin.Register(dto.Email, _passwordService.HashPassword(dto.Password));
+            
             await _unitOfWork.CompleteAsync(async ctx => { await _unitOfWork.Admins.AddAsync(admin); });
+            
             return await SignInAdminAsync(new SignInDto
             {
                 Password = dto.Password,

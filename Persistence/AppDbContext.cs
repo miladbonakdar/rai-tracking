@@ -48,5 +48,12 @@ namespace Persistence
             optionsBuilder.UseNpgsql(PersistenceModule.PgConnectionString);
             return optionsBuilder.Options;
         }
+
+        public static IEnumerable<Type> IgnoredForDefaultModelConfiguration()
+        {
+            yield return typeof(Organization);
+            yield return typeof(Admin);
+            yield return typeof(Station);
+        }
     }
 }

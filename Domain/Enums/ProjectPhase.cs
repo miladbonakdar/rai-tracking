@@ -5,6 +5,8 @@ namespace Domain.Enums
 {
     public enum ProjectPhase
     {
+        [Description(Dic.ProjectPhases.Unknown)]
+        Unknown,
         [Description(Dic.ProjectPhases.Started)]
         Started,
 

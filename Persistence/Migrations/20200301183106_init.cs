@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Persistence.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -18,13 +18,7 @@ namespace Persistence.Migrations
                     Name = table.Column<string>(maxLength: 150, nullable: false),
                     Location_Latitude = table.Column<double>(nullable: true),
                     Location_Longitude = table.Column<double>(nullable: true),
-                    Code = table.Column<string>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    CreatedById = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    UpdatedById = table.Column<DateTime>(nullable: false)
+                    Code = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -44,14 +38,8 @@ namespace Persistence.Migrations
                     PhoneNumber = table.Column<string>(maxLength: 13, nullable: true),
                     Telephone = table.Column<string>(maxLength: 13, nullable: true),
                     About = table.Column<string>(nullable: true),
-                    AdminType = table.Column<string>(nullable: true, defaultValue: "AdminType.Agent"),
-                    OrganizationId = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    CreatedById = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    UpdatedById = table.Column<DateTime>(nullable: false)
+                    AdminType = table.Column<string>(nullable: false, defaultValue: "AdminType.Agent"),
+                    OrganizationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -70,19 +58,13 @@ namespace Persistence.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Code = table.Column<int>(nullable: false),
                     Name = table.Column<string>(maxLength: 150, nullable: false),
-                    Location_Latitude = table.Column<double>(nullable: true),
-                    Location_Longitude = table.Column<double>(nullable: true),
+                    Latitude = table.Column<double>(nullable: false),
+                    Longitude = table.Column<double>(nullable: false),
+                    Altitude = table.Column<double>(nullable: false),
                     PreStationId = table.Column<int>(nullable: true),
                     PostStationId = table.Column<int>(nullable: true),
-                    OrganizationId = table.Column<int>(nullable: false),
-                    CreatedAt = table.Column<DateTime>(nullable: false),
-                    CreatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    CreatedById = table.Column<DateTime>(nullable: false),
-                    UpdatedAt = table.Column<DateTime>(nullable: false),
-                    UpdatedBy = table.Column<string>(maxLength: 200, nullable: true),
-                    UpdatedById = table.Column<DateTime>(nullable: false)
+                    OrganizationId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -93,18 +75,6 @@ namespace Persistence.Migrations
                         principalTable: "Organizations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Stations_Stations_PostStationId",
-                        column: x => x.PostStationId,
-                        principalTable: "Stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
-                        name: "FK_Stations_Stations_PreStationId",
-                        column: x => x.PreStationId,
-                        principalTable: "Stations",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -249,11 +219,12 @@ namespace Persistence.Migrations
                     OTDR = table.Column<int>(nullable: true),
                     StartedAt = table.Column<DateTime>(nullable: true),
                     FinishedAt = table.Column<DateTime>(nullable: true),
+                    Phase = table.Column<int>(nullable: false),
                     FailureLocation_Latitude = table.Column<double>(nullable: true),
                     FailureLocation_Longitude = table.Column<double>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    StartOneId = table.Column<int>(nullable: false),
-                    StartTwoId = table.Column<int>(nullable: false),
+                    StationOneId = table.Column<int>(nullable: false),
+                    StationTwoId = table.Column<int>(nullable: true),
                     AgentId = table.Column<int>(nullable: false),
                     AdminId = table.Column<int>(nullable: true),
                     CreatedAt = table.Column<DateTime>(nullable: false),
@@ -279,17 +250,17 @@ namespace Persistence.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Missions_Stations_StartOneId",
-                        column: x => x.StartOneId,
+                        name: "FK_Missions_Stations_StationOneId",
+                        column: x => x.StationOneId,
                         principalTable: "Stations",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Missions_Stations_StartTwoId",
-                        column: x => x.StartTwoId,
+                        name: "FK_Missions_Stations_StationTwoId",
+                        column: x => x.StationTwoId,
                         principalTable: "Stations",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -356,6 +327,34 @@ namespace Persistence.Migrations
                         principalTable: "Missions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Organizations",
+                columns: new[] { "Id", "Code", "IsAdmin", "Name" },
+                values: new object[,]
+                {
+                    { 1, "000", true, "ستاد" },
+                    { 24, "047", false, "شرق" },
+                    { 23, "045", false, "هرمزگان" },
+                    { 22, "041", false, "زاگرس" },
+                    { 21, "136", false, "لرستان" },
+                    { 20, "038", false, "شمال غرب" },
+                    { 19, "035", false, "شمال" },
+                    { 18, "036", false, "شمال شرق 1" },
+                    { 17, "132", false, "جنوب شرق" },
+                    { 25, "058", false, "فارس" },
+                    { 16, "057", false, "کرمان" },
+                    { 14, "044", false, "یزد" },
+                    { 13, "042", false, "جنوب" },
+                    { 12, "137", false, "قم" },
+                    { 11, "034", false, "تهران" },
+                    { 10, "043", false, "اصفهان" },
+                    { 9, "040", false, "اراک" },
+                    { 8, "039", false, "آذربایجان" },
+                    { 2, "999", false, "نامعلوم" },
+                    { 15, "037", false, "خراسان" },
+                    { 26, "138", false, "شمال شرق 2" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -438,14 +437,14 @@ namespace Persistence.Migrations
                 column: "AgentId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Missions_StartOneId",
+                name: "IX_Missions_StationOneId",
                 table: "Missions",
-                column: "StartOneId");
+                column: "StationOneId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Missions_StartTwoId",
+                name: "IX_Missions_StationTwoId",
                 table: "Missions",
-                column: "StartTwoId");
+                column: "StationTwoId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Organizations_Code",
@@ -460,25 +459,9 @@ namespace Persistence.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Stations_Code",
-                table: "Stations",
-                column: "Code",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Stations_OrganizationId",
                 table: "Stations",
                 column: "OrganizationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stations_PostStationId",
-                table: "Stations",
-                column: "PostStationId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Stations_PreStationId",
-                table: "Stations",
-                column: "PreStationId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

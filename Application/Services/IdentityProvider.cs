@@ -26,7 +26,12 @@ namespace Application.Services
             _configured = true;
             
             HasValue = user.Identity.IsAuthenticated;
-            if(!HasValue) return;
+            if (!HasValue)
+            {
+                Fullname = "System";
+                Id = -1;
+                return;
+            }
             Id = int.Parse(user.Identity.Name);
             
             foreach (var userClaim in user.Claims)

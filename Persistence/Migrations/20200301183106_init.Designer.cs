@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200214155931_Init")]
-    partial class Init
+    [Migration("20200301183106_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -32,19 +32,10 @@ namespace Persistence.Migrations
                         .HasColumnType("text");
 
                     b.Property<string>("AdminType")
+                        .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
                         .HasDefaultValue("AdminType.Agent");
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -64,16 +55,6 @@ namespace Persistence.Migrations
                     b.Property<string>("Telephone")
                         .HasColumnType("character varying(13)")
                         .HasMaxLength(13);
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -324,17 +305,20 @@ namespace Persistence.Migrations
                     b.Property<int?>("OTDR")
                         .HasColumnType("integer");
 
+                    b.Property<int>("Phase")
+                        .HasColumnType("integer");
+
                     b.Property<int>("RemainingTime")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StartOneId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("StartTwoId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime?>("StartedAt")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("StationOneId")
+                        .HasColumnType("integer");
+
+                    b.Property<int?>("StationTwoId")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("timestamp without time zone");
@@ -352,9 +336,9 @@ namespace Persistence.Migrations
 
                     b.HasIndex("AgentId");
 
-                    b.HasIndex("StartOneId");
+                    b.HasIndex("StationOneId");
 
-                    b.HasIndex("StartTwoId");
+                    b.HasIndex("StationTwoId");
 
                     b.ToTable("Missions");
                 });
@@ -465,16 +449,6 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<bool>("IsAdmin")
                         .HasColumnType("boolean");
 
@@ -482,16 +456,6 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .HasColumnType("character varying(150)")
                         .HasMaxLength(150);
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
 
                     b.HasKey("Id");
 
@@ -502,6 +466,155 @@ namespace Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Organizations");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Code = "000",
+                            IsAdmin = true,
+                            Name = "ستاد"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Code = "999",
+                            IsAdmin = false,
+                            Name = "نامعلوم"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Code = "039",
+                            IsAdmin = false,
+                            Name = "آذربایجان"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Code = "040",
+                            IsAdmin = false,
+                            Name = "اراک"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            Code = "043",
+                            IsAdmin = false,
+                            Name = "اصفهان"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            Code = "034",
+                            IsAdmin = false,
+                            Name = "تهران"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            Code = "137",
+                            IsAdmin = false,
+                            Name = "قم"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Code = "042",
+                            IsAdmin = false,
+                            Name = "جنوب"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            Code = "044",
+                            IsAdmin = false,
+                            Name = "یزد"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            Code = "037",
+                            IsAdmin = false,
+                            Name = "خراسان"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            Code = "057",
+                            IsAdmin = false,
+                            Name = "کرمان"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            Code = "132",
+                            IsAdmin = false,
+                            Name = "جنوب شرق"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            Code = "036",
+                            IsAdmin = false,
+                            Name = "شمال شرق 1"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            Code = "035",
+                            IsAdmin = false,
+                            Name = "شمال"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            Code = "038",
+                            IsAdmin = false,
+                            Name = "شمال غرب"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            Code = "136",
+                            IsAdmin = false,
+                            Name = "لرستان"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            Code = "041",
+                            IsAdmin = false,
+                            Name = "زاگرس"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            Code = "045",
+                            IsAdmin = false,
+                            Name = "هرمزگان"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            Code = "047",
+                            IsAdmin = false,
+                            Name = "شرق"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            Code = "058",
+                            IsAdmin = false,
+                            Name = "فارس"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            Code = "138",
+                            IsAdmin = false,
+                            Name = "شمال شرق 2"
+                        });
                 });
 
             modelBuilder.Entity("Domain.Station", b =>
@@ -511,18 +624,14 @@ namespace Persistence.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int>("Code")
-                        .HasColumnType("integer");
+                    b.Property<double>("Altitude")
+                        .HasColumnType("double precision");
 
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<double>("Latitude")
+                        .HasColumnType("double precision");
 
-                    b.Property<string>("CreatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<double>("Longitude")
+                        .HasColumnType("double precision");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -539,26 +648,9 @@ namespace Persistence.Migrations
                     b.Property<int?>("PreStationId")
                         .HasColumnType("integer");
 
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<string>("UpdatedBy")
-                        .HasColumnType("character varying(200)")
-                        .HasMaxLength(200);
-
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("Code")
-                        .IsUnique();
-
                     b.HasIndex("OrganizationId");
-
-                    b.HasIndex("PostStationId");
-
-                    b.HasIndex("PreStationId");
 
                     b.ToTable("Stations");
                 });
@@ -763,17 +855,15 @@ namespace Persistence.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Station", "StartOne")
+                    b.HasOne("Domain.Station", "StationOne")
                         .WithMany()
-                        .HasForeignKey("StartOneId")
+                        .HasForeignKey("StationOneId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Domain.Station", "StartTwo")
+                    b.HasOne("Domain.Station", "StationTwo")
                         .WithMany()
-                        .HasForeignKey("StartTwoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("StationTwoId");
 
                     b.OwnsOne("Domain.ValueObjects.Location", "FailureLocation", b1 =>
                         {
@@ -886,33 +976,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Station", "PostStation")
-                        .WithMany()
-                        .HasForeignKey("PostStationId");
-
-                    b.HasOne("Domain.Station", "PreStation")
-                        .WithMany()
-                        .HasForeignKey("PreStationId");
-
-                    b.OwnsOne("Domain.ValueObjects.Location", "Location", b1 =>
-                        {
-                            b1.Property<int>("StationId")
-                                .HasColumnType("integer");
-
-                            b1.Property<double>("Latitude")
-                                .HasColumnType("double precision");
-
-                            b1.Property<double>("Longitude")
-                                .HasColumnType("double precision");
-
-                            b1.HasKey("StationId");
-
-                            b1.ToTable("Stations");
-
-                            b1.WithOwner()
-                                .HasForeignKey("StationId");
-                        });
                 });
 #pragma warning restore 612, 618
         }

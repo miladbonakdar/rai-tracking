@@ -4,6 +4,7 @@
     {
         public static class ProjectPhases
         {
+            public const string Unknown = "نا معلوم";
             public const string Started = "آغاز شده است";
             public const string Finished = "پایان یافته است";
             public const string Canceled = "لغو شده است";

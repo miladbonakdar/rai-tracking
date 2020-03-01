@@ -4,7 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IMission
     {
-        int MissionId { set; get; }
-        Mission Mission { set; get; }
+        int MissionId {  get; }
+        Mission Mission {  get; }
     }
 }

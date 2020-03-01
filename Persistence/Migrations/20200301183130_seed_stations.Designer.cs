@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Persistence;
@@ -9,9 +10,10 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200301183130_seed_stations")]
+    partial class seed_stations
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -649,10 +651,6 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("OrganizationId");
-
-                    b.HasIndex("PostStationId");
-
-                    b.HasIndex("PreStationId");
 
                     b.ToTable("Stations");
 
@@ -5884,14 +5882,6 @@ namespace Persistence.Migrations
                         .HasForeignKey("OrganizationId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Domain.Station", "PostStation")
-                        .WithMany()
-                        .HasForeignKey("PostStationId");
-
-                    b.HasOne("Domain.Station", "PreStation")
-                        .WithMany()
-                        .HasForeignKey("PreStationId");
                 });
 #pragma warning restore 612, 618
         }
