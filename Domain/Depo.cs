@@ -3,20 +3,35 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Domain.Interfaces;
 using Domain.ValueObjects;
+using JetBrains.Annotations;
 using SharedKernel;
 
 namespace Domain
 {
     public class Depo : AggregateRoot, IOrganizationTenant
     {
-        public Location Location { get; set; }
-        [Required]
-        public string Name { get; set; }
+        public Depo([NotNull] string name, int organizationId, int stationId)
+        {
+            Name = name;
+            OrganizationId = organizationId;
+            StationId = stationId;
+            Agents = new List<Agent>();
+        }
 
-        public int OrganizationId { get; set; }
-        public Organization Organization { get; set; }
-        public int StationId { get; set; }
-        public Station Station { get; set; }
+        private Depo()
+        {
+        }
+
+        public void UpdateLocation([NotNull] Location location)
+            => Location = location ?? throw new ArgumentNullException("location");
+
+        public Location Location { get; private set; }
+        [Required] public string Name { get; private set; }
+
+        public int OrganizationId { get; private set; }
+        public Organization Organization { get; private set; }
+        public int StationId { get; private set; }
+        public Station Station { get; private set; }
         public ICollection<Agent> Agents { get; set; }
     }
 }

@@ -1,11 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using SharedKernel.Constants;
+using SharedKernel.Exceptions;
 
 namespace SharedKernel
 {
     public class Guard
     {
+        public static void ForValidRoleName(string role)
+        {
+            if (!Constants.Constants.AdminType.All.Contains(role))
+            {
+                throw new BadRequestException("role", "Role(admin type) is not valid");
+            }
+        }
+
         public static void ForLessEqualZero(int value, string parameterName)
         {
             if (value <= 0)
@@ -29,6 +40,7 @@ namespace SharedKernel
                 throw new ArgumentOutOfRangeException(parameterName);
             }
         }
+
         public static void ValidateCoordinate(double latitude, double longitude,
             string latitudeParamName, string longitudeParamName)
         {

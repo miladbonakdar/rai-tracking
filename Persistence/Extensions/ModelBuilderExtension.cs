@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Persistence.EntityConfigurations;
 using SharedKernel;
@@ -8,10 +9,11 @@ namespace Persistence.Extensions
     public static class ModelBuilderExtension
     {
         public static void Configure<TConfiguration, TEntity>(this ModelBuilder builder) where
-            TConfiguration : IEntityConfiguration<TEntity> , new()
+            TConfiguration : IEntityConfiguration<TEntity>, new()
             where TEntity : class
         {
-            builder.SharedConfiguration<TEntity>();
+            if (!AppDbContext.IgnoredForDefaultModelConfiguration().Contains(typeof(TEntity)))
+                builder.SharedConfiguration<TEntity>();
             var configuration = new TConfiguration();
             configuration.Configure(builder.Entity<TEntity>());
         }

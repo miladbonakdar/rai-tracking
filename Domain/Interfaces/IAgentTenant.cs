@@ -4,7 +4,7 @@ namespace Domain.Interfaces
 {
     public interface IAgentTenant
     {
-        int AgentId { set; get; }
-        Agent Agent { set; get; }
+        int AgentId { get; }
+        Agent Agent { get; }
     }
 }

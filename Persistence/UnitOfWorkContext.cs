@@ -15,7 +15,7 @@ namespace Persistence
         public IMissionRepository Missions => _missionsLazy.Value;
         public IOrganizationRepository Organizations => _organizationsLazy.Value;
         public IStationRepository Stations => _stationsLazy.Value;
-        public IAdminRepository Admins => _usersLazy.Value;
+        public IAdminRepository Admins => _adminsLazy.Value;
 
         private readonly Lazy<IAgentRepository> _agentsLazy;
         private readonly Lazy<ICommandRepository> _commandsLazy;
@@ -23,7 +23,7 @@ namespace Persistence
         private readonly Lazy<IMissionRepository> _missionsLazy;
         private readonly Lazy<IOrganizationRepository> _organizationsLazy;
         private readonly Lazy<IStationRepository> _stationsLazy;
-        private readonly Lazy<IAdminRepository> _usersLazy;
+        private readonly Lazy<IAdminRepository> _adminsLazy;
 
         public UnitOfWorkContext(DbContext context)
         {
@@ -34,7 +34,7 @@ namespace Persistence
             _missionsLazy = new Lazy<IMissionRepository>(() => new MissionRepository(Context));
             _organizationsLazy = new Lazy<IOrganizationRepository>(() => new OrganizationRepository(Context));
             _stationsLazy = new Lazy<IStationRepository>(() => new StationRepository(Context));
-            _usersLazy = new Lazy<IAdminRepository>(() => new AdminRepository(Context));
+            _adminsLazy = new Lazy<IAdminRepository>(() => new AdminRepository(Context));
         }
     }
 }

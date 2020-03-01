@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Application.Constants;
+using Application.Enums;
 using Application.Interfaces;
 using Infrastructure.Interfaces;
 using Newtonsoft.Json;
@@ -20,7 +20,7 @@ namespace Infrastructure
         }
 
         public async Task<TCache> StoreAndGetAsync<TCache>(string key, Func<Task<TCache>> cacheFactory,
-            int duration = CacheDuration.Eternal)
+            CacheDuration duration = CacheDuration.Eternal)
         {
             string oldCache = await _multiplexer.Db.StringGetAsync(key);
 
@@ -45,12 +45,15 @@ namespace Infrastructure
         }
 
         public async Task<TCache> StoreAsync<TCache>(string key, TCache toBeCached,
-            int duration = CacheDuration.Eternal)
+            CacheDuration duration = CacheDuration.Eternal)
         {
             try
             {
                 string objectString = JsonConvert.SerializeObject(toBeCached);
-                await _multiplexer.Db.StringSetAsync(key, objectString);
+                await _multiplexer.Db.StringSetAsync(key, objectString,
+                    duration == CacheDuration.Eternal
+                        ? (TimeSpan?) null
+                        : TimeSpan.FromSeconds((int) duration));
                 return toBeCached;
             }
             catch (Exception e)

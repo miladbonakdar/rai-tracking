@@ -60,8 +60,7 @@ namespace RaiTracking
 
         private static void RegisterMiddleware(IApplicationBuilder app)
         {
-            app.UseMiddleware<AdminProviderMiddleware>();
-            app.UseMiddleware<AgentProviderMiddleware>();
+            app.UseMiddleware<IdentityProviderMiddleware>();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)

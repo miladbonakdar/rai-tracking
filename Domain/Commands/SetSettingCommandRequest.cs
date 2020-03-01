@@ -1,6 +1,7 @@
 ﻿using System;
 using Domain.Enums;
 using SharedKernel;
+using SharedKernel.Constants;
 
 namespace Domain.Commands
 {

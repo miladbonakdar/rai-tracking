@@ -3,7 +3,7 @@
     public interface IAuthSetting
     {
         string Secret { get; }
-        int UserExpireInDays { get; }
+        int AdminExpireInDays { get; }
         int AgentExpireInDays { get; }
     }
 }

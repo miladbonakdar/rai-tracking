@@ -6,19 +6,15 @@ namespace Application.DTO
     public abstract class PersonDto : IModelDto
     {
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Name { get; set; }
 
         [Required]
-        [MaxLength(50)]
+        [MaxLength(150)]
         public string Lastname { get; set; }
 
-        public Guid Id { get; set; }
-        AuthenticatedClientDto Authenticated(string token)
+        public int Id { get; set; }
+        AuthenticatedClientDto Authenticate(string token)
             => new AuthenticatedClientDto(this, token);
-
-        [MinLength(8)]
-        [Required]
-        public string Password { get; set; }
     }
 }
