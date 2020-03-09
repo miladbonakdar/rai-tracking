@@ -12,5 +12,7 @@ namespace Application.Interfaces
 
         Task<TCache> StoreAsync<TCache>(string key, TCache toBeCached,
             CacheDuration duration = CacheDuration.Eternal);
+
+        Task<bool> RemoveAsync(string key);
     }
 }

@@ -20,10 +20,12 @@ namespace RaiTracking.Controllers
             _organizationService = organizationService;
         }
 
+        [WasFine]
         [HttpGet]
         public Result<string> Index() => Result<string>.Success(data: "yeah it is the main page");
 
 
+        [WasFine]
         [HttpGet(nameof(UserTypes))]
         public Result<IEnumerable<KeyValuePairDto<string, string>>> UserTypes()
             => Result<IEnumerable<KeyValuePairDto<string, string>>>.Success(data: new[]
@@ -36,6 +38,8 @@ namespace RaiTracking.Controllers
                 new KeyValuePairDto<string, string>(Constants.UserType.SysAdmin, "ادمین سیستم"),
             });
 
+        
+        [WasFine]
         [HttpGet(nameof(Organizations))]
         public async Task<Result<IEnumerable<OrganizationDto>>> Organizations()
         {

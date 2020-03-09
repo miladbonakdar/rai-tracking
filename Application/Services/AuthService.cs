@@ -132,12 +132,10 @@ namespace Application.Services
             var claims = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, admin.Id.ToString()),
-                new Claim(ClaimTypes.Role, admin.AdminType.ToString()),
+                new Claim(ClaimTypes.Role, admin.AdminType),
                 new Claim(Constants.CustomClaimTypes.Fullname,
                     $"{admin.PersonName.Firstname} {admin.PersonName.Lastname}"),
                 new Claim(ClaimTypes.Email, admin.Email),
-                new Claim(Constants.CustomClaimTypes.PhoneNumber, admin.PhoneNumber),
-                new Claim(Constants.CustomClaimTypes.Number, admin.Telephone),
                 new Claim(Constants.CustomClaimTypes.Organization, admin.OrganizationId.ToString())
             });
             return claims;

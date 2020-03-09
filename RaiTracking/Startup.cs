@@ -31,7 +31,8 @@ namespace RaiTracking
         {
             services.AddControllers();
             services.ConfigureAppSettingsSections(Configuration)
-                .ConfigureAppCorsSection(Configuration).ConfigureAppAuthentication(Configuration);
+                .ConfigureAppCorsSection(Configuration)
+                .ConfigureAppAuthentication(Configuration);
             services.ConfigureSerilog(Configuration);
             services.AddSwaggerGen(c => c.SwaggerDoc("v1"
                 , new OpenApiInfo {Title = "Rai Tracking API", Version = "v1"}));
@@ -44,25 +45,18 @@ namespace RaiTracking
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsSetting corsOptions)
         {
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
-            app.UseHttpsRedirection();
             app.ConfigureExceptionHandler(env);
             app.UseRouting();
-            app.UseAuthorization();
-            app.UseEndpoints(endpoints => endpoints.MapControllers());
             app.UseAuthentication();
-            RegisterMiddleware(app);
+            app.UseAuthorization();
+            app.UseMiddleware<IdentityProviderMiddleware>();
+            app.UseEndpoints(endpoints => endpoints.MapControllers());
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rai tracking API"));
             app.UseCors(corsOptions.PolicyName);
             var cachePeriod = env.IsDevelopment() ? "600" : "604800"; //6 min and 7 days 
             app.UseApplicationStaticFiles(env);
         }
-
-        private static void RegisterMiddleware(IApplicationBuilder app)
-        {
-            app.UseMiddleware<IdentityProviderMiddleware>();
-        }
-
         public void ConfigureContainer(ContainerBuilder builder)
             => builder.RegisterApplicationComponents();
     }

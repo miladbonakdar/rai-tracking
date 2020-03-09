@@ -13,7 +13,6 @@ namespace Application.Services
         public bool IsAgent => Role == Constants.UserType.Agent;
         public bool IsAdmin => !IsAgent;
         public string PhoneNumber { get; private set; }
-        public string Number { get;  private set;}
         public string Email { get;  private set;}
         public string Role { get;  private set;}
         public int Id { get;  private set;}
@@ -52,9 +51,6 @@ namespace Application.Services
                         continue;
                     case Constants.CustomClaimTypes.PhoneNumber:
                         PhoneNumber = userClaim.Value;
-                        continue;
-                    case Constants.CustomClaimTypes.Number:
-                        Number = userClaim.Value;
                         continue;
                 }
             }

@@ -23,18 +23,22 @@ namespace RaiTracking.Controllers
             _identityProvider = identityProvider;
         }
 
+        [WasFine]
         [HttpPost(nameof(SignUpAdmin))]
         public async Task<Result<AuthenticatedClientDto>> SignUpAdmin([FromBody]RegisterAdminDto dto)
             => await _authService.SignUpAdminAsync(dto);
-
+        
+        [NeedTest]
         [HttpPost(nameof(SignInAgent))]
         public async Task<Result<AuthenticatedClientDto>> SignInAgent([FromBody]SignInDto dto)
             => await _authService.SignInAgentAsync(dto);
 
+        [WasFine]
         [HttpPost(nameof(SignInAdmin))]
         public async Task<Result<AuthenticatedClientDto>> SignInAdmin([FromBody]SignInDto dto)
             => await _authService.SignInAdminAsync(dto);
 
+        [NeedTest]
         [Authorize(Roles = Constants.UserType.Agent)]
         [HttpGet(nameof(Agent))]
         public Result<AgentDto> Agent()
@@ -46,6 +50,7 @@ namespace RaiTracking.Controllers
                 PhoneNumber = _identityProvider.PhoneNumber
             });
 
+        [WasFine]
         [Authorize]
         [HttpGet(nameof(Admin))]
         public Result<AdminDto> Admin()
@@ -55,11 +60,11 @@ namespace RaiTracking.Controllers
                 Lastname = _identityProvider.Fullname,
                 Id = _identityProvider.Id,
                 Name = _identityProvider.Fullname,
-                Number = _identityProvider.Number,
                 PhoneNumber = _identityProvider.PhoneNumber
             });
 
 
+        [WasFine]
         [HttpGet(nameof(AdminTypes))]
         public Result<IEnumerable<KeyValuePairDto<string,string>>> AdminTypes()
             => Result<IEnumerable<KeyValuePairDto<string,string>>>.Success(data: new[]
