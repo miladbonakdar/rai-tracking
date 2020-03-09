@@ -5,10 +5,16 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import {ThemeProvider} from "@material-ui/core";
 import theme from "./customization/theme";
+import {Provider} from "react-redux";
+import store from "./config/redux/store";
 
-ReactDOM.render(<ThemeProvider theme={theme}>
-                    <App/>
-                </ThemeProvider>,
+ReactDOM.render(
+  <Provider store={store}>
+<ThemeProvider theme={theme}>
+  <App/>
+  </ThemeProvider>
+</Provider>
+  ,
     document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change
