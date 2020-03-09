@@ -11,7 +11,7 @@ namespace SharedKernel
     {
         public static void ForValidRoleName(string role)
         {
-            if (!Constants.Constants.AdminType.All.Contains(role))
+            if (!Constants.Constants.UserType.All.Contains(role))
             {
                 throw new BadRequestException("role", "Role(admin type) is not valid");
             }

@@ -30,8 +30,8 @@ namespace Application.Interfaces
         TAggregateRoot SingleOrDefault(Expression<Func<TAggregateRoot, bool>> where);
         Task<TAggregateRoot> SingleOrDefaultAsync(Expression<Func<TAggregateRoot, bool>> where);
 
-        IList<TAggregateRoot> Get(Expression<Func<TAggregateRoot, bool>> where);
-        Task<IList<TAggregateRoot>> GetAsync(Expression<Func<TAggregateRoot, bool>> where);
+        IList<TAggregateRoot> Get(Expression<Func<TAggregateRoot, bool>> where = null);
+        Task<IList<TAggregateRoot>> GetAsync(Expression<Func<TAggregateRoot, bool>> where = null);
 
         void Remove(TAggregateRoot entity);
         void RemoveRange(IEnumerable<TAggregateRoot> entities);

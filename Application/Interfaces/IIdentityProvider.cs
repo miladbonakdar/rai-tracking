@@ -10,7 +10,6 @@ namespace Application.Interfaces
         public bool IsAgent { get; }
         public bool IsAdmin { get; }
         public string PhoneNumber { get; }
-        public string Number { get; }
         public string Email { get; }
         public string Role { get; }
         public int Id { get; }

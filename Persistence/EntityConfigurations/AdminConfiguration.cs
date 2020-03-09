@@ -12,7 +12,7 @@ namespace Persistence.EntityConfigurations
         {
             builder.OwnsOne(a => a.PersonName);
             builder.HasIndex(a => a.Email).IsUnique();
-            builder.Property(a => a.AdminType).HasDefaultValue(Constants.AdminType.Agent);
+            builder.Property(a => a.AdminType).HasDefaultValue(Constants.UserType.Agent);
         }
     }
 }
