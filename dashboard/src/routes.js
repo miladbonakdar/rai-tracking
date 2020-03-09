@@ -43,7 +43,7 @@ const dashboardRoutes = [
     rtlName: "لوحة القيادة",
     icon: Dashboard,
     component: DashboardPage,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/user",
@@ -51,7 +51,7 @@ const dashboardRoutes = [
     rtlName: "ملف تعريفي للمستخدم",
     icon: Person,
     component: UserProfile,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/table",
@@ -59,7 +59,7 @@ const dashboardRoutes = [
     rtlName: "قائمة الجدول",
     icon: "content_paste",
     component: TableList,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/typography",
@@ -67,7 +67,7 @@ const dashboardRoutes = [
     rtlName: "طباعة",
     icon: LibraryBooks,
     component: Typography,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/icons",
@@ -75,7 +75,7 @@ const dashboardRoutes = [
     rtlName: "الرموز",
     icon: BubbleChart,
     component: Icons,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/maps",
@@ -83,7 +83,7 @@ const dashboardRoutes = [
     rtlName: "خرائط",
     icon: LocationOn,
     component: Maps,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/notifications",
@@ -91,7 +91,7 @@ const dashboardRoutes = [
     rtlName: "إخطارات",
     icon: Notifications,
     component: NotificationsPage,
-    layout: "/admin"
+    layout: "/rtl"
   },
   {
     path: "/rtl-page",
@@ -107,7 +107,7 @@ const dashboardRoutes = [
     rtlName: "التطور للاحترافية",
     icon: Unarchive,
     component: UpgradeToPro,
-    layout: "/admin"
+    layout: "/rtl"
   }
 ];
 
