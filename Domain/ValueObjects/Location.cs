@@ -13,17 +13,12 @@ namespace Domain.ValueObjects
         public double Latitude { get; protected set; }
         public double Longitude { get; protected set; }
 
-        public Location(double latitude, double longitude, DateTime date)
+        public Location(double latitude, double longitude)
         {
             Guard.ValidateCoordinate(latitude, longitude,
                 "latitude", "longitude");
             Latitude = latitude;
             Longitude = longitude;
-        }
-
-        public Location(double latitude, double longitude)
-            : this(latitude, longitude, DateTime.Now)
-        {
         }
 
         protected Location()

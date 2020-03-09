@@ -17,6 +17,7 @@ namespace Application
             builder.RegisterAssemblyTypes(Assembly.GetAssembly(GetType()))
                 .Where(t => t.IsAssignableToGenericType(typeof(IHandler<>))).AsImplementedInterfaces();
             builder.RegisterType<AuthService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<OrganizationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<IdentityProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }

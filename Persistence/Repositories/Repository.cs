@@ -92,14 +92,16 @@ namespace Persistence.Repositories
             return DbSet.SingleOrDefaultAsync(where);
         }
 
-        public virtual IList<T> Get(Expression<Func<T, bool>> @where)
+        public virtual IList<T> Get(Expression<Func<T, bool>> @where = null)
         {
-            return DbSet.Where(where).ToList();
+            return @where is null ? DbSet.ToList() : DbSet.Where(@where).ToList();
         }
 
-        public virtual async Task<IList<T>> GetAsync(Expression<Func<T, bool>> @where)
+        public virtual async Task<IList<T>> GetAsync(Expression<Func<T, bool>> @where = null)
         {
-            return await DbSet.Where(where).ToListAsync();
+            return @where is null
+                ? await DbSet.ToListAsync()
+                : await DbSet.Where(@where).ToListAsync();
         }
 
         public void Remove(T entity)
@@ -111,16 +113,15 @@ namespace Persistence.Repositories
         {
             DbSet.RemoveRange(entities);
         }
-        
+
         public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> @where)
         {
             return DbSet.AnyAsync(where);
         }
-        
+
         public virtual bool Any(Expression<Func<T, bool>> @where)
         {
             return DbSet.Any(where);
         }
-
     }
 }

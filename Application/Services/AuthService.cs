@@ -148,7 +148,7 @@ namespace Application.Services
             var claims = new ClaimsIdentity(new[]
             {
                 new Claim(ClaimTypes.Name, account.Id.ToString()),
-                new Claim(ClaimTypes.Role, Constants.AdminType.Agent),
+                new Claim(ClaimTypes.Role, Constants.UserType.Agent),
                 new Claim(Constants.CustomClaimTypes.Fullname,
                     $"{account.PersonName.Firstname} {account.PersonName.Lastname}"),
                 new Claim(ClaimTypes.Email, account.Email),

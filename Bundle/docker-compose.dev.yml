@@ -25,7 +25,7 @@ services:
     volumes:
       - pgadmin:/root/.pgadmin
     ports:
-      - "${PGADMIN_PORT:-8888}:80"
+      - "${PGADMIN_PORT:-9999}:80"
     networks:
       - PG_net
     restart: always
@@ -47,7 +47,7 @@ services:
     networks:
       - redis_net
     ports:
-      - "8887:5001"
+      - "9998:5001"
   
 volumes:
   postgres:

@@ -15,14 +15,14 @@ namespace SharedKernel.Constants
             public const string Organization = nameof(CustomClaimTypes) + "." + nameof(Organization);
         }
 
-        public static class AdminType
+        public static class UserType
         {
-            public const string SysAdmin = nameof(AdminType) + "." + nameof(SysAdmin);
-            public const string RootAdmin = nameof(AdminType) + "." + nameof(RootAdmin);
-            public const string OrganizationAdmin = nameof(AdminType) + "." + nameof(OrganizationAdmin);
-            public const string Monitor = nameof(AdminType) + "." + nameof(Monitor);
-            public const string OrganizationMonitor = nameof(AdminType) + "." + nameof(OrganizationMonitor);
-            public const string Agent = nameof(AdminType) + "." + nameof(Agent);
+            public const string SysAdmin = nameof(UserType) + "." + nameof(SysAdmin);
+            public const string RootAdmin = nameof(UserType) + "." + nameof(RootAdmin);
+            public const string OrganizationAdmin = nameof(UserType) + "." + nameof(OrganizationAdmin);
+            public const string Monitor = nameof(UserType) + "." + nameof(Monitor);
+            public const string OrganizationMonitor = nameof(UserType) + "." + nameof(OrganizationMonitor);
+            public const string Agent = nameof(UserType) + "." + nameof(Agent);
 
             public static IEnumerable<string> All = new string[]
             {
