@@ -33,6 +33,7 @@ import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import UpgradeToPro from "views/UpgradeToPro/UpgradeToPro.js";
+import Auth from "./views/auth/auth";
 // core components/views for RTL layout
 import RTLPage from "views/RTLPage/RTLPage.js";
 
@@ -108,6 +109,15 @@ const dashboardRoutes = [
     icon: Unarchive,
     component: UpgradeToPro,
     layout: "/rtl"
+  },
+  {
+    path: "/auth/login",
+    name: "auth",
+    rtlName: "auth",
+    icon: Unarchive,
+    component: Auth,
+    layout: "/rtl",
+    needAuth: true
   }
 ];
 

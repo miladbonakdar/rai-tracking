@@ -1,5 +1,6 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
+import './rtl.css';
 // creates a beautiful scrollbar
 import PerfectScrollbar from "perfect-scrollbar";
 import "perfect-scrollbar/css/perfect-scrollbar.css";
@@ -69,6 +70,9 @@ export default function RTL({ ...rest }) {
   const getRoute = () => {
     return window.location.pathname !== "/admin/maps";
   };
+  const getAuth = () => {
+    return window.location.pathname !== "/rtl/auth/login"
+  }
   const resizeFunction = () => {
     if (window.innerWidth >= 960) {
       setMobileOpen(false);
@@ -94,24 +98,32 @@ export default function RTL({ ...rest }) {
   }, [mainPanel]);
   return (
     <div className={classes.wrapper}>
-      <Sidebar
-        routes={routes}
-        logoText={"الإبداعية تيم"}
-        logo={logo}
-        image={image}
-        handleDrawerToggle={handleDrawerToggle}
-        open={mobileOpen}
-        color={color}
-        rtlActive
-        {...rest}
-      />
-      <div className={classes.mainPanel} ref={mainPanel}>
-        <Navbar
-          routes={routes}
-          handleDrawerToggle={handleDrawerToggle}
-          rtlActive
-          {...rest}
-        />
+      {
+        getAuth() ?
+          <Sidebar
+            routes={routes}
+            logoText={"الإبداعية تيم"}
+            logo={logo}
+            image={image}
+            handleDrawerToggle={handleDrawerToggle}
+            open={mobileOpen}
+            color={color}
+            rtlActive
+            {...rest}
+          />
+          :null
+      }
+
+      <div className={getAuth() ? classes.mainPanel : 'main-panel-notAuth'} ref={mainPanel}>
+        {getAuth() ?
+          <Navbar
+            routes={routes}
+            handleDrawerToggle={handleDrawerToggle}
+            rtlActive
+            {...rest}
+          />
+          : null}
+
         {/* On the /maps route we want the map to be on full screen - this is not possible if the content and conatiner classes are present because they have some paddings which would make the map smaller */}
         {getRoute() ? (
           <div className={classes.content}>
