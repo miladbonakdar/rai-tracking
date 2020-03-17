@@ -19,11 +19,37 @@ namespace Persistence
         public int Complete(Action<IUnitOfWorkContext> beforeComplete = null)
         {
             beforeComplete?.Invoke(this);
+            UpdateShadowProperties();
+            return Context.SaveChanges();
+        }
+
+        public async Task<int> CompleteAsync(Func<IUnitOfWorkContext, Task> beforeComplete)
+        {
+            if (beforeComplete != null) await beforeComplete(this);
+            UpdateShadowProperties();
+            return await Context.SaveChangesAsync();
+        }
+
+        public Task<int> CompleteAsync(Action<IUnitOfWorkContext> beforeComplete)
+        {
+            beforeComplete?.Invoke(this);
+            UpdateShadowProperties();
+            return Context.SaveChangesAsync();
+        }
+
+        public Task<int> CompleteAsync()
+        {
+            UpdateShadowProperties();
+            return Context.SaveChangesAsync();
+        }
+
+        private void UpdateShadowProperties()
+        {
             foreach (var entry in Context.ChangeTracker.Entries())
             {
                 if (AppDbContext.IgnoredForDefaultModelConfiguration().Contains(entry.Entity.GetType()))
                     continue;
-                
+
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property(ShadowPropertyKeys.CreatedAt).CurrentValue = DateTime.Now;
@@ -37,15 +63,7 @@ namespace Persistence
                     entry.Property(ShadowPropertyKeys.UpdatedBy).CurrentValue = _identityProvider.Fullname;
                     entry.Property(ShadowPropertyKeys.UpdatedById).CurrentValue = _identityProvider.Id;
                 }
-            }
-
-            return Context.SaveChanges();
-        }
-
-        public async Task<int> CompleteAsync(Func<IUnitOfWorkContext, Task> beforeComplete = null)
-        {
-            if (beforeComplete != null) await beforeComplete(this);
-            return await Context.SaveChangesAsync();
+            }   
         }
     }
 }

@@ -36,10 +36,24 @@ namespace Domain
             return this;
         }
 
-        public Agent UpdateLocation([NotNull] AgentInfo info)
+        public Agent UpdateInfo([NotNull] AgentInfo info)
         {
             LastUpdate = DateTime.Now;
             AgentInfo = info;
+            return this;
+        }
+
+        public Agent Update(string email, string phoneNumber, string name, string lastname)
+        {
+            Email = email;
+            PhoneNumber = phoneNumber;
+            PersonName = new PersonName(name, lastname);
+            return this;
+        }
+
+        public Agent UpdatePassword(string newPasswordHash)
+        {
+            Password = newPasswordHash;
             return this;
         }
 

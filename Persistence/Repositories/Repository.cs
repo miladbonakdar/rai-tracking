@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using Application.DTO;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using SharedKernel.Interfaces;
@@ -104,6 +105,22 @@ namespace Persistence.Repositories
                 : await DbSet.Where(@where).ToListAsync();
         }
 
+        public virtual async Task<Tuple<IList<T>, int>> GetPageAsync(int pageSize, int pageNumber,
+            Expression<Func<T, bool>> @where = null)
+        {
+            var query = DbSet.AsQueryable();
+            if (@where != null)
+                query = query.Where(@where);
+
+            var listQuery = query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
+                .Take(pageSize).ToListAsync();
+            var listTotal = query.CountAsync();
+
+            await Task.WhenAll(listQuery, listTotal);
+
+            return new Tuple<IList<T>, int>(await listQuery, await listTotal);
+        }
+
         public void Remove(T entity)
         {
             DbSet.Remove(entity);
@@ -122,6 +139,17 @@ namespace Persistence.Repositories
         public virtual bool Any(Expression<Func<T, bool>> @where)
         {
             return DbSet.Any(where);
+        }
+
+        public virtual void UpdatedOwnedProperty<TOwned>(T item, Func<T, TOwned> propertySelector
+            , Action<T> update)
+        {
+            var property = propertySelector(item);
+            if (property is null) throw new ArgumentOutOfRangeException();
+            Context.Entry(property).State = EntityState.Detached;
+            update(item);
+            Context.Entry(property).State = EntityState.Modified;
+            Context.Entry(item).State = EntityState.Modified;
         }
     }
 }

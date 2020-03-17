@@ -33,10 +33,16 @@ namespace Application.Interfaces
         IList<TAggregateRoot> Get(Expression<Func<TAggregateRoot, bool>> where = null);
         Task<IList<TAggregateRoot>> GetAsync(Expression<Func<TAggregateRoot, bool>> where = null);
 
+        Task<Tuple<IList<TAggregateRoot>, int>> GetPageAsync(int pageSize, int pageNumber,
+            Expression<Func<TAggregateRoot, bool>> @where = null);
+
         void Remove(TAggregateRoot entity);
         void RemoveRange(IEnumerable<TAggregateRoot> entities);
 
         Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> @where);
         bool Any(Expression<Func<TAggregateRoot, bool>> @where);
+
+        void UpdatedOwnedProperty<TOwned>(TAggregateRoot item, Func<TAggregateRoot, TOwned> propertySelector
+            , Action<TAggregateRoot> update);
     }
 }
