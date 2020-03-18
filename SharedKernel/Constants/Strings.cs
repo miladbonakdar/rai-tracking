@@ -34,5 +34,17 @@ namespace SharedKernel.Constants
                 RootAdmin
             };
         }
+
+        public static class UserGroup
+        {
+            public const string AllAdmins = AllRootAdmins + "," + AllMonitors;
+            public const string SysAdmin = UserType.SysAdmin;
+
+            public const string AllRootAdmins = UserType.SysAdmin + "," + UserType.OrganizationAdmin
+                                                + "," + UserType.RootAdmin;
+
+            public const string AllMonitors = UserType.Monitor + "," + UserType.OrganizationMonitor;
+            public const string Agent = UserType.Agent;
+        }
     }
 }

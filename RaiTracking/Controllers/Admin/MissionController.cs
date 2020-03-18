@@ -1,5 +1,8 @@
-﻿namespace RaiTracking.Controllers.Admin
+﻿using Microsoft.AspNetCore.Mvc;
+
+namespace RaiTracking.Controllers.Admin
 {
+    [Route(RouteBase)]
     public class MissionController: BaseAdminApiController
     {
         

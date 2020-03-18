@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 using SharedKernel;
+using SharedKernel.Exceptions;
 
 namespace Domain.ValueObjects
 {
@@ -11,20 +12,18 @@ namespace Domain.ValueObjects
     {
         public PersonName(string firstname, string lastname)
         {
-            Firstname = firstname;
-            Lastname = lastname;
+            Firstname = firstname ?? throw new ArgumentNullException(nameof(firstname));
+            Lastname = lastname ?? throw new ArgumentNullException(nameof(lastname));
         }
 
         private PersonName()
         {
-            
         }
 
-        [MaxLength(200)]
-        public string Firstname { get; private set; }
-        [MaxLength(200)]
-        public string Lastname { get; private set; }
+        [MaxLength(200)] public string Firstname { get; private set; }
+        [MaxLength(200)] public string Lastname { get; private set; }
         [NotMapped] public string Fullname => $"{Firstname} {Lastname}";
+
         public override bool IsEmpty()
         {
             return (Firstname == "" && Lastname == "");

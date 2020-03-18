@@ -9,7 +9,7 @@ namespace SharedKernel
         public bool Ok { get; }
         public TContent Data { get; }
 
-        private Result(string message, int statusCode, bool ok, TContent data)
+        protected Result(string message, int statusCode, bool ok, TContent data)
         {
             Message = message;
             StatusCode = statusCode;
@@ -30,5 +30,25 @@ namespace SharedKernel
 
         public override string ToString()
             => JsonConvert.SerializeObject(this);
+    }
+    
+    public class Result : Result<bool>
+    {
+        protected Result(string message, int statusCode, bool ok, bool data) 
+            : base(message, statusCode, ok, data)
+        {
+        }
+        
+        
+        public new static Result Success(string message = "با موفقیت انجام شد", bool data = true)
+            => new Result(message, 200, true, data);
+        public new static Result Error(string message = "مشکلی رخ داده است", bool data = false)
+            => new Result(message, 500, false, data);
+        public new static Result BadRequest(string message = "درخواست شما نا معتبر می باشد", bool data = false)
+            => new Result(message, 400, false, data);
+        public new static Result NotFound(string message = "درخواست شما یافت نشد", bool data = false)
+            => new Result(message, 404, false, data);
+        public new static Result Create(string message, int statusCode, bool ok, bool data = default)
+            => new Result(message, statusCode, ok, data);
     }
 }
