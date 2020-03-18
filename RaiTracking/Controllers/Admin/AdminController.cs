@@ -6,9 +6,9 @@ using SharedKernel;
 
 namespace RaiTracking.Controllers.Admin
 {
+    [Route(RouteBase)]
     public class AdminController: BaseAdminApiController
     {
-        
         [NeedTest]
         [HttpPost]
         public Result<AdminDto> Create([FromBody]AdminDto dto)

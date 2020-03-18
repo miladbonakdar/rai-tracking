@@ -9,6 +9,7 @@ using SharedKernel.Constants;
 
 namespace RaiTracking.Controllers.Admin
 {
+    [Route(RouteBase)]
     public class AgentController : BaseAdminApiController
     {
         private readonly IAgentService _agentService;

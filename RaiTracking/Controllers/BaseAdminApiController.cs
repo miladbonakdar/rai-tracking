@@ -9,8 +9,8 @@ using SharedKernel.Constants;
 namespace RaiTracking.Controllers
 {
     [Authorize(Roles = Constants.UserGroup.AllAdmins)]
-    [Route("Admins/v1/[controller]")]
     public abstract class BaseAdminApiController : BaseApiController
     {
+        public const string RouteBase = "Admins/v1/[controller]";
     }
 }
