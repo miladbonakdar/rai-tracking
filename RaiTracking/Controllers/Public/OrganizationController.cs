@@ -9,7 +9,7 @@ using SharedKernel;
 namespace RaiTracking.Controllers.Public
 {
     [Authorize]
-    [Microsoft.AspNetCore.Components.Route("Public/v1/[controller]")]
+    [Route("Public/v1/[controller]")]
     public class OrganizationController : BaseApiController
     {
         private readonly IOrganizationService _organizationService;

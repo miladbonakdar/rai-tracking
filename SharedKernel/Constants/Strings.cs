@@ -37,11 +37,13 @@ namespace SharedKernel.Constants
 
         public static class UserGroup
         {
-            public const string AllAdmins = AllRootAdmins + "," + AllMonitors;
+            public const string AllAdmins = AllMainAdmins + "," + AllMonitors;
             public const string SysAdmin = UserType.SysAdmin;
 
-            public const string AllRootAdmins = UserType.SysAdmin + "," + UserType.OrganizationAdmin
+            public const string AllMainAdmins = UserType.SysAdmin + "," + UserType.OrganizationAdmin
                                                 + "," + UserType.RootAdmin;
+
+            public const string AllRootAdmins = UserType.SysAdmin + "," + UserType.RootAdmin;
 
             public const string AllMonitors = UserType.Monitor + "," + UserType.OrganizationMonitor;
             public const string Agent = UserType.Agent;

@@ -49,6 +49,8 @@ namespace Persistence
             {
                 if (AppDbContext.IgnoredForDefaultModelConfiguration().Contains(entry.Entity.GetType()))
                     continue;
+                if (AppDbContext.OwnedProperties().Contains(entry.Entity.GetType()))
+                    continue;
 
                 if (entry.State == EntityState.Added)
                 {
@@ -63,7 +65,7 @@ namespace Persistence
                     entry.Property(ShadowPropertyKeys.UpdatedBy).CurrentValue = _identityProvider.Fullname;
                     entry.Property(ShadowPropertyKeys.UpdatedById).CurrentValue = _identityProvider.Id;
                 }
-            }   
+            }
         }
     }
 }

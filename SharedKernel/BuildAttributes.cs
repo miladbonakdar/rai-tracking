@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
 
-namespace RaiTracking
+namespace SharedKernel
 {
     [Description("This section tested and it was fine.")]
     public class WasFineAttribute : Attribute

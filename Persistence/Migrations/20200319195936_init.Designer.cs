@@ -10,8 +10,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200301183130_seed_stations")]
-    partial class seed_stations
+    [Migration("20200319195936_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace Persistence.Migrations
                         .IsRequired()
                         .ValueGeneratedOnAdd()
                         .HasColumnType("text")
-                        .HasDefaultValue("AdminType.Agent");
+                        .HasDefaultValue("UserType.Agent");
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -80,8 +80,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<int>("DepoId")
                         .HasColumnType("integer");
@@ -108,8 +108,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -141,8 +141,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EventData")
                         .IsRequired()
@@ -167,8 +167,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -198,8 +198,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("timestamp without time zone");
@@ -214,8 +214,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -238,8 +238,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -258,8 +258,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -293,8 +293,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -327,8 +327,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -360,8 +360,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EventData")
                         .IsRequired()
@@ -389,8 +389,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -415,8 +415,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<int>("MissionId")
                         .HasColumnType("integer");
@@ -428,8 +428,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -639,18 +639,7 @@ namespace Persistence.Migrations
                         .HasMaxLength(150)
                         .IsUnicode(true);
 
-                    b.Property<int>("OrganizationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PostStationId")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("PreStationId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("OrganizationId");
 
                     b.ToTable("Stations");
 
@@ -661,10 +650,7 @@ namespace Persistence.Migrations
                             Altitude = 1268.0,
                             Latitude = 35.949280000000002,
                             Longitude = 50.668939999999999,
-                            Name = "هشتگرد",
-                            OrganizationId = 11,
-                            PostStationId = 168,
-                            PreStationId = 167
+                            Name = "هشتگرد"
                         },
                         new
                         {
@@ -672,10 +658,7 @@ namespace Persistence.Migrations
                             Altitude = 1326.8,
                             Latitude = 36.201880000000003,
                             Longitude = 50.19285,
-                            Name = "كهندژ",
-                            OrganizationId = 20,
-                            PostStationId = 229,
-                            PreStationId = 169
+                            Name = "كهندژ"
                         },
                         new
                         {
@@ -683,10 +666,7 @@ namespace Persistence.Migrations
                             Altitude = 1407.5999999999999,
                             Latitude = 36.031669999999998,
                             Longitude = 49.54204,
-                            Name = "سياه باغ",
-                            OrganizationId = 20,
-                            PostStationId = 121,
-                            PreStationId = 172
+                            Name = "سياه باغ"
                         },
                         new
                         {
@@ -694,10 +674,7 @@ namespace Persistence.Migrations
                             Altitude = 1552.3,
                             Latitude = 37.381390000000003,
                             Longitude = 47.112369999999999,
-                            Name = "خراسانك",
-                            OrganizationId = 20,
-                            PostStationId = 173,
-                            PreStationId = 202
+                            Name = "خراسانك"
                         },
                         new
                         {
@@ -705,8 +682,7 @@ namespace Persistence.Migrations
                             Altitude = 1837.9000000000001,
                             Latitude = 37.292160000000003,
                             Longitude = 46.636130000000001,
-                            Name = "خراجو",
-                            OrganizationId = 20
+                            Name = "خراجو"
                         },
                         new
                         {
@@ -714,10 +690,7 @@ namespace Persistence.Migrations
                             Altitude = 1336.9000000000001,
                             Latitude = 37.434339999999999,
                             Longitude = 45.978900000000003,
-                            Name = "ديزه رود",
-                            OrganizationId = 8,
-                            PostStationId = 211,
-                            PreStationId = 210
+                            Name = "ديزه رود"
                         },
                         new
                         {
@@ -725,10 +698,7 @@ namespace Persistence.Migrations
                             Altitude = 1317.0999999999999,
                             Latitude = 37.76737,
                             Longitude = 45.876289999999997,
-                            Name = "آذر شهر",
-                            OrganizationId = 8,
-                            PostStationId = 213,
-                            PreStationId = 442
+                            Name = "آذر شهر"
                         },
                         new
                         {
@@ -736,10 +706,7 @@ namespace Persistence.Migrations
                             Altitude = 1383.0999999999999,
                             Latitude = 38.071939999999998,
                             Longitude = 46.227809999999998,
-                            Name = "تبريز",
-                            OrganizationId = 8,
-                            PostStationId = 215,
-                            PreStationId = 214
+                            Name = "تبريز"
                         },
                         new
                         {
@@ -747,10 +714,7 @@ namespace Persistence.Migrations
                             Altitude = 1651.3,
                             Latitude = 38.336779999999997,
                             Longitude = 45.883270000000003,
-                            Name = "سيوان",
-                            OrganizationId = 8,
-                            PostStationId = 217,
-                            PreStationId = 216
+                            Name = "سيوان"
                         },
                         new
                         {
@@ -758,9 +722,7 @@ namespace Persistence.Migrations
                             Altitude = 751.70000000000005,
                             Latitude = 38.93777,
                             Longitude = 45.630719999999997,
-                            Name = "جلفا",
-                            OrganizationId = 8,
-                            PreStationId = 195
+                            Name = "جلفا"
                         },
                         new
                         {
@@ -768,10 +730,7 @@ namespace Persistence.Migrations
                             Altitude = 1347.2,
                             Latitude = 38.286879999999996,
                             Longitude = 45.119190000000003,
-                            Name = "چشمه كنان",
-                            OrganizationId = 8,
-                            PostStationId = 225,
-                            PreStationId = 224
+                            Name = "چشمه كنان"
                         },
                         new
                         {
@@ -779,9 +738,7 @@ namespace Persistence.Migrations
                             Altitude = 2069.0,
                             Latitude = 38.493020000000001,
                             Longitude = 44.344169999999998,
-                            Name = "رازي",
-                            OrganizationId = 8,
-                            PreStationId = 443
+                            Name = "رازي"
                         },
                         new
                         {
@@ -789,10 +746,7 @@ namespace Persistence.Migrations
                             Altitude = 1076.8,
                             Latitude = 35.580750000000002,
                             Longitude = 51.424810000000001,
-                            Name = "ري",
-                            OrganizationId = 11,
-                            PostStationId = 14,
-                            PreStationId = 162
+                            Name = "ري"
                         },
                         new
                         {
@@ -800,10 +754,7 @@ namespace Persistence.Migrations
                             Altitude = 1009.8,
                             Latitude = 35.464449999999999,
                             Longitude = 51.53575,
-                            Name = "بهرام",
-                            OrganizationId = 11,
-                            PostStationId = 161,
-                            PreStationId = 13
+                            Name = "بهرام"
                         },
                         new
                         {
@@ -811,10 +762,7 @@ namespace Persistence.Migrations
                             Altitude = 936.89999999999998,
                             Latitude = 35.289839999999998,
                             Longitude = 51.721069999999997,
-                            Name = "پيشوا",
-                            OrganizationId = 11,
-                            PostStationId = 16,
-                            PreStationId = 161
+                            Name = "پيشوا"
                         },
                         new
                         {
@@ -822,10 +770,7 @@ namespace Persistence.Migrations
                             Altitude = 865.39999999999998,
                             Latitude = 35.205219999999997,
                             Longitude = 51.802019999999999,
-                            Name = "ابردژ",
-                            OrganizationId = 11,
-                            PostStationId = 17,
-                            PreStationId = 15
+                            Name = "ابردژ"
                         },
                         new
                         {
@@ -833,10 +778,7 @@ namespace Persistence.Migrations
                             Altitude = 833.5,
                             Latitude = 35.163969999999999,
                             Longitude = 52.038870000000003,
-                            Name = "كوير",
-                            OrganizationId = 11,
-                            PostStationId = 18,
-                            PreStationId = 16
+                            Name = "كوير"
                         },
                         new
                         {
@@ -844,10 +786,7 @@ namespace Persistence.Migrations
                             Altitude = 874.29999999999995,
                             Latitude = 35.235489999999999,
                             Longitude = 52.308369999999996,
-                            Name = "گرمسار",
-                            OrganizationId = 11,
-                            PostStationId = 120,
-                            PreStationId = 17
+                            Name = "گرمسار"
                         },
                         new
                         {
@@ -855,10 +794,7 @@ namespace Persistence.Migrations
                             Altitude = 1279.7,
                             Latitude = 35.426630000000003,
                             Longitude = 52.428379999999997,
-                            Name = "كبوتر دره",
-                            OrganizationId = 19,
-                            PostStationId = 20,
-                            PreStationId = 418
+                            Name = "كبوتر دره"
                         },
                         new
                         {
@@ -866,10 +802,7 @@ namespace Persistence.Migrations
                             Altitude = 1483.4000000000001,
                             Latitude = 35.520560000000003,
                             Longitude = 52.501130000000003,
-                            Name = "سيمين دشت",
-                            OrganizationId = 19,
-                            PostStationId = 21,
-                            PreStationId = 19
+                            Name = "سيمين دشت"
                         },
                         new
                         {
@@ -877,10 +810,7 @@ namespace Persistence.Migrations
                             Altitude = 1611.8,
                             Latitude = 35.572119999999998,
                             Longitude = 52.60313,
-                            Name = "زرين دشت",
-                            OrganizationId = 19,
-                            PostStationId = 22,
-                            PreStationId = 20
+                            Name = "زرين دشت"
                         },
                         new
                         {
@@ -888,10 +818,7 @@ namespace Persistence.Migrations
                             Altitude = 1786.4000000000001,
                             Latitude = 35.662430000000001,
                             Longitude = 52.706200000000003,
-                            Name = "مهاباد",
-                            OrganizationId = 19,
-                            PostStationId = 23,
-                            PreStationId = 21
+                            Name = "مهاباد"
                         },
                         new
                         {
@@ -899,10 +826,7 @@ namespace Persistence.Migrations
                             Altitude = 1958.3,
                             Latitude = 35.749650000000003,
                             Longitude = 52.775030000000001,
-                            Name = "فيروزكوه",
-                            OrganizationId = 19,
-                            PostStationId = 24,
-                            PreStationId = 22
+                            Name = "فيروزكوه"
                         },
                         new
                         {
@@ -910,10 +834,7 @@ namespace Persistence.Migrations
                             Altitude = 2144.4000000000001,
                             Latitude = 35.824249999999999,
                             Longitude = 52.917200000000001,
-                            Name = "گدوك",
-                            OrganizationId = 19,
-                            PostStationId = 25,
-                            PreStationId = 23
+                            Name = "گدوك"
                         },
                         new
                         {
@@ -921,10 +842,7 @@ namespace Persistence.Migrations
                             Altitude = 1755.0,
                             Latitude = 35.880890000000001,
                             Longitude = 52.968470000000003,
-                            Name = "دو گل",
-                            OrganizationId = 19,
-                            PostStationId = 26,
-                            PreStationId = 24
+                            Name = "دو گل"
                         },
                         new
                         {
@@ -932,10 +850,7 @@ namespace Persistence.Migrations
                             Altitude = 1525.5999999999999,
                             Latitude = 35.90663,
                             Longitude = 52.98574,
-                            Name = "ورسك",
-                            OrganizationId = 19,
-                            PostStationId = 27,
-                            PreStationId = 25
+                            Name = "ورسك"
                         },
                         new
                         {
@@ -943,10 +858,7 @@ namespace Persistence.Migrations
                             Altitude = 1203.4000000000001,
                             Latitude = 35.954360000000001,
                             Longitude = 53.005800000000001,
-                            Name = "سرخ آباد",
-                            OrganizationId = 19,
-                            PostStationId = 28,
-                            PreStationId = 26
+                            Name = "سرخ آباد"
                         },
                         new
                         {
@@ -954,10 +866,7 @@ namespace Persistence.Migrations
                             Altitude = 926.79999999999995,
                             Latitude = 36.018700000000003,
                             Longitude = 53.044550000000001,
-                            Name = "سواد كوه",
-                            OrganizationId = 19,
-                            PostStationId = 29,
-                            PreStationId = 27
+                            Name = "سواد كوه"
                         },
                         new
                         {
@@ -965,10 +874,7 @@ namespace Persistence.Migrations
                             Altitude = 592.0,
                             Latitude = 36.11544,
                             Longitude = 53.056040000000003,
-                            Name = "پل سفيد",
-                            OrganizationId = 19,
-                            PostStationId = 30,
-                            PreStationId = 28
+                            Name = "پل سفيد"
                         },
                         new
                         {
@@ -976,10 +882,7 @@ namespace Persistence.Migrations
                             Altitude = 445.10000000000002,
                             Latitude = 36.177050000000001,
                             Longitude = 52.971179999999997,
-                            Name = "زير اب",
-                            OrganizationId = 19,
-                            PostStationId = 31,
-                            PreStationId = 29
+                            Name = "زير اب"
                         },
                         new
                         {
@@ -987,10 +890,7 @@ namespace Persistence.Migrations
                             Altitude = 258.60000000000002,
                             Latitude = 36.294420000000002,
                             Longitude = 52.888159999999999,
-                            Name = "شير گاه",
-                            OrganizationId = 19,
-                            PostStationId = 32,
-                            PreStationId = 30
+                            Name = "شير گاه"
                         },
                         new
                         {
@@ -998,10 +898,7 @@ namespace Persistence.Migrations
                             Altitude = 76.0,
                             Latitude = 36.462739999999997,
                             Longitude = 52.862839999999998,
-                            Name = "قائم شهر",
-                            OrganizationId = 19,
-                            PostStationId = 33,
-                            PreStationId = 31
+                            Name = "قائم شهر"
                         },
                         new
                         {
@@ -1009,10 +906,7 @@ namespace Persistence.Migrations
                             Altitude = 57.799999999999997,
                             Latitude = 36.481900000000003,
                             Longitude = 52.89817,
-                            Name = "گوني بافي",
-                            OrganizationId = 19,
-                            PostStationId = 34,
-                            PreStationId = 32
+                            Name = "گوني بافي"
                         },
                         new
                         {
@@ -1020,10 +914,7 @@ namespace Persistence.Migrations
                             Altitude = 77.200000000000003,
                             Latitude = 36.552770000000002,
                             Longitude = 53.058729999999997,
-                            Name = "ساري",
-                            OrganizationId = 19,
-                            PostStationId = 35,
-                            PreStationId = 33
+                            Name = "ساري"
                         },
                         new
                         {
@@ -1031,10 +922,7 @@ namespace Persistence.Migrations
                             Altitude = 61.700000000000003,
                             Latitude = 36.61016,
                             Longitude = 53.209960000000002,
-                            Name = "شهيد نوبخت",
-                            OrganizationId = 19,
-                            PostStationId = 36,
-                            PreStationId = 34
+                            Name = "شهيد نوبخت"
                         },
                         new
                         {
@@ -1042,10 +930,7 @@ namespace Persistence.Migrations
                             Altitude = 66.200000000000003,
                             Latitude = 36.65625,
                             Longitude = 53.289279999999998,
-                            Name = "نكا",
-                            OrganizationId = 19,
-                            PostStationId = 37,
-                            PreStationId = 35
+                            Name = "نكا"
                         },
                         new
                         {
@@ -1053,10 +938,7 @@ namespace Persistence.Migrations
                             Altitude = 18.699999999999999,
                             Latitude = 36.687370000000001,
                             Longitude = 53.413209999999999,
-                            Name = "رستم كلا",
-                            OrganizationId = 19,
-                            PostStationId = 39,
-                            PreStationId = 36
+                            Name = "رستم كلا"
                         },
                         new
                         {
@@ -1064,10 +946,7 @@ namespace Persistence.Migrations
                             Altitude = 37.299999999999997,
                             Latitude = 36.847670000000001,
                             Longitude = 53.357509999999998,
-                            Name = "بندر امير آباد",
-                            OrganizationId = 19,
-                            PostStationId = 39,
-                            PreStationId = 37
+                            Name = "بندر امير آباد"
                         },
                         new
                         {
@@ -1075,10 +954,7 @@ namespace Persistence.Migrations
                             Altitude = 20.0,
                             Latitude = 36.702590000000001,
                             Longitude = 53.540199999999999,
-                            Name = "بهشهر",
-                            OrganizationId = 19,
-                            PostStationId = 40,
-                            PreStationId = 37
+                            Name = "بهشهر"
                         },
                         new
                         {
@@ -1086,10 +962,7 @@ namespace Persistence.Migrations
                             Altitude = 20.199999999999999,
                             Latitude = 36.726970000000001,
                             Longitude = 53.724589999999999,
-                            Name = "تير تاش",
-                            OrganizationId = 19,
-                            PostStationId = 41,
-                            PreStationId = 39
+                            Name = "تير تاش"
                         },
                         new
                         {
@@ -1097,10 +970,7 @@ namespace Persistence.Migrations
                             Altitude = 18.600000000000001,
                             Latitude = 36.747059999999998,
                             Longitude = 53.812910000000002,
-                            Name = "گلوگاه",
-                            OrganizationId = 19,
-                            PostStationId = 42,
-                            PreStationId = 40
+                            Name = "گلوگاه"
                         },
                         new
                         {
@@ -1108,10 +978,7 @@ namespace Persistence.Migrations
                             Altitude = 35.299999999999997,
                             Latitude = 36.77469,
                             Longitude = 53.950650000000003,
-                            Name = "بند گز",
-                            OrganizationId = 19,
-                            PostStationId = 43,
-                            PreStationId = 41
+                            Name = "بند گز"
                         },
                         new
                         {
@@ -1119,10 +986,7 @@ namespace Persistence.Migrations
                             Altitude = 39.299999999999997,
                             Latitude = 36.893259999999998,
                             Longitude = 54.065770000000001,
-                            Name = "بندر تركمن",
-                            OrganizationId = 19,
-                            PostStationId = 44,
-                            PreStationId = 42
+                            Name = "بندر تركمن"
                         },
                         new
                         {
@@ -1130,10 +994,7 @@ namespace Persistence.Migrations
                             Altitude = 33.100000000000001,
                             Latitude = 36.886150000000001,
                             Longitude = 54.219949999999997,
-                            Name = "سبز دشت",
-                            OrganizationId = 19,
-                            PostStationId = 45,
-                            PreStationId = 43
+                            Name = "سبز دشت"
                         },
                         new
                         {
@@ -1141,9 +1002,7 @@ namespace Persistence.Migrations
                             Altitude = 100.59999999999999,
                             Latitude = 36.855539999999998,
                             Longitude = 54.420259999999999,
-                            Name = "گرگان",
-                            OrganizationId = 19,
-                            PreStationId = 44
+                            Name = "گرگان"
                         },
                         new
                         {
@@ -1151,9 +1010,7 @@ namespace Persistence.Migrations
                             Altitude = 1747.3,
                             Latitude = 32.314619999999998,
                             Longitude = 51.412799999999997,
-                            Name = "حسن آباد",
-                            OrganizationId = 10,
-                            PreStationId = 270
+                            Name = "حسن آباد"
                         },
                         new
                         {
@@ -1161,10 +1018,7 @@ namespace Persistence.Migrations
                             Altitude = 1597.9000000000001,
                             Latitude = 30.491150000000001,
                             Longitude = 55.606299999999997,
-                            Name = "احمد آباد",
-                            OrganizationId = 23,
-                            PostStationId = 48,
-                            PreStationId = 312
+                            Name = "احمد آباد"
                         },
                         new
                         {
@@ -1172,10 +1026,7 @@ namespace Persistence.Migrations
                             Altitude = 2028.5999999999999,
                             Latitude = 30.079070000000002,
                             Longitude = 55.55312,
-                            Name = "ميمند",
-                            OrganizationId = 23,
-                            PostStationId = 313,
-                            PreStationId = 47
+                            Name = "ميمند"
                         },
                         new
                         {
@@ -1183,10 +1034,7 @@ namespace Persistence.Migrations
                             Altitude = 1915.7,
                             Latitude = 29.77636,
                             Longitude = 55.584949999999999,
-                            Name = "چوران",
-                            OrganizationId = 23,
-                            PostStationId = 314,
-                            PreStationId = 313
+                            Name = "چوران"
                         },
                         new
                         {
@@ -1194,10 +1042,7 @@ namespace Persistence.Migrations
                             Altitude = 1759.8,
                             Latitude = 29.089130000000001,
                             Longitude = 55.332000000000001,
-                            Name = "معدن گل گهر",
-                            OrganizationId = 23,
-                            PostStationId = 52,
-                            PreStationId = 51
+                            Name = "معدن گل گهر"
                         },
                         new
                         {
@@ -1205,10 +1050,7 @@ namespace Persistence.Migrations
                             Altitude = 1709.5,
                             Latitude = 29.140080000000001,
                             Longitude = 55.423900000000003,
-                            Name = "گل گهر",
-                            OrganizationId = 23,
-                            PostStationId = 50,
-                            PreStationId = 315
+                            Name = "گل گهر"
                         },
                         new
                         {
@@ -1216,10 +1058,7 @@ namespace Persistence.Migrations
                             Altitude = 1659.5999999999999,
                             Latitude = 28.78791,
                             Longitude = 55.515039999999999,
-                            Name = "قره تپه",
-                            OrganizationId = 23,
-                            PostStationId = 316,
-                            PreStationId = 50
+                            Name = "قره تپه"
                         },
                         new
                         {
@@ -1227,9 +1066,7 @@ namespace Persistence.Migrations
                             Altitude = 23.399999999999999,
                             Latitude = 27.211670000000002,
                             Longitude = 56.25506,
-                            Name = "بند رعباس",
-                            OrganizationId = 23,
-                            PreStationId = 324
+                            Name = "بند رعباس"
                         },
                         new
                         {
@@ -1237,10 +1074,7 @@ namespace Persistence.Migrations
                             Altitude = 34.200000000000003,
                             Latitude = 27.12518,
                             Longitude = 56.043509999999998,
-                            Name = "پايانه نفتي",
-                            OrganizationId = 23,
-                            PostStationId = 55,
-                            PreStationId = 325
+                            Name = "پايانه نفتي"
                         },
                         new
                         {
@@ -1248,9 +1082,7 @@ namespace Persistence.Migrations
                             Altitude = 40.899999999999999,
                             Latitude = 27.107340000000001,
                             Longitude = 56.050269999999998,
-                            Name = "اسكله",
-                            OrganizationId = 23,
-                            PreStationId = 54
+                            Name = "اسكله"
                         },
                         new
                         {
@@ -1258,10 +1090,7 @@ namespace Persistence.Migrations
                             Altitude = 1328.0,
                             Latitude = 36.400069999999999,
                             Longitude = 55.001220000000004,
-                            Name = "شاهرود",
-                            OrganizationId = 18,
-                            PostStationId = 150,
-                            PreStationId = 151
+                            Name = "شاهرود"
                         },
                         new
                         {
@@ -1269,9 +1098,7 @@ namespace Persistence.Migrations
                             Altitude = 981.29999999999995,
                             Latitude = 36.304690000000001,
                             Longitude = 59.624839999999999,
-                            Name = "مشهد",
-                            OrganizationId = 15,
-                            PreStationId = 129
+                            Name = "مشهد"
                         },
                         new
                         {
@@ -1279,9 +1106,7 @@ namespace Persistence.Migrations
                             Altitude = 1015.1,
                             Latitude = 34.567779999999999,
                             Longitude = 60.185890000000001,
-                            Name = "خواف",
-                            OrganizationId = 24,
-                            PreStationId = 362
+                            Name = "خواف"
                         },
                         new
                         {
@@ -1289,8 +1114,7 @@ namespace Persistence.Migrations
                             Altitude = 789.0,
                             Latitude = 33.06073,
                             Longitude = 56.818150000000003,
-                            Name = "معدن زغال سنگ پرواده",
-                            OrganizationId = 24
+                            Name = "معدن زغال سنگ پرواده"
                         },
                         new
                         {
@@ -1298,10 +1122,7 @@ namespace Persistence.Migrations
                             Altitude = 1140.8,
                             Latitude = 33.162289999999999,
                             Longitude = 56.336509999999997,
-                            Name = "عباس آباد",
-                            OrganizationId = 24,
-                            PostStationId = 343,
-                            PreStationId = 342
+                            Name = "عباس آباد"
                         },
                         new
                         {
@@ -1309,10 +1130,7 @@ namespace Persistence.Migrations
                             Altitude = 1020.1,
                             Latitude = 32.47654,
                             Longitude = 54.011029999999998,
-                            Name = "گلدانه",
-                            OrganizationId = 14,
-                            PostStationId = 62,
-                            PreStationId = 293
+                            Name = "گلدانه"
                         },
                         new
                         {
@@ -1320,10 +1138,7 @@ namespace Persistence.Migrations
                             Altitude = 1044.0999999999999,
                             Latitude = 32.554450000000003,
                             Longitude = 54.205199999999998,
-                            Name = "چغا سرخ",
-                            OrganizationId = 14,
-                            PostStationId = 63,
-                            PreStationId = 61
+                            Name = "چغا سرخ"
                         },
                         new
                         {
@@ -1331,10 +1146,7 @@ namespace Persistence.Migrations
                             Altitude = 1107.8,
                             Latitude = 32.630580000000002,
                             Longitude = 54.402470000000001,
-                            Name = "توت",
-                            OrganizationId = 14,
-                            PostStationId = 64,
-                            PreStationId = 62
+                            Name = "توت"
                         },
                         new
                         {
@@ -1342,10 +1154,7 @@ namespace Persistence.Migrations
                             Altitude = 1147.2,
                             Latitude = 32.712069999999997,
                             Longitude = 54.6023,
-                            Name = "زرين",
-                            OrganizationId = 14,
-                            PostStationId = 65,
-                            PreStationId = 63
+                            Name = "زرين"
                         },
                         new
                         {
@@ -1353,10 +1162,7 @@ namespace Persistence.Migrations
                             Altitude = 1064.3,
                             Latitude = 32.624850000000002,
                             Longitude = 54.739629999999998,
-                            Name = "ريگ",
-                            OrganizationId = 14,
-                            PostStationId = 66,
-                            PreStationId = 64
+                            Name = "ريگ"
                         },
                         new
                         {
@@ -1364,10 +1170,7 @@ namespace Persistence.Migrations
                             Altitude = 1016.8,
                             Latitude = 32.454079999999998,
                             Longitude = 54.908810000000003,
-                            Name = "ني باد",
-                            OrganizationId = 14,
-                            PostStationId = 67,
-                            PreStationId = 65
+                            Name = "ني باد"
                         },
                         new
                         {
@@ -1375,10 +1178,7 @@ namespace Persistence.Migrations
                             Altitude = 1038.9000000000001,
                             Latitude = 32.332839999999997,
                             Longitude = 55.049860000000002,
-                            Name = "دره انجير",
-                            OrganizationId = 14,
-                            PostStationId = 68,
-                            PreStationId = 66
+                            Name = "دره انجير"
                         },
                         new
                         {
@@ -1386,10 +1186,7 @@ namespace Persistence.Migrations
                             Altitude = 1154.8,
                             Latitude = 32.331650000000003,
                             Longitude = 55.2395,
-                            Name = "خوشومي",
-                            OrganizationId = 14,
-                            PostStationId = 69,
-                            PreStationId = 67
+                            Name = "خوشومي"
                         },
                         new
                         {
@@ -1397,10 +1194,7 @@ namespace Persistence.Migrations
                             Altitude = 1153.8,
                             Latitude = 32.394910000000003,
                             Longitude = 55.398249999999997,
-                            Name = "ساغند",
-                            OrganizationId = 14,
-                            PostStationId = 70,
-                            PreStationId = 68
+                            Name = "ساغند"
                         },
                         new
                         {
@@ -1408,10 +1202,7 @@ namespace Persistence.Migrations
                             Altitude = 1272.5999999999999,
                             Latitude = 32.334240000000001,
                             Longitude = 55.536079999999998,
-                            Name = "چادر ملو",
-                            OrganizationId = 14,
-                            PostStationId = 336,
-                            PreStationId = 69
+                            Name = "چادر ملو"
                         },
                         new
                         {
@@ -1419,9 +1210,7 @@ namespace Persistence.Migrations
                             Altitude = 1088.4000000000001,
                             Latitude = 31.500080000000001,
                             Longitude = 55.515279999999997,
-                            Name = "دره ريگ",
-                            OrganizationId = 16,
-                            PostStationId = 326
+                            Name = "دره ريگ"
                         },
                         new
                         {
@@ -1429,10 +1218,7 @@ namespace Persistence.Migrations
                             Altitude = 1209.3,
                             Latitude = 31.257180000000002,
                             Longitude = 55.718449999999997,
-                            Name = "ماني",
-                            OrganizationId = 16,
-                            PostStationId = 327,
-                            PreStationId = 326
+                            Name = "ماني"
                         },
                         new
                         {
@@ -1440,10 +1226,7 @@ namespace Persistence.Migrations
                             Altitude = 1707.4000000000001,
                             Latitude = 30.800699999999999,
                             Longitude = 56.601730000000003,
-                            Name = "زغال شويي",
-                            OrganizationId = 16,
-                            PostStationId = 333,
-                            PreStationId = 332
+                            Name = "زغال شويي"
                         },
                         new
                         {
@@ -1451,10 +1234,7 @@ namespace Persistence.Migrations
                             Altitude = 1741.7,
                             Latitude = 30.52412,
                             Longitude = 56.80283,
-                            Name = "پورمند",
-                            OrganizationId = 16,
-                            PostStationId = 75,
-                            PreStationId = 333
+                            Name = "پورمند"
                         },
                         new
                         {
@@ -1462,10 +1242,7 @@ namespace Persistence.Migrations
                             Altitude = 1768.0999999999999,
                             Latitude = 30.356190000000002,
                             Longitude = 56.893050000000002,
-                            Name = "سلطاني",
-                            OrganizationId = 16,
-                            PostStationId = 76,
-                            PreStationId = 74
+                            Name = "سلطاني"
                         },
                         new
                         {
@@ -1473,10 +1250,7 @@ namespace Persistence.Migrations
                             Altitude = 1770.0999999999999,
                             Latitude = 30.246459999999999,
                             Longitude = 57.023299999999999,
-                            Name = "كرمان",
-                            OrganizationId = 16,
-                            PostStationId = 399,
-                            PreStationId = 75
+                            Name = "كرمان"
                         },
                         new
                         {
@@ -1484,10 +1258,7 @@ namespace Persistence.Migrations
                             Altitude = 1828.8,
                             Latitude = 30.094909999999999,
                             Longitude = 56.917720000000003,
-                            Name = "باغين",
-                            OrganizationId = 16,
-                            PostStationId = 76,
-                            PreStationId = 76
+                            Name = "باغين"
                         },
                         new
                         {
@@ -1495,10 +1266,7 @@ namespace Persistence.Migrations
                             Altitude = 1123.9000000000001,
                             Latitude = 34.589489999999998,
                             Longitude = 50.693989999999999,
-                            Name = "ساقه",
-                            OrganizationId = 12,
-                            PostStationId = 233,
-                            PreStationId = 423
+                            Name = "ساقه"
                         },
                         new
                         {
@@ -1506,10 +1274,7 @@ namespace Persistence.Migrations
                             Altitude = 1379.3,
                             Latitude = 34.570659999999997,
                             Longitude = 50.490409999999997,
-                            Name = "باغيك(شهيد نيك نفس",
-                            OrganizationId = 9,
-                            PostStationId = 80,
-                            PreStationId = 78
+                            Name = "باغيك(شهيد نيك نفس"
                         },
                         new
                         {
@@ -1517,10 +1282,7 @@ namespace Persistence.Migrations
                             Altitude = 1550.0,
                             Latitude = 34.481090000000002,
                             Longitude = 50.400449999999999,
-                            Name = "سواريان(شهيد محبوبي",
-                            OrganizationId = 9,
-                            PostStationId = 81,
-                            PreStationId = 79
+                            Name = "سواريان(شهيد محبوبي"
                         },
                         new
                         {
@@ -1528,10 +1290,7 @@ namespace Persistence.Migrations
                             Altitude = 1727.0,
                             Latitude = 34.385190000000001,
                             Longitude = 50.337510000000002,
-                            Name = "راهگرد",
-                            OrganizationId = 9,
-                            PostStationId = 82,
-                            PreStationId = 80
+                            Name = "راهگرد"
                         },
                         new
                         {
@@ -1539,10 +1298,7 @@ namespace Persistence.Migrations
                             Altitude = 1839.0999999999999,
                             Latitude = 34.327779999999997,
                             Longitude = 50.16151,
-                            Name = "نانگرد",
-                            OrganizationId = 9,
-                            PostStationId = 83,
-                            PreStationId = 81
+                            Name = "نانگرد"
                         },
                         new
                         {
@@ -1550,10 +1306,7 @@ namespace Persistence.Migrations
                             Altitude = 1714.5999999999999,
                             Latitude = 34.203090000000003,
                             Longitude = 50.022379999999998,
-                            Name = "مشك آباد",
-                            OrganizationId = 9,
-                            PostStationId = 84,
-                            PreStationId = 82
+                            Name = "مشك آباد"
                         },
                         new
                         {
@@ -1561,10 +1314,7 @@ namespace Persistence.Migrations
                             Altitude = 1698.2,
                             Latitude = 34.109610000000004,
                             Longitude = 49.861109999999996,
-                            Name = "ملك آباد",
-                            OrganizationId = 9,
-                            PostStationId = 85,
-                            PreStationId = 83
+                            Name = "ملك آباد"
                         },
                         new
                         {
@@ -1572,10 +1322,7 @@ namespace Persistence.Migrations
                             Altitude = 1802.4000000000001,
                             Latitude = 34.071420000000003,
                             Longitude = 49.702060000000003,
-                            Name = "اراك",
-                            OrganizationId = 9,
-                            PostStationId = 86,
-                            PreStationId = 84
+                            Name = "اراك"
                         },
                         new
                         {
@@ -1583,10 +1330,7 @@ namespace Persistence.Migrations
                             Altitude = 1985.4000000000001,
                             Latitude = 34.015929999999997,
                             Longitude = 49.560740000000003,
-                            Name = "سمنگان)شهيدهاشمي ن‍زاد)",
-                            OrganizationId = 9,
-                            PostStationId = 87,
-                            PreStationId = 85
+                            Name = "سمنگان)شهيدهاشمي ن‍زاد)"
                         },
                         new
                         {
@@ -1594,10 +1338,7 @@ namespace Persistence.Migrations
                             Altitude = 1923.7,
                             Latitude = 33.941429999999997,
                             Longitude = 49.418219999999998,
-                            Name = "شازند",
-                            OrganizationId = 9,
-                            PostStationId = 88,
-                            PreStationId = 86
+                            Name = "شازند"
                         },
                         new
                         {
@@ -1605,10 +1346,7 @@ namespace Persistence.Migrations
                             Altitude = 2197.1999999999998,
                             Latitude = 33.798229999999997,
                             Longitude = 49.421570000000003,
-                            Name = "نور آباد",
-                            OrganizationId = 9,
-                            PostStationId = 89,
-                            PreStationId = 87
+                            Name = "نور آباد"
                         },
                         new
                         {
@@ -1616,10 +1354,7 @@ namespace Persistence.Migrations
                             Altitude = 2093.5999999999999,
                             Latitude = 33.679740000000002,
                             Longitude = 49.457830000000001,
-                            Name = "سميه",
-                            OrganizationId = 9,
-                            PostStationId = 90,
-                            PreStationId = 88
+                            Name = "سميه"
                         },
                         new
                         {
@@ -1627,10 +1362,7 @@ namespace Persistence.Migrations
                             Altitude = 1953.8,
                             Latitude = 33.58905,
                             Longitude = 49.520600000000002,
-                            Name = "مومن اباد",
-                            OrganizationId = 2,
-                            PostStationId = 91,
-                            PreStationId = 89
+                            Name = "مومن اباد"
                         },
                         new
                         {
@@ -1638,10 +1370,7 @@ namespace Persistence.Migrations
                             Altitude = 1890.2,
                             Latitude = 33.454360000000001,
                             Longitude = 49.452309999999997,
-                            Name = "ازنا",
-                            OrganizationId = 2,
-                            PostStationId = 92,
-                            PreStationId = 90
+                            Name = "ازنا"
                         },
                         new
                         {
@@ -1649,10 +1378,7 @@ namespace Persistence.Migrations
                             Altitude = 1768.2,
                             Latitude = 33.433390000000003,
                             Longitude = 49.307989999999997,
-                            Name = "دربند",
-                            OrganizationId = 2,
-                            PostStationId = 93,
-                            PreStationId = 91
+                            Name = "دربند"
                         },
                         new
                         {
@@ -1660,10 +1386,7 @@ namespace Persistence.Migrations
                             Altitude = 1629.3,
                             Latitude = 33.463999999999999,
                             Longitude = 49.173879999999997,
-                            Name = "رودك",
-                            OrganizationId = 2,
-                            PostStationId = 94,
-                            PreStationId = 92
+                            Name = "رودك"
                         },
                         new
                         {
@@ -1671,10 +1394,7 @@ namespace Persistence.Migrations
                             Altitude = 1478.9000000000001,
                             Latitude = 33.485379999999999,
                             Longitude = 49.062989999999999,
-                            Name = "درود",
-                            OrganizationId = 2,
-                            PostStationId = 95,
-                            PreStationId = 93
+                            Name = "درود"
                         },
                         new
                         {
@@ -1682,10 +1402,7 @@ namespace Persistence.Migrations
                             Altitude = 1387.3,
                             Latitude = 33.42118,
                             Longitude = 48.996020000000001,
-                            Name = "قارون",
-                            OrganizationId = 2,
-                            PostStationId = 96,
-                            PreStationId = 94
+                            Name = "قارون"
                         },
                         new
                         {
@@ -1693,10 +1410,7 @@ namespace Persistence.Migrations
                             Altitude = 1247.0,
                             Latitude = 33.330559999999998,
                             Longitude = 48.87715,
-                            Name = "بيشه",
-                            OrganizationId = 2,
-                            PostStationId = 97,
-                            PreStationId = 95
+                            Name = "بيشه"
                         },
                         new
                         {
@@ -1704,10 +1418,7 @@ namespace Persistence.Migrations
                             Altitude = 1086.9000000000001,
                             Latitude = 33.223179999999999,
                             Longitude = 48.883310000000002,
-                            Name = "سپيد دشت",
-                            OrganizationId = 2,
-                            PostStationId = 98,
-                            PreStationId = 96
+                            Name = "سپيد دشت"
                         },
                         new
                         {
@@ -1715,10 +1426,7 @@ namespace Persistence.Migrations
                             Altitude = 871.0,
                             Latitude = 33.166339999999998,
                             Longitude = 48.763330000000003,
-                            Name = "چمسنگر",
-                            OrganizationId = 2,
-                            PostStationId = 99,
-                            PreStationId = 97
+                            Name = "چمسنگر"
                         },
                         new
                         {
@@ -1726,10 +1434,7 @@ namespace Persistence.Migrations
                             Altitude = 782.0,
                             Latitude = 33.135330000000003,
                             Longitude = 48.643279999999997,
-                            Name = "كشور",
-                            OrganizationId = 2,
-                            PostStationId = 100,
-                            PreStationId = 98
+                            Name = "كشور"
                         },
                         new
                         {
@@ -1737,10 +1442,7 @@ namespace Persistence.Migrations
                             Altitude = 680.89999999999998,
                             Latitude = 33.043799999999997,
                             Longitude = 48.671379999999999,
-                            Name = "تنگ هفت",
-                            OrganizationId = 2,
-                            PostStationId = 101,
-                            PreStationId = 99
+                            Name = "تنگ هفت"
                         },
                         new
                         {
@@ -1748,10 +1450,7 @@ namespace Persistence.Migrations
                             Altitude = 560.79999999999995,
                             Latitude = 32.944479999999999,
                             Longitude = 48.745750000000001,
-                            Name = "تنگ پنج",
-                            OrganizationId = 22,
-                            PostStationId = 102,
-                            PreStationId = 100
+                            Name = "تنگ پنج"
                         },
                         new
                         {
@@ -1759,10 +1458,7 @@ namespace Persistence.Migrations
                             Altitude = 507.80000000000001,
                             Latitude = 32.82405,
                             Longitude = 48.766359999999999,
-                            Name = "تله زنگ",
-                            OrganizationId = 22,
-                            PostStationId = 103,
-                            PreStationId = 101
+                            Name = "تله زنگ"
                         },
                         new
                         {
@@ -1770,10 +1466,7 @@ namespace Persistence.Migrations
                             Altitude = 479.10000000000002,
                             Latitude = 32.783000000000001,
                             Longitude = 48.654539999999997,
-                            Name = "شهبازان",
-                            OrganizationId = 22,
-                            PostStationId = 104,
-                            PreStationId = 102
+                            Name = "شهبازان"
                         },
                         new
                         {
@@ -1781,10 +1474,7 @@ namespace Persistence.Migrations
                             Altitude = 459.5,
                             Latitude = 32.788400000000003,
                             Longitude = 48.510919999999999,
-                            Name = "مازو",
-                            OrganizationId = 22,
-                            PostStationId = 105,
-                            PreStationId = 103
+                            Name = "مازو"
                         },
                         new
                         {
@@ -1792,10 +1482,7 @@ namespace Persistence.Migrations
                             Altitude = 457.89999999999998,
                             Latitude = 32.71414,
                             Longitude = 48.368670000000002,
-                            Name = "بالارود",
-                            OrganizationId = 22,
-                            PostStationId = 106,
-                            PreStationId = 104
+                            Name = "بالارود"
                         },
                         new
                         {
@@ -1803,10 +1490,7 @@ namespace Persistence.Migrations
                             Altitude = 418.10000000000002,
                             Latitude = 32.645350000000001,
                             Longitude = 48.312139999999999,
-                            Name = "گل محك",
-                            OrganizationId = 22,
-                            PostStationId = 107,
-                            PreStationId = 105
+                            Name = "گل محك"
                         },
                         new
                         {
@@ -1814,10 +1498,7 @@ namespace Persistence.Migrations
                             Altitude = 236.90000000000001,
                             Latitude = 32.560279999999999,
                             Longitude = 48.297139999999999,
-                            Name = "دو كوهه",
-                            OrganizationId = 22,
-                            PostStationId = 108,
-                            PreStationId = 106
+                            Name = "دو كوهه"
                         },
                         new
                         {
@@ -1825,10 +1506,7 @@ namespace Persistence.Migrations
                             Altitude = 158.80000000000001,
                             Latitude = 32.456629999999997,
                             Longitude = 48.351410000000001,
-                            Name = "انديمشك",
-                            OrganizationId = 22,
-                            PostStationId = 109,
-                            PreStationId = 107
+                            Name = "انديمشك"
                         },
                         new
                         {
@@ -1836,10 +1514,7 @@ namespace Persistence.Migrations
                             Altitude = 115.3,
                             Latitude = 32.337150000000001,
                             Longitude = 48.280659999999997,
-                            Name = "سبز آب",
-                            OrganizationId = 22,
-                            PostStationId = 110,
-                            PreStationId = 108
+                            Name = "سبز آب"
                         },
                         new
                         {
@@ -1847,10 +1522,7 @@ namespace Persistence.Migrations
                             Altitude = 93.0,
                             Latitude = 32.204859999999996,
                             Longitude = 48.2898,
-                            Name = "شوش",
-                            OrganizationId = 22,
-                            PostStationId = 111,
-                            PreStationId = 109
+                            Name = "شوش"
                         },
                         new
                         {
@@ -1858,10 +1530,7 @@ namespace Persistence.Migrations
                             Altitude = 89.0,
                             Latitude = 32.073509999999999,
                             Longitude = 48.337980000000002,
-                            Name = "هفت تپه",
-                            OrganizationId = 22,
-                            PostStationId = 100,
-                            PreStationId = 110
+                            Name = "هفت تپه"
                         },
                         new
                         {
@@ -1869,10 +1538,7 @@ namespace Persistence.Migrations
                             Altitude = 53.899999999999999,
                             Latitude = 31.96988,
                             Longitude = 48.44706,
-                            Name = "ميان آب",
-                            OrganizationId = 13,
-                            PostStationId = 113,
-                            PreStationId = 111
+                            Name = "ميان آب"
                         },
                         new
                         {
@@ -1880,10 +1546,7 @@ namespace Persistence.Migrations
                             Altitude = 40.299999999999997,
                             Latitude = 31.874179999999999,
                             Longitude = 48.560220000000001,
-                            Name = "آهو دشت",
-                            OrganizationId = 13,
-                            PostStationId = 114,
-                            PreStationId = 112
+                            Name = "آهو دشت"
                         },
                         new
                         {
@@ -1891,10 +1554,7 @@ namespace Persistence.Migrations
                             Altitude = 36.600000000000001,
                             Latitude = 31.687799999999999,
                             Longitude = 48.668559999999999,
-                            Name = "بامدژ",
-                            OrganizationId = 13,
-                            PostStationId = 115,
-                            PreStationId = 113
+                            Name = "بامدژ"
                         },
                         new
                         {
@@ -1902,10 +1562,7 @@ namespace Persistence.Migrations
                             Altitude = 38.5,
                             Latitude = 31.61253,
                             Longitude = 48.69303,
-                            Name = "خاور",
-                            OrganizationId = 13,
-                            PostStationId = 116,
-                            PreStationId = 114
+                            Name = "خاور"
                         },
                         new
                         {
@@ -1913,10 +1570,7 @@ namespace Persistence.Migrations
                             Altitude = 39.299999999999997,
                             Latitude = 31.472000000000001,
                             Longitude = 48.690530000000003,
-                            Name = "نظاميه",
-                            OrganizationId = 13,
-                            PostStationId = 187,
-                            PreStationId = 115
+                            Name = "نظاميه"
                         },
                         new
                         {
@@ -1924,10 +1578,7 @@ namespace Persistence.Migrations
                             Altitude = 1115.8,
                             Latitude = 35.552480000000003,
                             Longitude = 53.404910000000001,
-                            Name = "سمنان",
-                            OrganizationId = 18,
-                            PostStationId = 200,
-                            PreStationId = 118
+                            Name = "سمنان"
                         },
                         new
                         {
@@ -1935,10 +1586,7 @@ namespace Persistence.Migrations
                             Altitude = 1075.3,
                             Latitude = 35.429110000000001,
                             Longitude = 53.278449999999999,
-                            Name = "بيابانك",
-                            OrganizationId = 18,
-                            PostStationId = 117,
-                            PreStationId = 159
+                            Name = "بيابانك"
                         },
                         new
                         {
@@ -1946,10 +1594,7 @@ namespace Persistence.Migrations
                             Altitude = 849.0,
                             Latitude = 35.248899999999999,
                             Longitude = 52.725079999999998,
-                            Name = "ده نمك",
-                            OrganizationId = 18,
-                            PostStationId = 160,
-                            PreStationId = 120
+                            Name = "ده نمك"
                         },
                         new
                         {
@@ -1957,10 +1602,7 @@ namespace Persistence.Migrations
                             Altitude = 880.60000000000002,
                             Latitude = 35.216000000000001,
                             Longitude = 52.491300000000003,
-                            Name = "ياتري",
-                            OrganizationId = 18,
-                            PostStationId = 119,
-                            PreStationId = 18
+                            Name = "ياتري"
                         },
                         new
                         {
@@ -1968,10 +1610,7 @@ namespace Persistence.Migrations
                             Altitude = 1513.4000000000001,
                             Latitude = 36.086190000000002,
                             Longitude = 49.377769999999998,
-                            Name = "قروه",
-                            OrganizationId = 20,
-                            PostStationId = 173,
-                            PreStationId = 3
+                            Name = "قروه"
                         },
                         new
                         {
@@ -1979,9 +1618,7 @@ namespace Persistence.Migrations
                             Altitude = 377.5,
                             Latitude = 36.320010000000003,
                             Longitude = 60.92315,
-                            Name = "گنبدلي",
-                            OrganizationId = 15,
-                            PreStationId = 123
+                            Name = "گنبدلي"
                         },
                         new
                         {
@@ -1989,10 +1626,7 @@ namespace Persistence.Migrations
                             Altitude = 613.60000000000002,
                             Latitude = 36.183259999999997,
                             Longitude = 60.81935,
-                            Name = "رباط شرف",
-                            OrganizationId = 15,
-                            PostStationId = 122,
-                            PreStationId = 124
+                            Name = "رباط شرف"
                         },
                         new
                         {
@@ -2000,10 +1634,7 @@ namespace Persistence.Migrations
                             Altitude = 887.79999999999995,
                             Latitude = 36.130159999999997,
                             Longitude = 60.611629999999998,
-                            Name = "مرزداران",
-                            OrganizationId = 15,
-                            PostStationId = 123,
-                            PreStationId = 125
+                            Name = "مرزداران"
                         },
                         new
                         {
@@ -2011,10 +1642,7 @@ namespace Persistence.Migrations
                             Altitude = 714.10000000000002,
                             Latitude = 36.086880000000001,
                             Longitude = 60.46293,
-                            Name = "مختوم قلي",
-                            OrganizationId = 15,
-                            PostStationId = 124,
-                            PreStationId = 126
+                            Name = "مختوم قلي"
                         },
                         new
                         {
@@ -2022,10 +1650,7 @@ namespace Persistence.Migrations
                             Altitude = 822.39999999999998,
                             Latitude = 36.078580000000002,
                             Longitude = 60.232889999999998,
-                            Name = "رباط ماهي",
-                            OrganizationId = 15,
-                            PostStationId = 125,
-                            PreStationId = 127
+                            Name = "رباط ماهي"
                         },
                         new
                         {
@@ -2033,10 +1658,7 @@ namespace Persistence.Migrations
                             Altitude = 908.70000000000005,
                             Latitude = 36.03322,
                             Longitude = 60.067219999999999,
-                            Name = "آزادگان",
-                            OrganizationId = 15,
-                            PostStationId = 126,
-                            PreStationId = 128
+                            Name = "آزادگان"
                         },
                         new
                         {
@@ -2044,10 +1666,7 @@ namespace Persistence.Migrations
                             Altitude = 1059.9000000000001,
                             Latitude = 36.030079999999998,
                             Longitude = 59.820749999999997,
-                            Name = "شهيد مطهري",
-                            OrganizationId = 15,
-                            PostStationId = 127,
-                            PreStationId = 130
+                            Name = "شهيد مطهري"
                         },
                         new
                         {
@@ -2055,10 +1674,7 @@ namespace Persistence.Migrations
                             Altitude = 1001.7,
                             Latitude = 36.148809999999997,
                             Longitude = 59.73171,
-                            Name = "سلام",
-                            OrganizationId = 15,
-                            PostStationId = 128,
-                            PreStationId = 130
+                            Name = "سلام"
                         },
                         new
                         {
@@ -2066,10 +1682,7 @@ namespace Persistence.Migrations
                             Altitude = 1134.0,
                             Latitude = 36.00056,
                             Longitude = 59.763249999999999,
-                            Name = "فريمان",
-                            OrganizationId = 15,
-                            PostStationId = 129,
-                            PreStationId = 131
+                            Name = "فريمان"
                         },
                         new
                         {
@@ -2077,10 +1690,7 @@ namespace Persistence.Migrations
                             Altitude = 1280.9000000000001,
                             Latitude = 35.957569999999997,
                             Longitude = 59.575670000000002,
-                            Name = "تربت",
-                            OrganizationId = 15,
-                            PostStationId = 130,
-                            PreStationId = 132
+                            Name = "تربت"
                         },
                         new
                         {
@@ -2088,10 +1698,7 @@ namespace Persistence.Migrations
                             Altitude = 1394.0999999999999,
                             Latitude = 35.946280000000002,
                             Longitude = 59.384520000000002,
-                            Name = "ابومسلم",
-                            OrganizationId = 15,
-                            PostStationId = 131,
-                            PreStationId = 133
+                            Name = "ابومسلم"
                         },
                         new
                         {
@@ -2099,10 +1706,7 @@ namespace Persistence.Migrations
                             Altitude = 1304.0,
                             Latitude = 35.969059999999999,
                             Longitude = 59.211680000000001,
-                            Name = "كاشمر",
-                            OrganizationId = 15,
-                            PostStationId = 132,
-                            PreStationId = 134
+                            Name = "كاشمر"
                         },
                         new
                         {
@@ -2110,10 +1714,7 @@ namespace Persistence.Migrations
                             Altitude = 1248.0,
                             Latitude = 36.085479999999997,
                             Longitude = 58.991720000000001,
-                            Name = "خيام",
-                            OrganizationId = 15,
-                            PostStationId = 133,
-                            PreStationId = 135
+                            Name = "خيام"
                         },
                         new
                         {
@@ -2121,10 +1722,7 @@ namespace Persistence.Migrations
                             Altitude = 1186.0,
                             Latitude = 36.194670000000002,
                             Longitude = 58.785150000000002,
-                            Name = "نيشابور",
-                            OrganizationId = 15,
-                            PostStationId = 134,
-                            PreStationId = 421
+                            Name = "نيشابور"
                         },
                         new
                         {
@@ -2132,10 +1730,7 @@ namespace Persistence.Migrations
                             Altitude = 1177.8,
                             Latitude = 36.28443,
                             Longitude = 58.564500000000002,
-                            Name = "عطار",
-                            OrganizationId = 15,
-                            PostStationId = 421,
-                            PreStationId = 137
+                            Name = "عطار"
                         },
                         new
                         {
@@ -2143,10 +1738,7 @@ namespace Persistence.Migrations
                             Altitude = 1252.9000000000001,
                             Latitude = 36.373350000000002,
                             Longitude = 58.326349999999998,
-                            Name = "فردوس",
-                            OrganizationId = 15,
-                            PostStationId = 136,
-                            PreStationId = 138
+                            Name = "فردوس"
                         },
                         new
                         {
@@ -2154,10 +1746,7 @@ namespace Persistence.Migrations
                             Altitude = 1198.5999999999999,
                             Latitude = 36.45064,
                             Longitude = 58.080869999999997,
-                            Name = "سبزوار",
-                            OrganizationId = 15,
-                            PostStationId = 137,
-                            PreStationId = 139
+                            Name = "سبزوار"
                         },
                         new
                         {
@@ -2165,10 +1754,7 @@ namespace Persistence.Migrations
                             Altitude = 1137.3,
                             Latitude = 36.524039999999999,
                             Longitude = 57.845619999999997,
-                            Name = "بيهق",
-                            OrganizationId = 15,
-                            PostStationId = 138,
-                            PreStationId = 140
+                            Name = "بيهق"
                         },
                         new
                         {
@@ -2176,10 +1762,7 @@ namespace Persistence.Migrations
                             Altitude = 1117.5999999999999,
                             Latitude = 36.589829999999999,
                             Longitude = 57.632989999999999,
-                            Name = "اسفراين",
-                            OrganizationId = 15,
-                            PostStationId = 139,
-                            PreStationId = 420
+                            Name = "اسفراين"
                         },
                         new
                         {
@@ -2187,10 +1770,7 @@ namespace Persistence.Migrations
                             Altitude = 1105.8,
                             Latitude = 36.725409999999997,
                             Longitude = 57.174030000000002,
-                            Name = "جوين",
-                            OrganizationId = 18,
-                            PostStationId = 420,
-                            PreStationId = 142
+                            Name = "جوين"
                         },
                         new
                         {
@@ -2198,10 +1778,7 @@ namespace Persistence.Migrations
                             Altitude = 1047.3,
                             Latitude = 36.758690000000001,
                             Longitude = 56.962879999999998,
-                            Name = "سنخواست",
-                            OrganizationId = 18,
-                            PostStationId = 141,
-                            PreStationId = 143
+                            Name = "سنخواست"
                         },
                         new
                         {
@@ -2209,10 +1786,7 @@ namespace Persistence.Migrations
                             Altitude = 991.79999999999995,
                             Latitude = 36.741660000000003,
                             Longitude = 56.748150000000003,
-                            Name = "آزادور",
-                            OrganizationId = 18,
-                            PostStationId = 142,
-                            PreStationId = 144
+                            Name = "آزادور"
                         },
                         new
                         {
@@ -2220,10 +1794,7 @@ namespace Persistence.Migrations
                             Altitude = 934.20000000000005,
                             Latitude = 36.703859999999999,
                             Longitude = 56.527189999999997,
-                            Name = "جاجرم",
-                            OrganizationId = 18,
-                            PostStationId = 143,
-                            PreStationId = 145
+                            Name = "جاجرم"
                         },
                         new
                         {
@@ -2231,10 +1802,7 @@ namespace Persistence.Migrations
                             Altitude = 903.20000000000005,
                             Latitude = 36.667050000000003,
                             Longitude = 56.283859999999997,
-                            Name = "ابريشم",
-                            OrganizationId = 18,
-                            PostStationId = 144,
-                            PreStationId = 146
+                            Name = "ابريشم"
                         },
                         new
                         {
@@ -2242,10 +1810,7 @@ namespace Persistence.Migrations
                             Altitude = 1023.1,
                             Latitude = 36.630229999999997,
                             Longitude = 56.070889999999999,
-                            Name = "جهان آباد",
-                            OrganizationId = 18,
-                            PostStationId = 145,
-                            PreStationId = 147
+                            Name = "جهان آباد"
                         },
                         new
                         {
@@ -2253,10 +1818,7 @@ namespace Persistence.Migrations
                             Altitude = 1020.5,
                             Latitude = 36.559489999999997,
                             Longitude = 55.83764,
-                            Name = "بكران",
-                            OrganizationId = 18,
-                            PostStationId = 146,
-                            PreStationId = 148
+                            Name = "بكران"
                         },
                         new
                         {
@@ -2264,10 +1826,7 @@ namespace Persistence.Migrations
                             Altitude = 1071.2,
                             Latitude = 36.513860000000001,
                             Longitude = 55.6173,
-                            Name = "گيلان",
-                            OrganizationId = 18,
-                            PostStationId = 147,
-                            PreStationId = 149
+                            Name = "گيلان"
                         },
                         new
                         {
@@ -2275,10 +1834,7 @@ namespace Persistence.Migrations
                             Altitude = 1213.0999999999999,
                             Latitude = 36.475810000000003,
                             Longitude = 55.428829999999998,
-                            Name = "شيرين چشمه",
-                            OrganizationId = 18,
-                            PostStationId = 148,
-                            PreStationId = 150
+                            Name = "شيرين چشمه"
                         },
                         new
                         {
@@ -2286,10 +1842,7 @@ namespace Persistence.Migrations
                             Altitude = 1335.4000000000001,
                             Latitude = 36.457430000000002,
                             Longitude = 55.212530000000001,
-                            Name = "بسطام",
-                            OrganizationId = 18,
-                            PostStationId = 149,
-                            PreStationId = 56
+                            Name = "بسطام"
                         },
                         new
                         {
@@ -2297,10 +1850,7 @@ namespace Persistence.Migrations
                             Altitude = 1166.9000000000001,
                             Latitude = 36.283320000000003,
                             Longitude = 54.846820000000001,
-                            Name = "كلاتخوان",
-                            OrganizationId = 18,
-                            PostStationId = 56,
-                            PreStationId = 64
+                            Name = "كلاتخوان"
                         },
                         new
                         {
@@ -2308,10 +1858,7 @@ namespace Persistence.Migrations
                             Altitude = 1091.3,
                             Latitude = 36.215269999999997,
                             Longitude = 54.610529999999997,
-                            Name = "زرين",
-                            OrganizationId = 18,
-                            PostStationId = 151,
-                            PreStationId = 153
+                            Name = "زرين"
                         },
                         new
                         {
@@ -2319,10 +1866,7 @@ namespace Persistence.Migrations
                             Altitude = 1149.0999999999999,
                             Latitude = 36.150449999999999,
                             Longitude = 54.370199999999997,
-                            Name = "دامغان",
-                            OrganizationId = 18,
-                            PostStationId = 64,
-                            PreStationId = 154
+                            Name = "دامغان"
                         },
                         new
                         {
@@ -2330,10 +1874,7 @@ namespace Persistence.Migrations
                             Altitude = 1117.0,
                             Latitude = 36.041780000000003,
                             Longitude = 54.290300000000002,
-                            Name = "سرخده",
-                            OrganizationId = 18,
-                            PostStationId = 153,
-                            PreStationId = 155
+                            Name = "سرخده"
                         },
                         new
                         {
@@ -2341,10 +1882,7 @@ namespace Persistence.Migrations
                             Altitude = 1188.9000000000001,
                             Latitude = 35.915950000000002,
                             Longitude = 54.205410000000001,
-                            Name = "امروان",
-                            OrganizationId = 18,
-                            PostStationId = 154,
-                            PreStationId = 156
+                            Name = "امروان"
                         },
                         new
                         {
@@ -2352,10 +1890,7 @@ namespace Persistence.Migrations
                             Altitude = 1459.2,
                             Latitude = 35.752719999999997,
                             Longitude = 54.138869999999997,
-                            Name = "لارستان",
-                            OrganizationId = 18,
-                            PostStationId = 155,
-                            PreStationId = 157
+                            Name = "لارستان"
                         },
                         new
                         {
@@ -2363,10 +1898,7 @@ namespace Persistence.Migrations
                             Altitude = 1584.9000000000001,
                             Latitude = 35.660809999999998,
                             Longitude = 54.075960000000002,
-                            Name = "هفتخوان",
-                            OrganizationId = 18,
-                            PostStationId = 156,
-                            PreStationId = 158
+                            Name = "هفتخوان"
                         },
                         new
                         {
@@ -2374,10 +1906,7 @@ namespace Persistence.Migrations
                             Altitude = 1542.8,
                             Latitude = 35.600569999999998,
                             Longitude = 53.859690000000001,
-                            Name = "گرداب",
-                            OrganizationId = 18,
-                            PostStationId = 157,
-                            PreStationId = 199
+                            Name = "گرداب"
                         },
                         new
                         {
@@ -2385,10 +1914,7 @@ namespace Persistence.Migrations
                             Altitude = 1022.6,
                             Latitude = 35.328319999999998,
                             Longitude = 53.08222,
-                            Name = "لاهور",
-                            OrganizationId = 18,
-                            PostStationId = 118,
-                            PreStationId = 160
+                            Name = "لاهور"
                         },
                         new
                         {
@@ -2396,10 +1922,7 @@ namespace Persistence.Migrations
                             Altitude = 864.79999999999995,
                             Latitude = 35.270949999999999,
                             Longitude = 52.87894,
-                            Name = "سرخ دشت",
-                            OrganizationId = 18,
-                            PostStationId = 159,
-                            PreStationId = 119
+                            Name = "سرخ دشت"
                         },
                         new
                         {
@@ -2407,10 +1930,7 @@ namespace Persistence.Migrations
                             Altitude = 956.60000000000002,
                             Latitude = 35.335450000000002,
                             Longitude = 51.644269999999999,
-                            Name = "ورامين",
-                            OrganizationId = 11,
-                            PostStationId = 15,
-                            PreStationId = 14
+                            Name = "ورامين"
                         },
                         new
                         {
@@ -2418,9 +1938,7 @@ namespace Persistence.Migrations
                             Altitude = 1138.9000000000001,
                             Latitude = 35.657060000000001,
                             Longitude = 51.397419999999997,
-                            Name = "تهران",
-                            OrganizationId = 11,
-                            PostStationId = 13
+                            Name = "تهران"
                         },
                         new
                         {
@@ -2428,10 +1946,7 @@ namespace Persistence.Migrations
                             Altitude = 1201.5,
                             Latitude = 35.67803,
                             Longitude = 51.255479999999999,
-                            Name = "نيك پسندي",
-                            OrganizationId = 11,
-                            PostStationId = 164,
-                            PreStationId = 162
+                            Name = "نيك پسندي"
                         },
                         new
                         {
@@ -2439,10 +1954,7 @@ namespace Persistence.Migrations
                             Altitude = 1209.0,
                             Latitude = 35.689450000000001,
                             Longitude = 51.209569999999999,
-                            Name = "لشكري",
-                            OrganizationId = 11,
-                            PostStationId = 165,
-                            PreStationId = 163
+                            Name = "لشكري"
                         },
                         new
                         {
@@ -2450,10 +1962,7 @@ namespace Persistence.Migrations
                             Altitude = 1212.0,
                             Latitude = 35.71199,
                             Longitude = 51.146680000000003,
-                            Name = "ملكي",
-                            OrganizationId = 11,
-                            PostStationId = 166,
-                            PreStationId = 164
+                            Name = "ملكي"
                         },
                         new
                         {
@@ -2461,10 +1970,7 @@ namespace Persistence.Migrations
                             Altitude = 1333.7,
                             Latitude = 35.77955,
                             Longitude = 50.989089999999997,
-                            Name = "كرج",
-                            OrganizationId = 11,
-                            PostStationId = 167,
-                            PreStationId = 165
+                            Name = "كرج"
                         },
                         new
                         {
@@ -2472,10 +1978,7 @@ namespace Persistence.Migrations
                             Altitude = 1318.5,
                             Latitude = 35.868740000000003,
                             Longitude = 50.826630000000002,
-                            Name = "كردان",
-                            OrganizationId = 11,
-                            PostStationId = 1,
-                            PreStationId = 166
+                            Name = "كردان"
                         },
                         new
                         {
@@ -2483,10 +1986,7 @@ namespace Persistence.Migrations
                             Altitude = 1250.0,
                             Latitude = 36.032130000000002,
                             Longitude = 50.510420000000003,
-                            Name = "آبيك",
-                            OrganizationId = 11,
-                            PostStationId = 169,
-                            PreStationId = 1
+                            Name = "آبيك"
                         },
                         new
                         {
@@ -2494,10 +1994,7 @@ namespace Persistence.Migrations
                             Altitude = 1286.0999999999999,
                             Latitude = 36.11074,
                             Longitude = 50.356520000000003,
-                            Name = "زياران",
-                            OrganizationId = 11,
-                            PostStationId = 2,
-                            PreStationId = 168
+                            Name = "زياران"
                         },
                         new
                         {
@@ -2505,10 +2002,7 @@ namespace Persistence.Migrations
                             Altitude = 1307.5,
                             Latitude = 36.243560000000002,
                             Longitude = 50.007579999999997,
-                            Name = "قزوين",
-                            OrganizationId = 20,
-                            PostStationId = 171,
-                            PreStationId = 2
+                            Name = "قزوين"
                         },
                         new
                         {
@@ -2516,10 +2010,7 @@ namespace Persistence.Migrations
                             Altitude = 1282.0,
                             Latitude = 36.162219999999998,
                             Longitude = 49.840739999999997,
-                            Name = "سياه چشمه",
-                            OrganizationId = 20,
-                            PostStationId = 172,
-                            PreStationId = 170
+                            Name = "سياه چشمه"
                         },
                         new
                         {
@@ -2527,10 +2018,7 @@ namespace Persistence.Migrations
                             Altitude = 1291.3,
                             Latitude = 36.071910000000003,
                             Longitude = 49.703800000000001,
-                            Name = "تاكستان",
-                            OrganizationId = 20,
-                            PostStationId = 3,
-                            PreStationId = 171
+                            Name = "تاكستان"
                         },
                         new
                         {
@@ -2538,10 +2026,7 @@ namespace Persistence.Migrations
                             Altitude = 1619.8,
                             Latitude = 36.18685,
                             Longitude = 49.23986,
-                            Name = "خرم دره",
-                            OrganizationId = 20,
-                            PostStationId = 174,
-                            PreStationId = 121
+                            Name = "خرم دره"
                         },
                         new
                         {
@@ -2549,10 +2034,7 @@ namespace Persistence.Migrations
                             Altitude = 1718.4000000000001,
                             Latitude = 36.300330000000002,
                             Longitude = 49.10962,
-                            Name = "زرين دژ",
-                            OrganizationId = 20,
-                            PostStationId = 175,
-                            PreStationId = 173
+                            Name = "زرين دژ"
                         },
                         new
                         {
@@ -2560,10 +2042,7 @@ namespace Persistence.Migrations
                             Altitude = 1824.5999999999999,
                             Latitude = 36.386589999999998,
                             Longitude = 48.964530000000003,
-                            Name = "پيرزاغه",
-                            OrganizationId = 20,
-                            PostStationId = 176,
-                            PreStationId = 174
+                            Name = "پيرزاغه"
                         },
                         new
                         {
@@ -2571,10 +2050,7 @@ namespace Persistence.Migrations
                             Altitude = 1805.4000000000001,
                             Latitude = 36.500900000000001,
                             Longitude = 48.79522,
-                            Name = "سلطانيه",
-                            OrganizationId = 20,
-                            PostStationId = 177,
-                            PreStationId = 175
+                            Name = "سلطانيه"
                         },
                         new
                         {
@@ -2582,10 +2058,7 @@ namespace Persistence.Migrations
                             Altitude = 1728.4000000000001,
                             Latitude = 36.599829999999997,
                             Longitude = 48.647640000000003,
-                            Name = "بناب",
-                            OrganizationId = 20,
-                            PostStationId = 178,
-                            PreStationId = 176
+                            Name = "بناب"
                         },
                         new
                         {
@@ -2593,10 +2066,7 @@ namespace Persistence.Migrations
                             Altitude = 1649.5,
                             Latitude = 36.661000000000001,
                             Longitude = 48.481529999999999,
-                            Name = "زنجان",
-                            OrganizationId = 20,
-                            PostStationId = 179,
-                            PreStationId = 177
+                            Name = "زنجان"
                         },
                         new
                         {
@@ -2604,10 +2074,7 @@ namespace Persistence.Migrations
                             Altitude = 1556.7,
                             Latitude = 36.729140000000001,
                             Longitude = 48.3367,
-                            Name = "خرم پي",
-                            OrganizationId = 20,
-                            PostStationId = 180,
-                            PreStationId = 178
+                            Name = "خرم پي"
                         },
                         new
                         {
@@ -2615,10 +2082,7 @@ namespace Persistence.Migrations
                             Altitude = 1439.5999999999999,
                             Latitude = 36.82602,
                             Longitude = 48.19717,
-                            Name = "نيك پي",
-                            OrganizationId = 20,
-                            PostStationId = 181,
-                            PreStationId = 179
+                            Name = "نيك پي"
                         },
                         new
                         {
@@ -2626,10 +2090,7 @@ namespace Persistence.Migrations
                             Altitude = 1329.4000000000001,
                             Latitude = 36.963979999999999,
                             Longitude = 48.107120000000002,
-                            Name = "آذر پي",
-                            OrganizationId = 20,
-                            PostStationId = 182,
-                            PreStationId = 180
+                            Name = "آذر پي"
                         },
                         new
                         {
@@ -2637,10 +2098,7 @@ namespace Persistence.Migrations
                             Altitude = 1229.5,
                             Latitude = 37.071669999999997,
                             Longitude = 47.964199999999998,
-                            Name = "سر چم",
-                            OrganizationId = 20,
-                            PostStationId = 183,
-                            PreStationId = 181
+                            Name = "سر چم"
                         },
                         new
                         {
@@ -2648,10 +2106,7 @@ namespace Persistence.Migrations
                             Altitude = 1149.3,
                             Latitude = 37.140099999999997,
                             Longitude = 47.793640000000003,
-                            Name = "رجين",
-                            OrganizationId = 20,
-                            PostStationId = 184,
-                            PreStationId = 182
+                            Name = "رجين"
                         },
                         new
                         {
@@ -2659,10 +2114,7 @@ namespace Persistence.Migrations
                             Altitude = 1104.8,
                             Latitude = 37.298859999999998,
                             Longitude = 47.808950000000003,
-                            Name = "پل دختر",
-                            OrganizationId = 20,
-                            PostStationId = 185,
-                            PreStationId = 183
+                            Name = "پل دختر"
                         },
                         new
                         {
@@ -2670,10 +2122,7 @@ namespace Persistence.Migrations
                             Altitude = 1093.5,
                             Latitude = 37.382739999999998,
                             Longitude = 47.739420000000003,
-                            Name = "ميانه",
-                            OrganizationId = 20,
-                            PostStationId = 186,
-                            PreStationId = 184
+                            Name = "ميانه"
                         },
                         new
                         {
@@ -2681,10 +2130,7 @@ namespace Persistence.Migrations
                             Altitude = 1144.0999999999999,
                             Latitude = 37.391930000000002,
                             Longitude = 47.575389999999999,
-                            Name = "قزانقو",
-                            OrganizationId = 20,
-                            PostStationId = 201,
-                            PreStationId = 185
+                            Name = "قزانقو"
                         },
                         new
                         {
@@ -2692,10 +2138,7 @@ namespace Persistence.Migrations
                             Altitude = 38.0,
                             Latitude = 31.326329999999999,
                             Longitude = 48.664090000000002,
-                            Name = "اهواز",
-                            OrganizationId = 13,
-                            PostStationId = 192,
-                            PreStationId = 116
+                            Name = "اهواز"
                         },
                         new
                         {
@@ -2703,10 +2146,7 @@ namespace Persistence.Migrations
                             Altitude = 33.899999999999999,
                             Latitude = 31.290320000000001,
                             Longitude = 48.583120000000001,
-                            Name = "قدس",
-                            OrganizationId = 13,
-                            PostStationId = 189,
-                            PreStationId = 187
+                            Name = "قدس"
                         },
                         new
                         {
@@ -2714,10 +2154,7 @@ namespace Persistence.Migrations
                             Altitude = 18.5,
                             Latitude = 31.131329999999998,
                             Longitude = 48.304319999999997,
-                            Name = "شهيد حميد موسوي",
-                            OrganizationId = 13,
-                            PostStationId = 190,
-                            PreStationId = 188
+                            Name = "شهيد حميد موسوي"
                         },
                         new
                         {
@@ -2725,10 +2162,7 @@ namespace Persistence.Migrations
                             Altitude = 23.300000000000001,
                             Latitude = 30.80809,
                             Longitude = 48.185549999999999,
-                            Name = "حسينيه",
-                            OrganizationId = 13,
-                            PostStationId = 191,
-                            PreStationId = 189
+                            Name = "حسينيه"
                         },
                         new
                         {
@@ -2736,10 +2170,7 @@ namespace Persistence.Migrations
                             Altitude = 17.399999999999999,
                             Latitude = 30.447800000000001,
                             Longitude = 48.162280000000003,
-                            Name = "خرمشهر",
-                            OrganizationId = 13,
-                            PostStationId = 434,
-                            PreStationId = 190
+                            Name = "خرمشهر"
                         },
                         new
                         {
@@ -2747,10 +2178,7 @@ namespace Persistence.Migrations
                             Altitude = 20.600000000000001,
                             Latitude = 31.320350000000001,
                             Longitude = 48.698050000000002,
-                            Name = "كارون",
-                            OrganizationId = 13,
-                            PostStationId = 193,
-                            PreStationId = 187
+                            Name = "كارون"
                         },
                         new
                         {
@@ -2758,10 +2186,7 @@ namespace Persistence.Migrations
                             Altitude = 26.100000000000001,
                             Latitude = 31.23151,
                             Longitude = 48.740810000000003,
-                            Name = "مياندشت",
-                            OrganizationId = 13,
-                            PostStationId = 194,
-                            PreStationId = 192
+                            Name = "مياندشت"
                         },
                         new
                         {
@@ -2769,10 +2194,7 @@ namespace Persistence.Migrations
                             Altitude = 24.899999999999999,
                             Latitude = 31.06457,
                             Longitude = 48.821750000000002,
-                            Name = "خسروي",
-                            OrganizationId = 13,
-                            PostStationId = 195,
-                            PreStationId = 193
+                            Name = "خسروي"
                         },
                         new
                         {
@@ -2780,10 +2202,7 @@ namespace Persistence.Migrations
                             Altitude = 16.0,
                             Latitude = 30.753450000000001,
                             Longitude = 48.968690000000002,
-                            Name = "گرگر-آذربایچان",
-                            OrganizationId = 8,
-                            PostStationId = 10,
-                            PreStationId = 220
+                            Name = "گرگر-آذربایچان"
                         },
                         new
                         {
@@ -2791,10 +2210,7 @@ namespace Persistence.Migrations
                             Altitude = 24.300000000000001,
                             Latitude = 30.54241,
                             Longitude = 49.068460000000002,
-                            Name = "سربندر",
-                            OrganizationId = 13,
-                            PostStationId = 198,
-                            PreStationId = 195
+                            Name = "سربندر"
                         },
                         new
                         {
@@ -2802,10 +2218,7 @@ namespace Persistence.Migrations
                             Altitude = 16.699999999999999,
                             Latitude = 30.559370000000001,
                             Longitude = 49.168419999999998,
-                            Name = "بندر ماهشهر",
-                            OrganizationId = 13,
-                            PostStationId = 198,
-                            PreStationId = 196
+                            Name = "بندر ماهشهر"
                         },
                         new
                         {
@@ -2813,10 +2226,7 @@ namespace Persistence.Migrations
                             Altitude = 21.600000000000001,
                             Latitude = 30.434200000000001,
                             Longitude = 49.078650000000003,
-                            Name = "بندر امام خميني",
-                            OrganizationId = 13,
-                            PostStationId = 188,
-                            PreStationId = 197
+                            Name = "بندر امام خميني"
                         },
                         new
                         {
@@ -2824,10 +2234,7 @@ namespace Persistence.Migrations
                             Altitude = 1411.8,
                             Latitude = 35.539839999999998,
                             Longitude = 53.763249999999999,
-                            Name = "آبگرم",
-                            OrganizationId = 18,
-                            PostStationId = 158,
-                            PreStationId = 200
+                            Name = "آبگرم"
                         },
                         new
                         {
@@ -2835,10 +2242,7 @@ namespace Persistence.Migrations
                             Altitude = 1248.5999999999999,
                             Latitude = 35.573819999999998,
                             Longitude = 53.602699999999999,
-                            Name = "مياندره",
-                            OrganizationId = 18,
-                            PostStationId = 199,
-                            PreStationId = 117
+                            Name = "مياندره"
                         },
                         new
                         {
@@ -2846,10 +2250,7 @@ namespace Persistence.Migrations
                             Altitude = 1299.5999999999999,
                             Latitude = 37.346290000000003,
                             Longitude = 47.425600000000003,
-                            Name = "شيخ صفي",
-                            OrganizationId = 20,
-                            PostStationId = 202,
-                            PreStationId = 186
+                            Name = "شيخ صفي"
                         },
                         new
                         {
@@ -2857,10 +2258,7 @@ namespace Persistence.Migrations
                             Altitude = 1428.2,
                             Latitude = 37.351660000000003,
                             Longitude = 47.264380000000003,
-                            Name = "بابك",
-                            OrganizationId = 20,
-                            PostStationId = 4,
-                            PreStationId = 201
+                            Name = "بابك"
                         },
                         new
                         {
@@ -2868,10 +2266,7 @@ namespace Persistence.Migrations
                             Altitude = 1581.5,
                             Latitude = 37.373449999999998,
                             Longitude = 46.985329999999998,
-                            Name = "صائب",
-                            OrganizationId = 20,
-                            PostStationId = 204,
-                            PreStationId = 4
+                            Name = "صائب"
                         },
                         new
                         {
@@ -2879,10 +2274,7 @@ namespace Persistence.Migrations
                             Altitude = 1639.9000000000001,
                             Latitude = 37.319580000000002,
                             Longitude = 46.879179999999998,
-                            Name = "هشترود",
-                            OrganizationId = 20,
-                            PostStationId = 205,
-                            PreStationId = 203
+                            Name = "هشترود"
                         },
                         new
                         {
@@ -2890,10 +2282,7 @@ namespace Persistence.Migrations
                             Altitude = 1752.2,
                             Latitude = 37.320680000000003,
                             Longitude = 46.773969999999998,
-                            Name = "آتش بغ",
-                            OrganizationId = 20,
-                            PostStationId = 206,
-                            PreStationId = 204
+                            Name = "آتش بغ"
                         },
                         new
                         {
@@ -2901,10 +2290,7 @@ namespace Persistence.Migrations
                             Altitude = 1873.2,
                             Latitude = 37.306809999999999,
                             Longitude = 46.709229999999998,
-                            Name = "سراجو",
-                            OrganizationId = 20,
-                            PostStationId = 207,
-                            PreStationId = 205
+                            Name = "سراجو"
                         },
                         new
                         {
@@ -2912,10 +2298,7 @@ namespace Persistence.Migrations
                             Altitude = 1735.7,
                             Latitude = 37.306829999999998,
                             Longitude = 46.531910000000003,
-                            Name = "سهند",
-                            OrganizationId = 20,
-                            PostStationId = 433,
-                            PreStationId = 206
+                            Name = "سهند"
                         },
                         new
                         {
@@ -2923,10 +2306,7 @@ namespace Persistence.Migrations
                             Altitude = 1635.9000000000001,
                             Latitude = 37.335149999999999,
                             Longitude = 46.353099999999998,
-                            Name = "خواجه نصير",
-                            OrganizationId = 20,
-                            PostStationId = 209,
-                            PreStationId = 433
+                            Name = "خواجه نصير"
                         },
                         new
                         {
@@ -2934,10 +2314,7 @@ namespace Persistence.Migrations
                             Altitude = 1463.2,
                             Latitude = 37.379539999999999,
                             Longitude = 46.234250000000003,
-                            Name = "مراغه",
-                            OrganizationId = 20,
-                            PostStationId = 210,
-                            PreStationId = 208
+                            Name = "مراغه"
                         },
                         new
                         {
@@ -2945,10 +2322,7 @@ namespace Persistence.Migrations
                             Altitude = 1387.5,
                             Latitude = 37.372570000000003,
                             Longitude = 46.123480000000001,
-                            Name = "آذربناب",
-                            OrganizationId = 8,
-                            PostStationId = 6,
-                            PreStationId = 209
+                            Name = "آذربناب"
                         },
                         new
                         {
@@ -2956,10 +2330,7 @@ namespace Persistence.Migrations
                             Altitude = 1340.2,
                             Latitude = 37.501640000000002,
                             Longitude = 45.882199999999997,
-                            Name = "عجب شير",
-                            OrganizationId = 8,
-                            PostStationId = 212,
-                            PreStationId = 6
+                            Name = "عجب شير"
                         },
                         new
                         {
@@ -2967,10 +2338,7 @@ namespace Persistence.Migrations
                             Altitude = 1463.7,
                             Latitude = 37.564630000000001,
                             Longitude = 45.79627,
-                            Name = "پرويز بهمن",
-                            OrganizationId = 8,
-                            PostStationId = 442,
-                            PreStationId = 211
+                            Name = "پرويز بهمن"
                         },
                         new
                         {
@@ -2978,10 +2346,7 @@ namespace Persistence.Migrations
                             Altitude = 1337.8,
                             Latitude = 37.905970000000003,
                             Longitude = 45.940640000000002,
-                            Name = "زارعي",
-                            OrganizationId = 8,
-                            PostStationId = 214,
-                            PreStationId = 7
+                            Name = "زارعي"
                         },
                         new
                         {
@@ -2989,10 +2354,7 @@ namespace Persistence.Migrations
                             Altitude = 1355.2,
                             Latitude = 38.01126,
                             Longitude = 46.083359999999999,
-                            Name = "عباسي",
-                            OrganizationId = 8,
-                            PostStationId = 8,
-                            PreStationId = 213
+                            Name = "عباسي"
                         },
                         new
                         {
@@ -3000,10 +2362,7 @@ namespace Persistence.Migrations
                             Altitude = 1368.3,
                             Latitude = 38.197180000000003,
                             Longitude = 46.097839999999998,
-                            Name = "سهلان",
-                            OrganizationId = 8,
-                            PostStationId = 216,
-                            PreStationId = 8
+                            Name = "سهلان"
                         },
                         new
                         {
@@ -3011,10 +2370,7 @@ namespace Persistence.Migrations
                             Altitude = 1419.9000000000001,
                             Latitude = 38.272970000000001,
                             Longitude = 46.002719999999997,
-                            Name = "صوفيان",
-                            OrganizationId = 8,
-                            PostStationId = 9,
-                            PreStationId = 215
+                            Name = "صوفيان"
                         },
                         new
                         {
@@ -3022,10 +2378,7 @@ namespace Persistence.Migrations
                             Altitude = 1829.0,
                             Latitude = 38.349730000000001,
                             Longitude = 45.800249999999998,
-                            Name = "پيام",
-                            OrganizationId = 8,
-                            PostStationId = 441,
-                            PreStationId = 9
+                            Name = "پيام"
                         },
                         new
                         {
@@ -3033,10 +2386,7 @@ namespace Persistence.Migrations
                             Altitude = 1335.0999999999999,
                             Latitude = 38.43676,
                             Longitude = 45.793689999999998,
-                            Name = "مرند",
-                            OrganizationId = 8,
-                            PostStationId = 219,
-                            PreStationId = 441
+                            Name = "مرند"
                         },
                         new
                         {
@@ -3044,10 +2394,7 @@ namespace Persistence.Migrations
                             Altitude = 1491.9000000000001,
                             Latitude = 38.626080000000002,
                             Longitude = 45.693330000000003,
-                            Name = "هرزند",
-                            OrganizationId = 8,
-                            PostStationId = 220,
-                            PreStationId = 218
+                            Name = "هرزند"
                         },
                         new
                         {
@@ -3055,10 +2402,7 @@ namespace Persistence.Migrations
                             Altitude = 1379.0999999999999,
                             Latitude = 38.730440000000002,
                             Longitude = 45.623130000000003,
-                            Name = "زال",
-                            OrganizationId = 8,
-                            PostStationId = 195,
-                            PreStationId = 219
+                            Name = "زال"
                         },
                         new
                         {
@@ -3066,9 +2410,7 @@ namespace Persistence.Migrations
                             Altitude = 1005.1,
                             Latitude = 38.831629999999997,
                             Longitude = 45.633229999999998,
-                            Name = "گرگر",
-                            OrganizationId = 13,
-                            PostStationId = 220
+                            Name = "گرگر"
                         },
                         new
                         {
@@ -3076,10 +2418,7 @@ namespace Persistence.Migrations
                             Altitude = 1357.4000000000001,
                             Latitude = 38.143450000000001,
                             Longitude = 45.749470000000002,
-                            Name = "ديزج خليل",
-                            OrganizationId = 8,
-                            PostStationId = 223,
-                            PreStationId = 216
+                            Name = "ديزج خليل"
                         },
                         new
                         {
@@ -3087,10 +2426,7 @@ namespace Persistence.Migrations
                             Altitude = 1316.3,
                             Latitude = 38.16769,
                             Longitude = 45.48556,
-                            Name = "شرفخانه",
-                            OrganizationId = 8,
-                            PostStationId = 224,
-                            PreStationId = 222
+                            Name = "شرفخانه"
                         },
                         new
                         {
@@ -3098,10 +2434,7 @@ namespace Persistence.Migrations
                             Altitude = 1325.0999999999999,
                             Latitude = 38.263860000000001,
                             Longitude = 45.342239999999997,
-                            Name = "تسوج قلعه",
-                            OrganizationId = 8,
-                            PostStationId = 11,
-                            PreStationId = 223
+                            Name = "تسوج قلعه"
                         },
                         new
                         {
@@ -3109,10 +2442,7 @@ namespace Persistence.Migrations
                             Altitude = 1478.9000000000001,
                             Latitude = 38.302199999999999,
                             Longitude = 44.941310000000001,
-                            Name = "شهيد برزگر منافي",
-                            OrganizationId = 8,
-                            PostStationId = 226,
-                            PreStationId = 11
+                            Name = "شهيد برزگر منافي"
                         },
                         new
                         {
@@ -3120,10 +2450,7 @@ namespace Persistence.Migrations
                             Altitude = 1557.3,
                             Latitude = 38.33023,
                             Longitude = 44.8264,
-                            Name = "سلماس",
-                            OrganizationId = 8,
-                            PostStationId = 227,
-                            PreStationId = 225
+                            Name = "سلماس"
                         },
                         new
                         {
@@ -3131,10 +2458,7 @@ namespace Persistence.Migrations
                             Altitude = 1505.5,
                             Latitude = 38.451369999999997,
                             Longitude = 44.796509999999998,
-                            Name = "بابكان",
-                            OrganizationId = 8,
-                            PostStationId = 228,
-                            PreStationId = 226
+                            Name = "بابكان"
                         },
                         new
                         {
@@ -3142,10 +2466,7 @@ namespace Persistence.Migrations
                             Altitude = 1655.4000000000001,
                             Latitude = 38.451039999999999,
                             Longitude = 44.699350000000003,
-                            Name = "ميلادي",
-                            OrganizationId = 8,
-                            PostStationId = 443,
-                            PreStationId = 227
+                            Name = "ميلادي"
                         },
                         new
                         {
@@ -3153,10 +2474,7 @@ namespace Persistence.Migrations
                             Altitude = 1141.9000000000001,
                             Latitude = 35.61139,
                             Longitude = 51.305779999999999,
-                            Name = "تپه سفيد",
-                            OrganizationId = 11,
-                            PostStationId = 230,
-                            PreStationId = 162
+                            Name = "تپه سفيد"
                         },
                         new
                         {
@@ -3164,10 +2482,7 @@ namespace Persistence.Migrations
                             Altitude = 1093.5999999999999,
                             Latitude = 35.554079999999999,
                             Longitude = 51.215089999999996,
-                            Name = "اسلامشهر",
-                            OrganizationId = 11,
-                            PostStationId = 231,
-                            PreStationId = 417
+                            Name = "اسلامشهر"
                         },
                         new
                         {
@@ -3175,10 +2490,7 @@ namespace Persistence.Migrations
                             Altitude = 1064.7,
                             Latitude = 35.481760000000001,
                             Longitude = 51.075029999999998,
-                            Name = "رباط كريم",
-                            OrganizationId = 11,
-                            PostStationId = 232,
-                            PreStationId = 230
+                            Name = "رباط كريم"
                         },
                         new
                         {
@@ -3186,10 +2498,7 @@ namespace Persistence.Migrations
                             Altitude = 1011.9,
                             Latitude = 35.4236,
                             Longitude = 51.19903,
-                            Name = "فرودگاه",
-                            OrganizationId = 11,
-                            PostStationId = 245,
-                            PreStationId = 230
+                            Name = "فرودگاه"
                         },
                         new
                         {
@@ -3197,10 +2506,7 @@ namespace Persistence.Migrations
                             Altitude = 1206.9000000000001,
                             Latitude = 35.357889999999998,
                             Longitude = 50.691949999999999,
-                            Name = "پرندك",
-                            OrganizationId = 12,
-                            PostStationId = 234,
-                            PreStationId = 404
+                            Name = "پرندك"
                         },
                         new
                         {
@@ -3208,10 +2514,7 @@ namespace Persistence.Migrations
                             Altitude = 1288.2,
                             Latitude = 35.223590000000002,
                             Longitude = 50.696120000000001,
-                            Name = "شهيد خيري پور",
-                            OrganizationId = 12,
-                            PostStationId = 235,
-                            PreStationId = 233
+                            Name = "شهيد خيري پور"
                         },
                         new
                         {
@@ -3219,10 +2522,7 @@ namespace Persistence.Migrations
                             Altitude = 1178.7,
                             Latitude = 35.102159999999998,
                             Longitude = 50.634099999999997,
-                            Name = "كوه پنگ",
-                            OrganizationId = 12,
-                            PostStationId = 236,
-                            PreStationId = 234
+                            Name = "كوه پنگ"
                         },
                         new
                         {
@@ -3230,10 +2530,7 @@ namespace Persistence.Migrations
                             Altitude = 973.70000000000005,
                             Latitude = 34.987760000000002,
                             Longitude = 50.615029999999997,
-                            Name = "انجيلاوند",
-                            OrganizationId = 12,
-                            PostStationId = 237,
-                            PreStationId = 235
+                            Name = "انجيلاوند"
                         },
                         new
                         {
@@ -3241,10 +2538,7 @@ namespace Persistence.Migrations
                             Altitude = 925.0,
                             Latitude = 34.887990000000002,
                             Longitude = 50.705599999999997,
-                            Name = "نودژ",
-                            OrganizationId = 12,
-                            PostStationId = 238,
-                            PreStationId = 236
+                            Name = "نودژ"
                         },
                         new
                         {
@@ -3252,10 +2546,7 @@ namespace Persistence.Migrations
                             Altitude = 950.79999999999995,
                             Latitude = 34.771079999999998,
                             Longitude = 50.794330000000002,
-                            Name = "پل",
-                            OrganizationId = 12,
-                            PostStationId = 239,
-                            PreStationId = 237
+                            Name = "پل"
                         },
                         new
                         {
@@ -3263,10 +2554,7 @@ namespace Persistence.Migrations
                             Altitude = 944.20000000000005,
                             Latitude = 34.710030000000003,
                             Longitude = 50.839440000000003,
-                            Name = "گارمانوري قم",
-                            OrganizationId = 12,
-                            PostStationId = 240,
-                            PreStationId = 238
+                            Name = "گارمانوري قم"
                         },
                         new
                         {
@@ -3274,10 +2562,7 @@ namespace Persistence.Migrations
                             Altitude = 950.39999999999998,
                             Latitude = 34.648380000000003,
                             Longitude = 50.872619999999998,
-                            Name = "قم",
-                            OrganizationId = 12,
-                            PostStationId = 241,
-                            PreStationId = 239
+                            Name = "قم"
                         },
                         new
                         {
@@ -3285,10 +2570,7 @@ namespace Persistence.Migrations
                             Altitude = 942.39999999999998,
                             Latitude = 34.597380000000001,
                             Longitude = 50.91798,
-                            Name = "جمكران",
-                            OrganizationId = 12,
-                            PostStationId = 242,
-                            PreStationId = 240
+                            Name = "جمكران"
                         },
                         new
                         {
@@ -3296,10 +2578,7 @@ namespace Persistence.Migrations
                             Altitude = 915.39999999999998,
                             Latitude = 34.558799999999998,
                             Longitude = 51.048780000000001,
-                            Name = "محمديه",
-                            OrganizationId = 12,
-                            PostStationId = 422,
-                            PreStationId = 241
+                            Name = "محمديه"
                         },
                         new
                         {
@@ -3307,10 +2586,7 @@ namespace Persistence.Migrations
                             Altitude = 851.20000000000005,
                             Latitude = 34.791620000000002,
                             Longitude = 51.138480000000001,
-                            Name = "سپر رستم",
-                            OrganizationId = 11,
-                            PostStationId = 422,
-                            PreStationId = 244
+                            Name = "سپر رستم"
                         },
                         new
                         {
@@ -3318,10 +2594,7 @@ namespace Persistence.Migrations
                             Altitude = 837.10000000000002,
                             Latitude = 34.987839999999998,
                             Longitude = 51.147779999999997,
-                            Name = "نمكزار",
-                            OrganizationId = 11,
-                            PostStationId = 243,
-                            PreStationId = 245
+                            Name = "نمكزار"
                         },
                         new
                         {
@@ -3329,10 +2602,7 @@ namespace Persistence.Migrations
                             Altitude = 982.60000000000002,
                             Latitude = 35.265770000000003,
                             Longitude = 51.171399999999998,
-                            Name = "علي آباد",
-                            OrganizationId = 11,
-                            PostStationId = 244,
-                            PreStationId = 232
+                            Name = "علي آباد"
                         },
                         new
                         {
@@ -3340,10 +2610,7 @@ namespace Persistence.Migrations
                             Altitude = 925.29999999999995,
                             Latitude = 34.450659999999999,
                             Longitude = 51.12003,
-                            Name = "شوراب",
-                            OrganizationId = 10,
-                            PostStationId = 242,
-                            PreStationId = 248
+                            Name = "شوراب"
                         },
                         new
                         {
@@ -3351,10 +2618,7 @@ namespace Persistence.Migrations
                             Altitude = 890.39999999999998,
                             Latitude = 34.368650000000002,
                             Longitude = 51.260129999999997,
-                            Name = "فيروز آباد",
-                            OrganizationId = 10,
-                            PostStationId = 246,
-                            PreStationId = 246
+                            Name = "فيروز آباد"
                         },
                         new
                         {
@@ -3362,10 +2626,7 @@ namespace Persistence.Migrations
                             Altitude = 867.60000000000002,
                             Latitude = 34.236980000000003,
                             Longitude = 51.300609999999999,
-                            Name = "دهنار",
-                            OrganizationId = 10,
-                            PostStationId = 247,
-                            PreStationId = 247
+                            Name = "دهنار"
                         },
                         new
                         {
@@ -3373,10 +2634,7 @@ namespace Persistence.Migrations
                             Altitude = 920.60000000000002,
                             Latitude = 34.109549999999999,
                             Longitude = 51.386090000000003,
-                            Name = "مد آباد",
-                            OrganizationId = 10,
-                            PostStationId = 247,
-                            PreStationId = 248
+                            Name = "مد آباد"
                         },
                         new
                         {
@@ -3384,10 +2642,7 @@ namespace Persistence.Migrations
                             Altitude = 964.60000000000002,
                             Latitude = 33.987340000000003,
                             Longitude = 51.471620000000001,
-                            Name = "كاشان",
-                            OrganizationId = 10,
-                            PostStationId = 252,
-                            PreStationId = 249
+                            Name = "كاشان"
                         },
                         new
                         {
@@ -3395,10 +2650,7 @@ namespace Persistence.Migrations
                             Altitude = 1024.7,
                             Latitude = 33.915599999999998,
                             Longitude = 51.618119999999998,
-                            Name = "گز",
-                            OrganizationId = 10,
-                            PostStationId = 250,
-                            PreStationId = 250
+                            Name = "گز"
                         },
                         new
                         {
@@ -3406,10 +2658,7 @@ namespace Persistence.Migrations
                             Altitude = 1033.0,
                             Latitude = 33.836660000000002,
                             Longitude = 51.763869999999997,
-                            Name = "سرخ گل",
-                            OrganizationId = 10,
-                            PostStationId = 254,
-                            PreStationId = 251
+                            Name = "سرخ گل"
                         },
                         new
                         {
@@ -3417,10 +2666,7 @@ namespace Persistence.Migrations
                             Altitude = 1037.3,
                             Latitude = 33.788539999999998,
                             Longitude = 51.825389999999999,
-                            Name = "ده آباد",
-                            OrganizationId = 10,
-                            PostStationId = 252,
-                            PreStationId = 252
+                            Name = "ده آباد"
                         },
                         new
                         {
@@ -3428,10 +2674,7 @@ namespace Persistence.Migrations
                             Altitude = 1030.8,
                             Latitude = 33.657110000000003,
                             Longitude = 52.030500000000004,
-                            Name = "بادرود",
-                            OrganizationId = 10,
-                            PostStationId = 256,
-                            PreStationId = 253
+                            Name = "بادرود"
                         },
                         new
                         {
@@ -3439,10 +2682,7 @@ namespace Persistence.Migrations
                             Altitude = 1226.2,
                             Latitude = 33.536589999999997,
                             Longitude = 52.040520000000001,
-                            Name = "جزن",
-                            OrganizationId = 10,
-                            PostStationId = 254,
-                            PreStationId = 256
+                            Name = "جزن"
                         },
                         new
                         {
@@ -3450,10 +2690,7 @@ namespace Persistence.Migrations
                             Altitude = 1412.0999999999999,
                             Latitude = 33.47184,
                             Longitude = 52.02778,
-                            Name = "اسپيدان",
-                            OrganizationId = 10,
-                            PostStationId = 257,
-                            PreStationId = 255
+                            Name = "اسپيدان"
                         },
                         new
                         {
@@ -3461,10 +2698,7 @@ namespace Persistence.Migrations
                             Altitude = 1619.5999999999999,
                             Latitude = 33.382779999999997,
                             Longitude = 52.013210000000001,
-                            Name = "ابیازان",
-                            OrganizationId = 10,
-                            PostStationId = 258,
-                            PreStationId = 256
+                            Name = "ابیازان"
                         },
                         new
                         {
@@ -3472,10 +2706,7 @@ namespace Persistence.Migrations
                             Altitude = 1876.2,
                             Latitude = 33.291679999999999,
                             Longitude = 52.093150000000001,
-                            Name = "رنگان",
-                            OrganizationId = 10,
-                            PostStationId = 260,
-                            PreStationId = 257
+                            Name = "رنگان"
                         },
                         new
                         {
@@ -3483,10 +2714,7 @@ namespace Persistence.Migrations
                             Altitude = 2013.8,
                             Latitude = 33.177039999999998,
                             Longitude = 52.106879999999997,
-                            Name = "گل",
-                            OrganizationId = 10,
-                            PostStationId = 258,
-                            PreStationId = 260
+                            Name = "گل"
                         },
                         new
                         {
@@ -3494,10 +2722,7 @@ namespace Persistence.Migrations
                             Altitude = 2107.5999999999999,
                             Latitude = 33.042450000000002,
                             Longitude = 52.09131,
-                            Name = "چاريسه",
-                            OrganizationId = 10,
-                            PostStationId = 262,
-                            PreStationId = 259
+                            Name = "چاريسه"
                         },
                         new
                         {
@@ -3505,10 +2730,7 @@ namespace Persistence.Migrations
                             Altitude = 1858.8,
                             Latitude = 32.92756,
                             Longitude = 52.11795,
-                            Name = "گرم آب",
-                            OrganizationId = 10,
-                            PostStationId = 260,
-                            PreStationId = 262
+                            Name = "گرم آب"
                         },
                         new
                         {
@@ -3516,10 +2738,7 @@ namespace Persistence.Migrations
                             Altitude = 1688.0,
                             Latitude = 32.833730000000003,
                             Longitude = 52.121319999999997,
-                            Name = "ورتون",
-                            OrganizationId = 10,
-                            PostStationId = 261,
-                            PreStationId = 263
+                            Name = "ورتون"
                         },
                         new
                         {
@@ -3527,10 +2746,7 @@ namespace Persistence.Migrations
                             Altitude = 1566.5999999999999,
                             Latitude = 32.66986,
                             Longitude = 52.112209999999997,
-                            Name = "سيستان",
-                            OrganizationId = 10,
-                            PostStationId = 271,
-                            PreStationId = 262
+                            Name = "سيستان"
                         },
                         new
                         {
@@ -3538,10 +2754,7 @@ namespace Persistence.Migrations
                             Altitude = 1564.3,
                             Latitude = 32.614780000000003,
                             Longitude = 51.923099999999998,
-                            Name = "فيروزه",
-                            OrganizationId = 10,
-                            PostStationId = 263,
-                            PreStationId = 263
+                            Name = "فيروزه"
                         },
                         new
                         {
@@ -3549,10 +2762,7 @@ namespace Persistence.Migrations
                             Altitude = 1608.9000000000001,
                             Latitude = 32.549880000000002,
                             Longitude = 51.695140000000002,
-                            Name = "اصفهان",
-                            OrganizationId = 10,
-                            PostStationId = 264,
-                            PreStationId = 264
+                            Name = "اصفهان"
                         },
                         new
                         {
@@ -3560,10 +2770,7 @@ namespace Persistence.Migrations
                             Altitude = 1660.0,
                             Latitude = 32.521470000000001,
                             Longitude = 51.637590000000003,
-                            Name = "ايران كوه",
-                            OrganizationId = 10,
-                            PostStationId = 267,
-                            PreStationId = 265
+                            Name = "ايران كوه"
                         },
                         new
                         {
@@ -3571,10 +2778,7 @@ namespace Persistence.Migrations
                             Altitude = 1649.7,
                             Latitude = 32.496589999999998,
                             Longitude = 51.57329,
-                            Name = "آب نيل",
-                            OrganizationId = 10,
-                            PostStationId = 375,
-                            PreStationId = 266
+                            Name = "آب نيل"
                         },
                         new
                         {
@@ -3582,10 +2786,7 @@ namespace Persistence.Migrations
                             Altitude = 1687.2,
                             Latitude = 32.407789999999999,
                             Longitude = 51.525739999999999,
-                            Name = "ديز بچه",
-                            OrganizationId = 10,
-                            PostStationId = 270,
-                            PreStationId = 375
+                            Name = "ديز بچه"
                         },
                         new
                         {
@@ -3593,10 +2794,7 @@ namespace Persistence.Migrations
                             Altitude = 1763.0,
                             Latitude = 32.416710000000002,
                             Longitude = 51.416939999999997,
-                            Name = "ريز",
-                            OrganizationId = 10,
-                            PostStationId = 270,
-                            PreStationId = 268
+                            Name = "ريز"
                         },
                         new
                         {
@@ -3604,10 +2802,7 @@ namespace Persistence.Migrations
                             Altitude = 1780.8,
                             Latitude = 32.424419999999998,
                             Longitude = 51.363799999999998,
-                            Name = "زرين شهر",
-                            OrganizationId = 10,
-                            PostStationId = 435,
-                            PreStationId = 269
+                            Name = "زرين شهر"
                         },
                         new
                         {
@@ -3615,10 +2810,7 @@ namespace Persistence.Migrations
                             Altitude = 1588.4000000000001,
                             Latitude = 32.641660000000002,
                             Longitude = 52.285409999999999,
-                            Name = "خير آباد",
-                            OrganizationId = 10,
-                            PostStationId = 272,
-                            PreStationId = 263
+                            Name = "خير آباد"
                         },
                         new
                         {
@@ -3626,10 +2818,7 @@ namespace Persistence.Migrations
                             Altitude = 1663.3,
                             Latitude = 32.628920000000001,
                             Longitude = 52.453209999999999,
-                            Name = "هرند",
-                            OrganizationId = 10,
-                            PostStationId = 273,
-                            PreStationId = 271
+                            Name = "هرند"
                         },
                         new
                         {
@@ -3637,10 +2826,7 @@ namespace Persistence.Migrations
                             Altitude = 1668.2,
                             Latitude = 32.569569999999999,
                             Longitude = 52.606839999999998,
-                            Name = "مشك",
-                            OrganizationId = 10,
-                            PostStationId = 274,
-                            PreStationId = 272
+                            Name = "مشك"
                         },
                         new
                         {
@@ -3648,10 +2834,7 @@ namespace Persistence.Migrations
                             Altitude = 1714.5,
                             Latitude = 32.526000000000003,
                             Longitude = 52.76032,
-                            Name = "ورزنه",
-                            OrganizationId = 10,
-                            PostStationId = 275,
-                            PreStationId = 273
+                            Name = "ورزنه"
                         },
                         new
                         {
@@ -3659,10 +2842,7 @@ namespace Persistence.Migrations
                             Altitude = 1703.8,
                             Latitude = 32.468890000000002,
                             Longitude = 52.905450000000002,
-                            Name = "شيراز كوه",
-                            OrganizationId = 10,
-                            PostStationId = 276,
-                            PreStationId = 274
+                            Name = "شيراز كوه"
                         },
                         new
                         {
@@ -3670,10 +2850,7 @@ namespace Persistence.Migrations
                             Altitude = 1614.7,
                             Latitude = 32.430160000000001,
                             Longitude = 53.071460000000002,
-                            Name = "شبنم",
-                            OrganizationId = 10,
-                            PostStationId = 277,
-                            PreStationId = 275
+                            Name = "شبنم"
                         },
                         new
                         {
@@ -3681,10 +2858,7 @@ namespace Persistence.Migrations
                             Altitude = 1512.7,
                             Latitude = 32.394689999999997,
                             Longitude = 53.225239999999999,
-                            Name = "هما",
-                            OrganizationId = 10,
-                            PostStationId = 278,
-                            PreStationId = 276
+                            Name = "هما"
                         },
                         new
                         {
@@ -3692,10 +2866,7 @@ namespace Persistence.Migrations
                             Altitude = 1493.0,
                             Latitude = 32.382010000000001,
                             Longitude = 53.406730000000003,
-                            Name = "ساسان",
-                            OrganizationId = 10,
-                            PostStationId = 279,
-                            PreStationId = 277
+                            Name = "ساسان"
                         },
                         new
                         {
@@ -3703,10 +2874,7 @@ namespace Persistence.Migrations
                             Altitude = 1377.9000000000001,
                             Latitude = 32.38364,
                             Longitude = 53.572180000000003,
-                            Name = "اشك",
-                            OrganizationId = 10,
-                            PostStationId = 280,
-                            PreStationId = 278
+                            Name = "اشك"
                         },
                         new
                         {
@@ -3714,10 +2882,7 @@ namespace Persistence.Migrations
                             Altitude = 1304.5999999999999,
                             Latitude = 32.37677,
                             Longitude = 53.673580000000001,
-                            Name = "عقدا",
-                            OrganizationId = 10,
-                            PostStationId = 281,
-                            PreStationId = 279
+                            Name = "عقدا"
                         },
                         new
                         {
@@ -3725,10 +2890,7 @@ namespace Persistence.Migrations
                             Altitude = 1244.0999999999999,
                             Latitude = 32.320230000000002,
                             Longitude = 53.816200000000002,
-                            Name = "ارژنگ",
-                            OrganizationId = 14,
-                            PostStationId = 294,
-                            PreStationId = 293
+                            Name = "ارژنگ"
                         },
                         new
                         {
@@ -3736,10 +2898,7 @@ namespace Persistence.Migrations
                             Altitude = 1034.5999999999999,
                             Latitude = 33.395829999999997,
                             Longitude = 52.661920000000002,
-                            Name = "رباط",
-                            OrganizationId = 14,
-                            PostStationId = 283,
-                            PreStationId = 430
+                            Name = "رباط"
                         },
                         new
                         {
@@ -3747,10 +2906,7 @@ namespace Persistence.Migrations
                             Altitude = 1091.2,
                             Latitude = 33.394829999999999,
                             Longitude = 52.82752,
-                            Name = "شهر آب",
-                            OrganizationId = 14,
-                            PostStationId = 284,
-                            PreStationId = 282
+                            Name = "شهر آب"
                         },
                         new
                         {
@@ -3758,10 +2914,7 @@ namespace Persistence.Migrations
                             Altitude = 1073.0,
                             Latitude = 33.342840000000002,
                             Longitude = 52.99747,
-                            Name = "سنگي",
-                            OrganizationId = 14,
-                            PostStationId = 285,
-                            PreStationId = 283
+                            Name = "سنگي"
                         },
                         new
                         {
@@ -3769,10 +2922,7 @@ namespace Persistence.Migrations
                             Altitude = 1094.4000000000001,
                             Latitude = 33.311630000000001,
                             Longitude = 53.076070000000001,
-                            Name = "سهيل",
-                            OrganizationId = 14,
-                            PostStationId = 286,
-                            PreStationId = 284
+                            Name = "سهيل"
                         },
                         new
                         {
@@ -3780,10 +2930,7 @@ namespace Persistence.Migrations
                             Altitude = 1116.0,
                             Latitude = 33.270679999999999,
                             Longitude = 53.148789999999998,
-                            Name = "ويادوك",
-                            OrganizationId = 14,
-                            PostStationId = 287,
-                            PreStationId = 285
+                            Name = "ويادوك"
                         },
                         new
                         {
@@ -3791,10 +2938,7 @@ namespace Persistence.Migrations
                             Altitude = 1105.5,
                             Latitude = 33.070430000000002,
                             Longitude = 53.416240000000002,
-                            Name = "نايين",
-                            OrganizationId = 14,
-                            PostStationId = 288,
-                            PreStationId = 286
+                            Name = "نايين"
                         },
                         new
                         {
@@ -3802,10 +2946,7 @@ namespace Persistence.Migrations
                             Altitude = 1099.5,
                             Latitude = 32.950420000000001,
                             Longitude = 53.505330000000001,
-                            Name = "سر گز",
-                            OrganizationId = 14,
-                            PostStationId = 289,
-                            PreStationId = 287
+                            Name = "سر گز"
                         },
                         new
                         {
@@ -3813,10 +2954,7 @@ namespace Persistence.Migrations
                             Altitude = 1029.9000000000001,
                             Latitude = 32.83117,
                             Longitude = 53.59008,
-                            Name = "دو گنبدان",
-                            OrganizationId = 14,
-                            PostStationId = 290,
-                            PreStationId = 288
+                            Name = "دو گنبدان"
                         },
                         new
                         {
@@ -3824,10 +2962,7 @@ namespace Persistence.Migrations
                             Altitude = 1010.2,
                             Latitude = 32.689540000000001,
                             Longitude = 53.692819999999998,
-                            Name = "سياه كوه",
-                            OrganizationId = 14,
-                            PostStationId = 291,
-                            PreStationId = 289
+                            Name = "سياه كوه"
                         },
                         new
                         {
@@ -3835,10 +2970,7 @@ namespace Persistence.Migrations
                             Altitude = 1015.7,
                             Latitude = 32.589700000000001,
                             Longitude = 53.765180000000001,
-                            Name = "سرو",
-                            OrganizationId = 14,
-                            PostStationId = 292,
-                            PreStationId = 290
+                            Name = "سرو"
                         },
                         new
                         {
@@ -3846,10 +2978,7 @@ namespace Persistence.Migrations
                             Altitude = 1056.3,
                             Latitude = 32.405549999999998,
                             Longitude = 53.880560000000003,
-                            Name = "بي سيم",
-                            OrganizationId = 14,
-                            PostStationId = 293,
-                            PreStationId = 291
+                            Name = "بي سيم"
                         },
                         new
                         {
@@ -3857,10 +2986,7 @@ namespace Persistence.Migrations
                             Altitude = 1091.0999999999999,
                             Latitude = 32.350549999999998,
                             Longitude = 53.898029999999999,
-                            Name = "اردكان",
-                            OrganizationId = 14,
-                            PostStationId = 294,
-                            PreStationId = 292
+                            Name = "اردكان"
                         },
                         new
                         {
@@ -3868,10 +2994,7 @@ namespace Persistence.Migrations
                             Altitude = 1154.4000000000001,
                             Latitude = 32.229199999999999,
                             Longitude = 53.929519999999997,
-                            Name = "ميبد",
-                            OrganizationId = 14,
-                            PostStationId = 295,
-                            PreStationId = 281
+                            Name = "ميبد"
                         },
                         new
                         {
@@ -3879,10 +3002,7 @@ namespace Persistence.Migrations
                             Altitude = 1190.4000000000001,
                             Latitude = 32.117420000000003,
                             Longitude = 53.985169999999997,
-                            Name = "شمسي",
-                            OrganizationId = 14,
-                            PostStationId = 296,
-                            PreStationId = 294
+                            Name = "شمسي"
                         },
                         new
                         {
@@ -3890,10 +3010,7 @@ namespace Persistence.Migrations
                             Altitude = 1210.0999999999999,
                             Latitude = 31.957599999999999,
                             Longitude = 54.150869999999998,
-                            Name = "نظر آباد",
-                            OrganizationId = 14,
-                            PostStationId = 297,
-                            PreStationId = 295
+                            Name = "نظر آباد"
                         },
                         new
                         {
@@ -3901,10 +3018,7 @@ namespace Persistence.Migrations
                             Altitude = 1268.9000000000001,
                             Latitude = 31.864419999999999,
                             Longitude = 54.34449,
-                            Name = "يزد",
-                            OrganizationId = 14,
-                            PostStationId = 298,
-                            PreStationId = 296
+                            Name = "يزد"
                         },
                         new
                         {
@@ -3912,10 +3026,7 @@ namespace Persistence.Migrations
                             Altitude = 1285.5999999999999,
                             Latitude = 31.817900000000002,
                             Longitude = 54.500219999999999,
-                            Name = "يزدگرد",
-                            OrganizationId = 14,
-                            PostStationId = 299,
-                            PreStationId = 297
+                            Name = "يزدگرد"
                         },
                         new
                         {
@@ -3923,10 +3034,7 @@ namespace Persistence.Migrations
                             Altitude = 1297.2,
                             Latitude = 31.776990000000001,
                             Longitude = 54.635460000000002,
-                            Name = "رخش",
-                            OrganizationId = 14,
-                            PostStationId = 300,
-                            PreStationId = 298
+                            Name = "رخش"
                         },
                         new
                         {
@@ -3934,10 +3042,7 @@ namespace Persistence.Migrations
                             Altitude = 1438.8,
                             Latitude = 31.745450000000002,
                             Longitude = 54.772869999999998,
-                            Name = "چاه خاور",
-                            OrganizationId = 14,
-                            PostStationId = 301,
-                            PreStationId = 299
+                            Name = "چاه خاور"
                         },
                         new
                         {
@@ -3945,10 +3050,7 @@ namespace Persistence.Migrations
                             Altitude = 1314.9000000000001,
                             Latitude = 31.74812,
                             Longitude = 54.929920000000003,
-                            Name = "تبركوه",
-                            OrganizationId = 14,
-                            PostStationId = 302,
-                            PreStationId = 300
+                            Name = "تبركوه"
                         },
                         new
                         {
@@ -3956,10 +3058,7 @@ namespace Persistence.Migrations
                             Altitude = 1161.5,
                             Latitude = 31.712759999999999,
                             Longitude = 55.081400000000002,
-                            Name = "مهرداد",
-                            OrganizationId = 14,
-                            PostStationId = 303,
-                            PreStationId = 301
+                            Name = "مهرداد"
                         },
                         new
                         {
@@ -3967,10 +3066,7 @@ namespace Persistence.Migrations
                             Altitude = 1014.2,
                             Latitude = 31.643689999999999,
                             Longitude = 55.240200000000002,
-                            Name = "بهرام گور",
-                            OrganizationId = 14,
-                            PostStationId = 308,
-                            PreStationId = 302
+                            Name = "بهرام گور"
                         },
                         new
                         {
@@ -3978,10 +3074,7 @@ namespace Persistence.Migrations
                             Altitude = 1018.8,
                             Latitude = 31.618559999999999,
                             Longitude = 55.438749999999999,
-                            Name = "مباركه",
-                            OrganizationId = 14,
-                            PostStationId = 305,
-                            PreStationId = 308
+                            Name = "مباركه"
                         },
                         new
                         {
@@ -3989,10 +3082,7 @@ namespace Persistence.Migrations
                             Altitude = 1210.0,
                             Latitude = 31.740200000000002,
                             Longitude = 55.479399999999998,
-                            Name = "بيشه در",
-                            OrganizationId = 24,
-                            PostStationId = 306,
-                            PreStationId = 304
+                            Name = "بيشه در"
                         },
                         new
                         {
@@ -4000,9 +3090,7 @@ namespace Persistence.Migrations
                             Altitude = 1422.3,
                             Latitude = 31.86983,
                             Longitude = 55.5565,
-                            Name = "شهید پور اکبری",
-                            OrganizationId = 24,
-                            PostStationId = 307
+                            Name = "شهید پور اکبری"
                         },
                         new
                         {
@@ -4010,9 +3098,7 @@ namespace Persistence.Migrations
                             Altitude = 1660.5,
                             Latitude = 31.892209999999999,
                             Longitude = 55.691189999999999,
-                            Name = "سه چاهون",
-                            OrganizationId = 24,
-                            PostStationId = 334
+                            Name = "سه چاهون"
                         },
                         new
                         {
@@ -4020,10 +3106,7 @@ namespace Persistence.Migrations
                             Altitude = 1016.8,
                             Latitude = 31.58765,
                             Longitude = 55.39902,
-                            Name = "بافق",
-                            OrganizationId = 14,
-                            PostStationId = 304,
-                            PreStationId = 303
+                            Name = "بافق"
                         },
                         new
                         {
@@ -4031,10 +3114,7 @@ namespace Persistence.Migrations
                             Altitude = 1050.4000000000001,
                             Latitude = 31.496099999999998,
                             Longitude = 55.458010000000002,
-                            Name = "اضطراري 25",
-                            OrganizationId = 23,
-                            PostStationId = 310,
-                            PreStationId = 432
+                            Name = "اضطراري 25"
                         },
                         new
                         {
@@ -4042,10 +3122,7 @@ namespace Persistence.Migrations
                             Altitude = 1283.3,
                             Latitude = 31.175799999999999,
                             Longitude = 55.498309999999996,
-                            Name = "جنت آباد",
-                            OrganizationId = 23,
-                            PostStationId = 309,
-                            PreStationId = 309
+                            Name = "جنت آباد"
                         },
                         new
                         {
@@ -4053,10 +3130,7 @@ namespace Persistence.Migrations
                             Altitude = 1497.5999999999999,
                             Latitude = 30.863,
                             Longitude = 55.496769999999998,
-                            Name = "اضطراري 22",
-                            OrganizationId = 23,
-                            PostStationId = 310,
-                            PreStationId = 310
+                            Name = "اضطراري 22"
                         },
                         new
                         {
@@ -4064,10 +3138,7 @@ namespace Persistence.Migrations
                             Altitude = 1425.3,
                             Latitude = 30.74718,
                             Longitude = 55.514609999999998,
-                            Name = "بياض",
-                            OrganizationId = 23,
-                            PostStationId = 311,
-                            PreStationId = 311
+                            Name = "بياض"
                         },
                         new
                         {
@@ -4075,10 +3146,7 @@ namespace Persistence.Migrations
                             Altitude = 1987.3,
                             Latitude = 29.915790000000001,
                             Longitude = 55.541499999999999,
-                            Name = "خاتون آباد",
-                            OrganizationId = 23,
-                            PostStationId = 48,
-                            PreStationId = 48
+                            Name = "خاتون آباد"
                         },
                         new
                         {
@@ -4086,10 +3154,7 @@ namespace Persistence.Migrations
                             Altitude = 1763.0,
                             Latitude = 29.508949999999999,
                             Longitude = 55.649700000000003,
-                            Name = "سيرجان",
-                            OrganizationId = 23,
-                            PostStationId = 49,
-                            PreStationId = 49
+                            Name = "سيرجان"
                         },
                         new
                         {
@@ -4097,10 +3162,7 @@ namespace Persistence.Migrations
                             Altitude = 1711.4000000000001,
                             Latitude = 29.336670000000002,
                             Longitude = 55.617440000000002,
-                            Name = "اضطراري 16",
-                            OrganizationId = 23,
-                            PostStationId = 314,
-                            PreStationId = 314
+                            Name = "اضطراري 16"
                         },
                         new
                         {
@@ -4108,10 +3170,7 @@ namespace Persistence.Migrations
                             Altitude = 1448.2,
                             Latitude = 28.588609999999999,
                             Longitude = 55.723239999999997,
-                            Name = "كهه",
-                            OrganizationId = 23,
-                            PostStationId = 52,
-                            PreStationId = 52
+                            Name = "كهه"
                         },
                         new
                         {
@@ -4119,10 +3178,7 @@ namespace Persistence.Migrations
                             Altitude = 1237.5999999999999,
                             Latitude = 28.415800000000001,
                             Longitude = 55.738590000000002,
-                            Name = "چاه تر",
-                            OrganizationId = 23,
-                            PostStationId = 316,
-                            PreStationId = 316
+                            Name = "چاه تر"
                         },
                         new
                         {
@@ -4130,10 +3186,7 @@ namespace Persistence.Migrations
                             Altitude = 895.10000000000002,
                             Latitude = 28.269269999999999,
                             Longitude = 55.784239999999997,
-                            Name = "تزرج",
-                            OrganizationId = 23,
-                            PostStationId = 317,
-                            PreStationId = 317
+                            Name = "تزرج"
                         },
                         new
                         {
@@ -4141,10 +3194,7 @@ namespace Persistence.Migrations
                             Altitude = 688.29999999999995,
                             Latitude = 28.125309999999999,
                             Longitude = 55.778959999999998,
-                            Name = "اضطراري 8",
-                            OrganizationId = 23,
-                            PostStationId = 318,
-                            PreStationId = 318
+                            Name = "اضطراري 8"
                         },
                         new
                         {
@@ -4152,10 +3202,7 @@ namespace Persistence.Migrations
                             Altitude = 678.20000000000005,
                             Latitude = 27.937889999999999,
                             Longitude = 55.713509999999999,
-                            Name = "زاد محمود",
-                            OrganizationId = 23,
-                            PostStationId = 319,
-                            PreStationId = 319
+                            Name = "زاد محمود"
                         },
                         new
                         {
@@ -4163,10 +3210,7 @@ namespace Persistence.Migrations
                             Altitude = 472.0,
                             Latitude = 27.766629999999999,
                             Longitude = 55.695329999999998,
-                            Name = "اضطراري 6",
-                            OrganizationId = 23,
-                            PostStationId = 320,
-                            PreStationId = 320
+                            Name = "اضطراري 6"
                         },
                         new
                         {
@@ -4174,10 +3218,7 @@ namespace Persistence.Migrations
                             Altitude = 313.89999999999998,
                             Latitude = 27.620740000000001,
                             Longitude = 55.898620000000001,
-                            Name = "فين",
-                            OrganizationId = 23,
-                            PostStationId = 321,
-                            PreStationId = 321
+                            Name = "فين"
                         },
                         new
                         {
@@ -4185,10 +3226,7 @@ namespace Persistence.Migrations
                             Altitude = 172.19999999999999,
                             Latitude = 27.406839999999999,
                             Longitude = 55.973959999999998,
-                            Name = "تيكو",
-                            OrganizationId = 23,
-                            PostStationId = 322,
-                            PreStationId = 322
+                            Name = "تيكو"
                         },
                         new
                         {
@@ -4196,10 +3234,7 @@ namespace Persistence.Migrations
                             Altitude = 42.299999999999997,
                             Latitude = 27.200279999999999,
                             Longitude = 56.122019999999999,
-                            Name = "انشعاب",
-                            OrganizationId = 23,
-                            PostStationId = 323,
-                            PreStationId = 323
+                            Name = "انشعاب"
                         },
                         new
                         {
@@ -4207,10 +3242,7 @@ namespace Persistence.Migrations
                             Altitude = 28.0,
                             Latitude = 27.135919999999999,
                             Longitude = 56.072920000000003,
-                            Name = "مانوري",
-                            OrganizationId = 23,
-                            PostStationId = 54,
-                            PreStationId = 324
+                            Name = "مانوري"
                         },
                         new
                         {
@@ -4218,10 +3250,7 @@ namespace Persistence.Migrations
                             Altitude = 1147.8,
                             Latitude = 31.37529,
                             Longitude = 55.638109999999998,
-                            Name = "كاوه",
-                            OrganizationId = 16,
-                            PostStationId = 72,
-                            PreStationId = 71
+                            Name = "كاوه"
                         },
                         new
                         {
@@ -4229,10 +3258,7 @@ namespace Persistence.Migrations
                             Altitude = 1304.4000000000001,
                             Latitude = 31.16056,
                             Longitude = 55.838329999999999,
-                            Name = "مورد",
-                            OrganizationId = 16,
-                            PostStationId = 328,
-                            PreStationId = 72
+                            Name = "مورد"
                         },
                         new
                         {
@@ -4240,10 +3266,7 @@ namespace Persistence.Migrations
                             Altitude = 1394.0999999999999,
                             Latitude = 31.03267,
                             Longitude = 55.944690000000001,
-                            Name = "سي ريز",
-                            OrganizationId = 16,
-                            PostStationId = 329,
-                            PreStationId = 327
+                            Name = "سي ريز"
                         },
                         new
                         {
@@ -4251,10 +3274,7 @@ namespace Persistence.Migrations
                             Altitude = 1483.9000000000001,
                             Latitude = 30.940670000000001,
                             Longitude = 56.108890000000002,
-                            Name = "سنگ",
-                            OrganizationId = 16,
-                            PostStationId = 330,
-                            PreStationId = 328
+                            Name = "سنگ"
                         },
                         new
                         {
@@ -4262,10 +3282,7 @@ namespace Persistence.Migrations
                             Altitude = 1582.0,
                             Latitude = 30.870560000000001,
                             Longitude = 56.239789999999999,
-                            Name = "گل زرد",
-                            OrganizationId = 16,
-                            PostStationId = 331,
-                            PreStationId = 329
+                            Name = "گل زرد"
                         },
                         new
                         {
@@ -4273,10 +3290,7 @@ namespace Persistence.Migrations
                             Altitude = 1649.8,
                             Latitude = 30.87369,
                             Longitude = 56.413260000000001,
-                            Name = "جلال آباد",
-                            OrganizationId = 16,
-                            PostStationId = 332,
-                            PreStationId = 330
+                            Name = "جلال آباد"
                         },
                         new
                         {
@@ -4284,10 +3298,7 @@ namespace Persistence.Migrations
                             Altitude = 1700.0,
                             Latitude = 30.812660000000001,
                             Longitude = 56.582349999999998,
-                            Name = "زرند",
-                            OrganizationId = 16,
-                            PostStationId = 73,
-                            PreStationId = 331
+                            Name = "زرند"
                         },
                         new
                         {
@@ -4295,10 +3306,7 @@ namespace Persistence.Migrations
                             Altitude = 1723.5999999999999,
                             Latitude = 30.655760000000001,
                             Longitude = 56.700560000000003,
-                            Name = "حسامي",
-                            OrganizationId = 16,
-                            PostStationId = 74,
-                            PreStationId = 73
+                            Name = "حسامي"
                         },
                         new
                         {
@@ -4306,9 +3314,7 @@ namespace Persistence.Migrations
                             Altitude = 1602.9000000000001,
                             Latitude = 32.077390000000001,
                             Longitude = 55.770989999999998,
-                            Name = "بهاباد",
-                            OrganizationId = 24,
-                            PostStationId = 335
+                            Name = "بهاباد"
                         },
                         new
                         {
@@ -4316,9 +3322,7 @@ namespace Persistence.Migrations
                             Altitude = 1421.2,
                             Latitude = 32.230510000000002,
                             Longitude = 55.711489999999998,
-                            Name = "چاه محمدو",
-                            OrganizationId = 24,
-                            PostStationId = 336
+                            Name = "چاه محمدو"
                         },
                         new
                         {
@@ -4326,10 +3330,7 @@ namespace Persistence.Migrations
                             Altitude = 1219.8,
                             Latitude = 32.35078,
                             Longitude = 55.699930000000002,
-                            Name = "جندق",
-                            OrganizationId = 24,
-                            PostStationId = 337,
-                            PreStationId = 335
+                            Name = "جندق"
                         },
                         new
                         {
@@ -4337,10 +3338,7 @@ namespace Persistence.Migrations
                             Altitude = 1065.9000000000001,
                             Latitude = 32.479170000000003,
                             Longitude = 55.762569999999997,
-                            Name = "رمل",
-                            OrganizationId = 24,
-                            PostStationId = 338,
-                            PreStationId = 336
+                            Name = "رمل"
                         },
                         new
                         {
@@ -4348,10 +3346,7 @@ namespace Persistence.Migrations
                             Altitude = 1026.8,
                             Latitude = 32.595320000000001,
                             Longitude = 55.865569999999998,
-                            Name = "خنج",
-                            OrganizationId = 24,
-                            PostStationId = 339,
-                            PreStationId = 337
+                            Name = "خنج"
                         },
                         new
                         {
@@ -4359,10 +3354,7 @@ namespace Persistence.Migrations
                             Altitude = 907.39999999999998,
                             Latitude = 32.777760000000001,
                             Longitude = 55.86844,
-                            Name = "رباط پشت بادام",
-                            OrganizationId = 24,
-                            PostStationId = 340,
-                            PreStationId = 338
+                            Name = "رباط پشت بادام"
                         },
                         new
                         {
@@ -4370,10 +3362,7 @@ namespace Persistence.Migrations
                             Altitude = 831.29999999999995,
                             Latitude = 32.934469999999997,
                             Longitude = 55.89772,
-                            Name = "تل حميد",
-                            OrganizationId = 24,
-                            PostStationId = 341,
-                            PreStationId = 339
+                            Name = "تل حميد"
                         },
                         new
                         {
@@ -4381,10 +3370,7 @@ namespace Persistence.Migrations
                             Altitude = 960.0,
                             Latitude = 33.025709999999997,
                             Longitude = 56.000309999999999,
-                            Name = "شهید منتظر قائم",
-                            OrganizationId = 24,
-                            PostStationId = 342,
-                            PreStationId = 340
+                            Name = "شهید منتظر قائم"
                         },
                         new
                         {
@@ -4392,10 +3378,7 @@ namespace Persistence.Migrations
                             Altitude = 1041.8,
                             Latitude = 33.048169999999999,
                             Longitude = 56.14461,
-                            Name = "ريزو",
-                            OrganizationId = 24,
-                            PostStationId = 60,
-                            PreStationId = 341
+                            Name = "ريزو"
                         },
                         new
                         {
@@ -4403,10 +3386,7 @@ namespace Persistence.Migrations
                             Altitude = 927.29999999999995,
                             Latitude = 33.324489999999997,
                             Longitude = 56.578299999999999,
-                            Name = "كال زرد",
-                            OrganizationId = 24,
-                            PostStationId = 244,
-                            PreStationId = 60
+                            Name = "كال زرد"
                         },
                         new
                         {
@@ -4414,9 +3394,7 @@ namespace Persistence.Migrations
                             Altitude = 694.5,
                             Latitude = 33.422980000000003,
                             Longitude = 56.747149999999998,
-                            Name = "نمكزار",
-                            OrganizationId = 24,
-                            PostStationId = 345
+                            Name = "نمكزار"
                         },
                         new
                         {
@@ -4424,9 +3402,7 @@ namespace Persistence.Migrations
                             Altitude = 672.5,
                             Latitude = 33.613709999999998,
                             Longitude = 56.890270000000001,
-                            Name = "طبس",
-                            OrganizationId = 24,
-                            PostStationId = 346
+                            Name = "طبس"
                         },
                         new
                         {
@@ -4434,9 +3410,7 @@ namespace Persistence.Migrations
                             Altitude = 768.5,
                             Latitude = 33.814500000000002,
                             Longitude = 56.790669999999999,
-                            Name = "ده شور",
-                            OrganizationId = 24,
-                            PostStationId = 347
+                            Name = "ده شور"
                         },
                         new
                         {
@@ -4444,9 +3418,7 @@ namespace Persistence.Migrations
                             Altitude = 1022.3,
                             Latitude = 34.010129999999997,
                             Longitude = 56.79027,
-                            Name = "شير گشت",
-                            OrganizationId = 24,
-                            PostStationId = 348
+                            Name = "شير گشت"
                         },
                         new
                         {
@@ -4454,9 +3426,7 @@ namespace Persistence.Migrations
                             Altitude = 1053.7,
                             Latitude = 34.06682,
                             Longitude = 56.985489999999999,
-                            Name = "عشق آباد",
-                            OrganizationId = 24,
-                            PostStationId = 349
+                            Name = "عشق آباد"
                         },
                         new
                         {
@@ -4464,8 +3434,7 @@ namespace Persistence.Migrations
                             Altitude = 1078.3,
                             Latitude = 34.219819999999999,
                             Longitude = 57.198779999999999,
-                            Name = "غني آباد",
-                            OrganizationId = 24
+                            Name = "غني آباد"
                         },
                         new
                         {
@@ -4473,8 +3442,7 @@ namespace Persistence.Migrations
                             Altitude = 889.60000000000002,
                             Latitude = 34.309109999999997,
                             Longitude = 57.352330000000002,
-                            Name = "بشرويه",
-                            OrganizationId = 24
+                            Name = "بشرويه"
                         },
                         new
                         {
@@ -4482,8 +3450,7 @@ namespace Persistence.Migrations
                             Altitude = 847.60000000000002,
                             Latitude = 34.41527,
                             Longitude = 57.638370000000002,
-                            Name = "جزين",
-                            OrganizationId = 24
+                            Name = "جزين"
                         },
                         new
                         {
@@ -4491,8 +3458,7 @@ namespace Persistence.Migrations
                             Altitude = 943.39999999999998,
                             Latitude = 34.591920000000002,
                             Longitude = 57.864139999999999,
-                            Name = "قاسم آباد",
-                            OrganizationId = 24
+                            Name = "قاسم آباد"
                         },
                         new
                         {
@@ -4500,8 +3466,7 @@ namespace Persistence.Migrations
                             Altitude = 1015.6,
                             Latitude = 34.60528,
                             Longitude = 58.067520000000002,
-                            Name = "آهنگ",
-                            OrganizationId = 24
+                            Name = "آهنگ"
                         },
                         new
                         {
@@ -4509,8 +3474,7 @@ namespace Persistence.Migrations
                             Altitude = 1073.3,
                             Latitude = 34.612549999999999,
                             Longitude = 58.219259999999998,
-                            Name = "بجستان",
-                            OrganizationId = 24
+                            Name = "بجستان"
                         },
                         new
                         {
@@ -4518,8 +3482,7 @@ namespace Persistence.Migrations
                             Altitude = 904.79999999999995,
                             Latitude = 34.712359999999997,
                             Longitude = 58.485460000000003,
-                            Name = "يونسي",
-                            OrganizationId = 24
+                            Name = "يونسي"
                         },
                         new
                         {
@@ -4527,8 +3490,7 @@ namespace Persistence.Migrations
                             Altitude = 874.5,
                             Latitude = 34.863320000000002,
                             Longitude = 58.728490000000001,
-                            Name = "كال شور",
-                            OrganizationId = 24
+                            Name = "كال شور"
                         },
                         new
                         {
@@ -4536,8 +3498,7 @@ namespace Persistence.Migrations
                             Altitude = 1027.4000000000001,
                             Latitude = 35.036580000000001,
                             Longitude = 58.906059999999997,
-                            Name = "نصر آباد",
-                            OrganizationId = 24
+                            Name = "نصر آباد"
                         },
                         new
                         {
@@ -4545,8 +3506,7 @@ namespace Persistence.Migrations
                             Altitude = 1201.7,
                             Latitude = 35.165640000000003,
                             Longitude = 59.100439999999999,
-                            Name = "شادمهر",
-                            OrganizationId = 24
+                            Name = "شادمهر"
                         },
                         new
                         {
@@ -4554,8 +3514,7 @@ namespace Persistence.Migrations
                             Altitude = 1249.5999999999999,
                             Latitude = 35.153779999999998,
                             Longitude = 59.378100000000003,
-                            Name = "سالار",
-                            OrganizationId = 24
+                            Name = "سالار"
                         },
                         new
                         {
@@ -4563,9 +3522,7 @@ namespace Persistence.Migrations
                             Altitude = 1197.3,
                             Latitude = 35.028579999999998,
                             Longitude = 59.560229999999997,
-                            Name = "رشت خوار",
-                            OrganizationId = 24,
-                            PreStationId = 359
+                            Name = "رشت خوار"
                         },
                         new
                         {
@@ -4573,9 +3530,7 @@ namespace Persistence.Migrations
                             Altitude = 1094.5999999999999,
                             Latitude = 34.873469999999998,
                             Longitude = 59.79956,
-                            Name = "چمن آباد",
-                            OrganizationId = 24,
-                            PreStationId = 360
+                            Name = "چمن آباد"
                         },
                         new
                         {
@@ -4583,9 +3538,7 @@ namespace Persistence.Migrations
                             Altitude = 1112.3,
                             Latitude = 34.742780000000003,
                             Longitude = 60.002540000000003,
-                            Name = "سلامي",
-                            OrganizationId = 24,
-                            PreStationId = 361
+                            Name = "سلامي"
                         },
                         new
                         {
@@ -4593,8 +3546,7 @@ namespace Persistence.Migrations
                             Altitude = 1394.8,
                             Latitude = 35.274380000000001,
                             Longitude = 59.308700000000002,
-                            Name = "تربت حيدريه",
-                            OrganizationId = 24
+                            Name = "تربت حيدريه"
                         },
                         new
                         {
@@ -4602,9 +3554,7 @@ namespace Persistence.Migrations
                             Altitude = 1580.2,
                             Latitude = 35.39425,
                             Longitude = 59.27469,
-                            Name = "رخ",
-                            OrganizationId = 24,
-                            PreStationId = 365
+                            Name = "رخ"
                         },
                         new
                         {
@@ -4612,8 +3562,7 @@ namespace Persistence.Migrations
                             Altitude = 1758.0999999999999,
                             Latitude = 35.480440000000002,
                             Longitude = 59.205309999999997,
-                            Name = "كامه",
-                            OrganizationId = 24
+                            Name = "كامه"
                         },
                         new
                         {
@@ -4621,9 +3570,7 @@ namespace Persistence.Migrations
                             Altitude = 1676.9000000000001,
                             Latitude = 35.65361,
                             Longitude = 59.227589999999999,
-                            Name = "حصار جلال",
-                            OrganizationId = 24,
-                            PreStationId = 365
+                            Name = "حصار جلال"
                         },
                         new
                         {
@@ -4631,9 +3578,7 @@ namespace Persistence.Migrations
                             Altitude = 1495.0,
                             Latitude = 35.786020000000001,
                             Longitude = 59.136690000000002,
-                            Name = "نمكي",
-                            OrganizationId = 24,
-                            PreStationId = 366
+                            Name = "نمكي"
                         },
                         new
                         {
@@ -4641,9 +3586,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "پدكي",
-                            OrganizationId = 17,
-                            PreStationId = 414
+                            Name = "پدكي"
                         },
                         new
                         {
@@ -4651,9 +3594,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "كچه رود",
-                            OrganizationId = 17,
-                            PreStationId = 368
+                            Name = "كچه رود"
                         },
                         new
                         {
@@ -4661,9 +3602,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "خان محمدچاه",
-                            OrganizationId = 17,
-                            PreStationId = 374
+                            Name = "خان محمدچاه"
                         },
                         new
                         {
@@ -4671,9 +3610,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "بوك",
-                            OrganizationId = 17,
-                            PreStationId = 370
+                            Name = "بوك"
                         },
                         new
                         {
@@ -4681,8 +3618,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "لندي عباس",
-                            OrganizationId = 17
+                            Name = "لندي عباس"
                         },
                         new
                         {
@@ -4690,9 +3626,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "ميرجاوه",
-                            OrganizationId = 17,
-                            PreStationId = 371
+                            Name = "ميرجاوه"
                         },
                         new
                         {
@@ -4700,9 +3634,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "چهار صوله",
-                            OrganizationId = 17,
-                            PreStationId = 369
+                            Name = "چهار صوله"
                         },
                         new
                         {
@@ -4710,10 +3642,7 @@ namespace Persistence.Migrations
                             Altitude = 1676.2,
                             Latitude = 32.43291,
                             Longitude = 51.593089999999997,
-                            Name = "سيد آباد",
-                            OrganizationId = 10,
-                            PostStationId = 268,
-                            PreStationId = 267
+                            Name = "سيد آباد"
                         },
                         new
                         {
@@ -4721,10 +3650,7 @@ namespace Persistence.Migrations
                             Altitude = 1692.2,
                             Latitude = 32.35942,
                             Longitude = 51.686819999999997,
-                            Name = "اسد آباد",
-                            OrganizationId = 25,
-                            PostStationId = 377,
-                            PreStationId = 375
+                            Name = "اسد آباد"
                         },
                         new
                         {
@@ -4732,10 +3658,7 @@ namespace Persistence.Migrations
                             Altitude = 1736.4000000000001,
                             Latitude = 32.189340000000001,
                             Longitude = 51.796639999999996,
-                            Name = "مهيار",
-                            OrganizationId = 25,
-                            PostStationId = 378,
-                            PreStationId = 376
+                            Name = "مهيار"
                         },
                         new
                         {
@@ -4743,10 +3666,7 @@ namespace Persistence.Migrations
                             Altitude = 1885.0,
                             Latitude = 31.976089999999999,
                             Longitude = 51.832030000000003,
-                            Name = "شهرضا",
-                            OrganizationId = 25,
-                            PostStationId = 379,
-                            PreStationId = 377
+                            Name = "شهرضا"
                         },
                         new
                         {
@@ -4754,10 +3674,7 @@ namespace Persistence.Migrations
                             Altitude = 1995.8,
                             Latitude = 31.817810000000001,
                             Longitude = 51.96452,
-                            Name = "وشاره",
-                            OrganizationId = 25,
-                            PostStationId = 389,
-                            PreStationId = 378
+                            Name = "وشاره"
                         },
                         new
                         {
@@ -4765,10 +3682,7 @@ namespace Persistence.Migrations
                             Altitude = 2334.6999999999998,
                             Latitude = 30.585129999999999,
                             Longitude = 53.195340000000002,
-                            Name = "صفاشهر",
-                            OrganizationId = 25,
-                            PostStationId = 398,
-                            PreStationId = 381
+                            Name = "صفاشهر"
                         },
                         new
                         {
@@ -4776,10 +3690,7 @@ namespace Persistence.Migrations
                             Altitude = 2555.0,
                             Latitude = 30.743919999999999,
                             Longitude = 53.16583,
-                            Name = "خرم بيد",
-                            OrganizationId = 25,
-                            PostStationId = 380,
-                            PreStationId = 382
+                            Name = "خرم بيد"
                         },
                         new
                         {
@@ -4787,10 +3698,7 @@ namespace Persistence.Migrations
                             Altitude = 2365.0,
                             Latitude = 30.834689999999998,
                             Longitude = 52.99944,
-                            Name = "خانه خوره",
-                            OrganizationId = 25,
-                            PostStationId = 381,
-                            PreStationId = 383
+                            Name = "خانه خوره"
                         },
                         new
                         {
@@ -4798,10 +3706,7 @@ namespace Persistence.Migrations
                             Altitude = 2162.9000000000001,
                             Latitude = 30.914149999999999,
                             Longitude = 52.818019999999997,
-                            Name = "بيد بيدك",
-                            OrganizationId = 25,
-                            PostStationId = 382,
-                            PreStationId = 384
+                            Name = "بيد بيدك"
                         },
                         new
                         {
@@ -4809,10 +3714,7 @@ namespace Persistence.Migrations
                             Altitude = 2045.8,
                             Latitude = 31.006779999999999,
                             Longitude = 52.750340000000001,
-                            Name = "اقليد",
-                            OrganizationId = 25,
-                            PostStationId = 383,
-                            PreStationId = 385
+                            Name = "اقليد"
                         },
                         new
                         {
@@ -4820,10 +3722,7 @@ namespace Persistence.Migrations
                             Altitude = 2102.6999999999998,
                             Latitude = 31.17022,
                             Longitude = 52.580370000000002,
-                            Name = "آباده",
-                            OrganizationId = 25,
-                            PostStationId = 384,
-                            PreStationId = 386
+                            Name = "آباده"
                         },
                         new
                         {
@@ -4831,10 +3730,7 @@ namespace Persistence.Migrations
                             Altitude = 2135.4000000000001,
                             Latitude = 31.31279,
                             Longitude = 52.485469999999999,
-                            Name = "صغاد",
-                            OrganizationId = 25,
-                            PostStationId = 385,
-                            PreStationId = 387
+                            Name = "صغاد"
                         },
                         new
                         {
@@ -4842,10 +3738,7 @@ namespace Persistence.Migrations
                             Altitude = 2198.4000000000001,
                             Latitude = 31.425260000000002,
                             Longitude = 52.346110000000003,
-                            Name = "شورحستان",
-                            OrganizationId = 25,
-                            PostStationId = 386,
-                            PreStationId = 388
+                            Name = "شورحستان"
                         },
                         new
                         {
@@ -4853,10 +3746,7 @@ namespace Persistence.Migrations
                             Altitude = 2235.0999999999999,
                             Latitude = 31.48865,
                             Longitude = 52.152520000000003,
-                            Name = "ابزد خواست",
-                            OrganizationId = 25,
-                            PostStationId = 387,
-                            PreStationId = 389
+                            Name = "ابزد خواست"
                         },
                         new
                         {
@@ -4864,10 +3754,7 @@ namespace Persistence.Migrations
                             Altitude = 2125.5,
                             Latitude = 31.6572,
                             Longitude = 52.05733,
-                            Name = "امين آباد",
-                            OrganizationId = 25,
-                            PostStationId = 388,
-                            PreStationId = 379
+                            Name = "امين آباد"
                         },
                         new
                         {
@@ -4875,8 +3762,7 @@ namespace Persistence.Migrations
                             Altitude = 1804.3,
                             Latitude = 29.764050000000001,
                             Longitude = 52.432209999999998,
-                            Name = "شيراز",
-                            OrganizationId = 25
+                            Name = "شيراز"
                         },
                         new
                         {
@@ -4884,9 +3770,7 @@ namespace Persistence.Migrations
                             Altitude = 1614.4000000000001,
                             Latitude = 29.840630000000001,
                             Longitude = 52.741280000000003,
-                            Name = "مرودشت",
-                            OrganizationId = 25,
-                            PreStationId = 392
+                            Name = "مرودشت"
                         },
                         new
                         {
@@ -4894,10 +3778,7 @@ namespace Persistence.Migrations
                             Altitude = 1735.8,
                             Latitude = 30.089510000000001,
                             Longitude = 52.909790000000001,
-                            Name = "سيوند",
-                            OrganizationId = 25,
-                            PostStationId = 391,
-                            PreStationId = 393
+                            Name = "سيوند"
                         },
                         new
                         {
@@ -4905,10 +3786,7 @@ namespace Persistence.Migrations
                             Altitude = 1786.7,
                             Latitude = 30.105619999999998,
                             Longitude = 53.094340000000003,
-                            Name = "سعادت شهر",
-                            OrganizationId = 25,
-                            PostStationId = 392,
-                            PreStationId = 394
+                            Name = "سعادت شهر"
                         },
                         new
                         {
@@ -4916,10 +3794,7 @@ namespace Persistence.Migrations
                             Altitude = 1890.3,
                             Latitude = 30.154109999999999,
                             Longitude = 53.210929999999998,
-                            Name = "پاسارگاد",
-                            OrganizationId = 25,
-                            PostStationId = 393,
-                            PreStationId = 395
+                            Name = "پاسارگاد"
                         },
                         new
                         {
@@ -4927,10 +3802,7 @@ namespace Persistence.Migrations
                             Altitude = 1932.3,
                             Latitude = 30.229559999999999,
                             Longitude = 53.262160000000002,
-                            Name = "مرغاب",
-                            OrganizationId = 25,
-                            PostStationId = 394,
-                            PreStationId = 396
+                            Name = "مرغاب"
                         },
                         new
                         {
@@ -4938,10 +3810,7 @@ namespace Persistence.Migrations
                             Altitude = 2085.4000000000001,
                             Latitude = 30.25292,
                             Longitude = 53.424419999999998,
-                            Name = "قادر آباد",
-                            OrganizationId = 25,
-                            PostStationId = 395,
-                            PreStationId = 397
+                            Name = "قادر آباد"
                         },
                         new
                         {
@@ -4949,10 +3818,7 @@ namespace Persistence.Migrations
                             Altitude = 2158.8000000000002,
                             Latitude = 30.363420000000001,
                             Longitude = 53.349710000000002,
-                            Name = "ديدگان",
-                            OrganizationId = 25,
-                            PostStationId = 396,
-                            PreStationId = 398
+                            Name = "ديدگان"
                         },
                         new
                         {
@@ -4960,10 +3826,7 @@ namespace Persistence.Migrations
                             Altitude = 2205.5999999999999,
                             Latitude = 30.465060000000001,
                             Longitude = 53.232599999999998,
-                            Name = "شهيد آباد",
-                            OrganizationId = 25,
-                            PostStationId = 397,
-                            PreStationId = 380
+                            Name = "شهيد آباد"
                         },
                         new
                         {
@@ -4971,10 +3834,7 @@ namespace Persistence.Migrations
                             Altitude = 2182.4000000000001,
                             Latitude = 29.83389,
                             Longitude = 57.03875,
-                            Name = "حسين آباد",
-                            OrganizationId = 16,
-                            PostStationId = 400,
-                            PreStationId = 76
+                            Name = "حسين آباد"
                         },
                         new
                         {
@@ -4982,10 +3842,7 @@ namespace Persistence.Migrations
                             Altitude = 2162.5999999999999,
                             Latitude = 29.640470000000001,
                             Longitude = 57.470820000000003,
-                            Name = "راين",
-                            OrganizationId = 16,
-                            PostStationId = 401,
-                            PreStationId = 399
+                            Name = "راين"
                         },
                         new
                         {
@@ -4993,9 +3850,7 @@ namespace Persistence.Migrations
                             Altitude = 1876.0,
                             Latitude = 29.388539999999999,
                             Longitude = 57.789389999999997,
-                            Name = "تهرود",
-                            OrganizationId = 16,
-                            PreStationId = 400
+                            Name = "تهرود"
                         },
                         new
                         {
@@ -5003,8 +3858,7 @@ namespace Persistence.Migrations
                             Altitude = 1088.3,
                             Latitude = 29.033429999999999,
                             Longitude = 58.351959999999998,
-                            Name = "بم",
-                            OrganizationId = 16
+                            Name = "بم"
                         },
                         new
                         {
@@ -5012,9 +3866,7 @@ namespace Persistence.Migrations
                             Altitude = 557.60000000000002,
                             Latitude = 29.286840000000002,
                             Longitude = 59.698459999999997,
-                            Name = "مزارآب",
-                            OrganizationId = 17,
-                            PreStationId = 404
+                            Name = "مزارآب"
                         },
                         new
                         {
@@ -5022,9 +3874,7 @@ namespace Persistence.Migrations
                             Altitude = 487.30000000000001,
                             Latitude = 29.238510000000002,
                             Longitude = 59.4895,
-                            Name = "رودشور-زاهدان",
-                            OrganizationId = 17,
-                            PreStationId = 405
+                            Name = "رودشور-زاهدان"
                         },
                         new
                         {
@@ -5032,9 +3882,7 @@ namespace Persistence.Migrations
                             Altitude = 483.69999999999999,
                             Latitude = 29.105399999999999,
                             Longitude = 59.259529999999998,
-                            Name = "شورگز",
-                            OrganizationId = 16,
-                            PreStationId = 406
+                            Name = "شورگز"
                         },
                         new
                         {
@@ -5042,10 +3890,7 @@ namespace Persistence.Migrations
                             Altitude = 578.10000000000002,
                             Latitude = 29.041319999999999,
                             Longitude = 59.022190000000002,
-                            Name = "ميل نادري",
-                            OrganizationId = 16,
-                            PostStationId = 405,
-                            PreStationId = 407
+                            Name = "ميل نادري"
                         },
                         new
                         {
@@ -5053,9 +3898,7 @@ namespace Persistence.Migrations
                             Altitude = 692.79999999999995,
                             Latitude = 28.97429,
                             Longitude = 58.858460000000001,
-                            Name = "فهرج",
-                            OrganizationId = 16,
-                            PostStationId = 406
+                            Name = "فهرج"
                         },
                         new
                         {
@@ -5063,9 +3906,7 @@ namespace Persistence.Migrations
                             Altitude = 1184.9000000000001,
                             Latitude = 29.232479999999999,
                             Longitude = 60.04325,
-                            Name = "رود ماهي",
-                            OrganizationId = 17,
-                            PreStationId = 409
+                            Name = "رود ماهي"
                         },
                         new
                         {
@@ -5073,9 +3914,7 @@ namespace Persistence.Migrations
                             Altitude = 939.39999999999998,
                             Latitude = 29.26868,
                             Longitude = 59.961579999999998,
-                            Name = "كلات",
-                            OrganizationId = 17,
-                            PreStationId = 410
+                            Name = "كلات"
                         },
                         new
                         {
@@ -5083,9 +3922,7 @@ namespace Persistence.Migrations
                             Altitude = 698.20000000000005,
                             Latitude = 29.185739999999999,
                             Longitude = 59.868549999999999,
-                            Name = "نمكزار-زاهدان",
-                            OrganizationId = 17,
-                            PreStationId = 403
+                            Name = "نمكزار-زاهدان"
                         },
                         new
                         {
@@ -5093,9 +3930,7 @@ namespace Persistence.Migrations
                             Altitude = 1801.0,
                             Latitude = 29.20147,
                             Longitude = 60.651350000000001,
-                            Name = "كنجانك",
-                            OrganizationId = 17,
-                            PreStationId = 412
+                            Name = "كنجانك"
                         },
                         new
                         {
@@ -5103,9 +3938,7 @@ namespace Persistence.Migrations
                             Altitude = 1555.0,
                             Latitude = 29.18242,
                             Longitude = 60.449039999999997,
-                            Name = "دومك",
-                            OrganizationId = 17,
-                            PreStationId = 413
+                            Name = "دومك"
                         },
                         new
                         {
@@ -5113,9 +3946,7 @@ namespace Persistence.Migrations
                             Altitude = 1393.3,
                             Latitude = 29.168189999999999,
                             Longitude = 60.23433,
-                            Name = "شورو",
-                            OrganizationId = 17,
-                            PreStationId = 408
+                            Name = "شورو"
                         },
                         new
                         {
@@ -5123,9 +3954,7 @@ namespace Persistence.Migrations
                             Altitude = 1398.5,
                             Latitude = 29.47963,
                             Longitude = 60.874670000000002,
-                            Name = "زاهدان قديم",
-                            OrganizationId = 17,
-                            PreStationId = 415
+                            Name = "زاهدان قديم"
                         },
                         new
                         {
@@ -5133,9 +3962,7 @@ namespace Persistence.Migrations
                             Altitude = 1411.2,
                             Latitude = 29.430900000000001,
                             Longitude = 60.912799999999997,
-                            Name = "زاهدان جديد",
-                            OrganizationId = 17,
-                            PreStationId = 416
+                            Name = "زاهدان جديد"
                         },
                         new
                         {
@@ -5143,9 +3970,7 @@ namespace Persistence.Migrations
                             Altitude = 1616.0999999999999,
                             Latitude = 29.311229999999998,
                             Longitude = 60.789819999999999,
-                            Name = "جيگولي",
-                            OrganizationId = 17,
-                            PreStationId = 411
+                            Name = "جيگولي"
                         },
                         new
                         {
@@ -5153,10 +3978,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "آپرين",
-                            OrganizationId = 11,
-                            PostStationId = 165,
-                            PreStationId = 230
+                            Name = "آپرين"
                         },
                         new
                         {
@@ -5164,10 +3986,7 @@ namespace Persistence.Migrations
                             Altitude = 1040.0999999999999,
                             Latitude = 35.304879999999997,
                             Longitude = 52.42754,
-                            Name = "بنكوه",
-                            OrganizationId = 19,
-                            PostStationId = 19,
-                            PreStationId = 18
+                            Name = "بنكوه"
                         },
                         new
                         {
@@ -5175,9 +3994,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "آزاد مهر",
-                            OrganizationId = 19,
-                            PreStationId = 29
+                            Name = "آزاد مهر"
                         },
                         new
                         {
@@ -5185,10 +4002,7 @@ namespace Persistence.Migrations
                             Altitude = 1121.8,
                             Latitude = 36.655670000000001,
                             Longitude = 57.418509999999998,
-                            Name = "نقاب",
-                            OrganizationId = 15,
-                            PostStationId = 140,
-                            PreStationId = 141
+                            Name = "نقاب"
                         },
                         new
                         {
@@ -5196,10 +4010,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "فولاد",
-                            OrganizationId = 15,
-                            PostStationId = 135,
-                            PreStationId = 136
+                            Name = "فولاد"
                         },
                         new
                         {
@@ -5207,10 +4018,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "قم رود",
-                            OrganizationId = 12,
-                            PostStationId = 423,
-                            PreStationId = 242
+                            Name = "قم رود"
                         },
                         new
                         {
@@ -5218,10 +4026,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شوراب قم",
-                            OrganizationId = 12,
-                            PostStationId = 424,
-                            PreStationId = 242
+                            Name = "شوراب قم"
                         },
                         new
                         {
@@ -5229,9 +4034,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "رودشور-قم",
-                            OrganizationId = 12,
-                            PreStationId = 231
+                            Name = "رودشور-قم"
                         },
                         new
                         {
@@ -5239,10 +4042,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "حك",
-                            OrganizationId = 9,
-                            PostStationId = 426,
-                            PreStationId = 86
+                            Name = "حك"
                         },
                         new
                         {
@@ -5250,10 +4050,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "جلاير",
-                            OrganizationId = 9,
-                            PostStationId = 427,
-                            PreStationId = 425
+                            Name = "جلاير"
                         },
                         new
                         {
@@ -5261,10 +4058,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "پري",
-                            OrganizationId = 9,
-                            PostStationId = 428,
-                            PreStationId = 426
+                            Name = "پري"
                         },
                         new
                         {
@@ -5272,9 +4066,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "ملاير",
-                            OrganizationId = 9,
-                            PreStationId = 427
+                            Name = "ملاير"
                         },
                         new
                         {
@@ -5282,10 +4074,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "سهاميه",
-                            OrganizationId = 14,
-                            PostStationId = 430,
-                            PreStationId = 431
+                            Name = "سهاميه"
                         },
                         new
                         {
@@ -5293,10 +4082,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "زواره",
-                            OrganizationId = 14,
-                            PostStationId = 282,
-                            PreStationId = 429
+                            Name = "زواره"
                         },
                         new
                         {
@@ -5304,10 +4090,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "موغار",
-                            OrganizationId = 14,
-                            PostStationId = 429,
-                            PreStationId = 254
+                            Name = "موغار"
                         },
                         new
                         {
@@ -5315,9 +4098,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "اضطراري 26- هرمزگان",
-                            OrganizationId = 23,
-                            PostStationId = 309
+                            Name = "اضطراري 26- هرمزگان"
                         },
                         new
                         {
@@ -5325,10 +4106,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "گل تپه",
-                            OrganizationId = 20,
-                            PostStationId = 208,
-                            PreStationId = 207
+                            Name = "گل تپه"
                         },
                         new
                         {
@@ -5336,9 +4114,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شلمچه",
-                            OrganizationId = 13,
-                            PreStationId = 191
+                            Name = "شلمچه"
                         },
                         new
                         {
@@ -5346,9 +4122,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "ذوب آهن",
-                            OrganizationId = 10,
-                            PreStationId = 270
+                            Name = "ذوب آهن"
                         },
                         new
                         {
@@ -5356,10 +4130,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "اضطراري 26",
-                            OrganizationId = 14,
-                            PostStationId = 309,
-                            PreStationId = 308
+                            Name = "اضطراري 26"
                         },
                         new
                         {
@@ -5367,10 +4138,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "گرمدشت",
-                            OrganizationId = 13,
-                            PostStationId = 191,
-                            PreStationId = 190
+                            Name = "گرمدشت"
                         },
                         new
                         {
@@ -5378,10 +4146,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "آهو",
-                            OrganizationId = 13,
-                            PostStationId = 190,
-                            PreStationId = 189
+                            Name = "آهو"
                         },
                         new
                         {
@@ -5389,8 +4154,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "گمنام",
-                            OrganizationId = 13
+                            Name = "گمنام"
                         },
                         new
                         {
@@ -5398,8 +4162,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "مرغزار",
-                            OrganizationId = 13
+                            Name = "مرغزار"
                         },
                         new
                         {
@@ -5407,10 +4170,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "كندلج",
-                            OrganizationId = 8,
-                            PostStationId = 218,
-                            PreStationId = 217
+                            Name = "كندلج"
                         },
                         new
                         {
@@ -5418,10 +4178,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شیر آئین",
-                            OrganizationId = 8,
-                            PostStationId = 7,
-                            PreStationId = 212
+                            Name = "شیر آئین"
                         },
                         new
                         {
@@ -5429,10 +4186,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شهيد مصطفي اميني",
-                            OrganizationId = 8,
-                            PostStationId = 12,
-                            PreStationId = 228
+                            Name = "شهيد مصطفي اميني"
                         },
                         new
                         {
@@ -5440,10 +4194,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "ملكان",
-                            OrganizationId = 20,
-                            PostStationId = 445,
-                            PreStationId = 209
+                            Name = "ملكان"
                         },
                         new
                         {
@@ -5451,10 +4202,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "مياندواب",
-                            OrganizationId = 20,
-                            PostStationId = 22,
-                            PreStationId = 444
+                            Name = "مياندواب"
                         },
                         new
                         {
@@ -5462,10 +4210,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "قز قلعه",
-                            OrganizationId = 20,
-                            PostStationId = 448,
-                            PreStationId = 447
+                            Name = "قز قلعه"
                         },
                         new
                         {
@@ -5473,8 +4218,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "مهاباد-شمالغرب",
-                            OrganizationId = 20
+                            Name = "مهاباد-شمالغرب"
                         },
                         new
                         {
@@ -5482,8 +4226,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "نقده",
-                            OrganizationId = 20
+                            Name = "نقده"
                         },
                         new
                         {
@@ -5491,8 +4234,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شيرين بلاغ",
-                            OrganizationId = 20
+                            Name = "شيرين بلاغ"
                         },
                         new
                         {
@@ -5500,8 +4242,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "رشكان",
-                            OrganizationId = 20
+                            Name = "رشكان"
                         },
                         new
                         {
@@ -5509,9 +4250,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "اروميه",
-                            OrganizationId = 20,
-                            PreStationId = 450
+                            Name = "اروميه"
                         },
                         new
                         {
@@ -5519,8 +4258,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "اينچه برون",
-                            OrganizationId = 19
+                            Name = "اينچه برون"
                         },
                         new
                         {
@@ -5528,9 +4266,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "شوشتر",
-                            OrganizationId = 22,
-                            PreStationId = 111
+                            Name = "شوشتر"
                         },
                         new
                         {
@@ -5538,8 +4274,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "قرتپه",
-                            OrganizationId = 19
+                            Name = "قرتپه"
                         },
                         new
                         {
@@ -5547,8 +4282,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "یامپی",
-                            OrganizationId = 19
+                            Name = "یامپی"
                         },
                         new
                         {
@@ -5556,8 +4290,7 @@ namespace Persistence.Migrations
                             Altitude = 0.0,
                             Latitude = 0.0,
                             Longitude = 0.0,
-                            Name = "پتروشیمی",
-                            OrganizationId = 19
+                            Name = "پتروشیمی"
                         });
                 });
 
@@ -5873,15 +4606,6 @@ namespace Persistence.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("OrganizationId");
                         });
-                });
-
-            modelBuilder.Entity("Domain.Station", b =>
-                {
-                    b.HasOne("Domain.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

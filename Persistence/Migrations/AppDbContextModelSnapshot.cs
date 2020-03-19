@@ -78,8 +78,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<int>("DepoId")
                         .HasColumnType("integer");
@@ -106,8 +106,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -139,8 +139,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EventData")
                         .IsRequired()
@@ -165,8 +165,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -196,8 +196,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("SentAt")
                         .HasColumnType("timestamp without time zone");
@@ -212,8 +212,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -236,8 +236,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -256,8 +256,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -291,8 +291,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Description")
                         .HasColumnType("text");
@@ -325,8 +325,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -358,8 +358,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<string>("EventData")
                         .IsRequired()
@@ -387,8 +387,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -413,8 +413,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("CreatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("CreatedById")
+                        .HasColumnType("integer");
 
                     b.Property<int>("MissionId")
                         .HasColumnType("integer");
@@ -426,8 +426,8 @@ namespace Persistence.Migrations
                         .HasColumnType("character varying(200)")
                         .HasMaxLength(200);
 
-                    b.Property<DateTime>("UpdatedById")
-                        .HasColumnType("timestamp without time zone");
+                    b.Property<int>("UpdatedById")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
