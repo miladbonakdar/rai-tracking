@@ -42,7 +42,5 @@ namespace Application.Interfaces
         Task<bool> AnyAsync(Expression<Func<TAggregateRoot, bool>> @where);
         bool Any(Expression<Func<TAggregateRoot, bool>> @where);
 
-        void UpdatedOwnedProperty<TOwned>(TAggregateRoot item, Func<TAggregateRoot, TOwned> propertySelector
-            , Action<TAggregateRoot> update);
     }
 }

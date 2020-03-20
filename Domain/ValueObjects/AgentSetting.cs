@@ -4,8 +4,8 @@ namespace Domain.ValueObjects
 {
     public class AgentSetting : ValueObject<AgentSetting>
     {
-
-        private static readonly AgentSetting DefaultSetting = new AgentSetting{
+        private static readonly AgentSetting DefaultSetting = new AgentSetting
+        {
             Version = 1
         };
 
@@ -15,10 +15,16 @@ namespace Domain.ValueObjects
         {
         }
 
+        public override void UpdateFrom(AgentSetting item)
+        {
+            Version = item.Version;
+        }
+
         public override bool IsEmpty()
         {
             return Version == default(int);
         }
+
         public static AgentSetting CreateEmpty() =>
             new AgentSetting();
 

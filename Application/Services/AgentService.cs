@@ -75,8 +75,7 @@ namespace Application.Services
         {
             var agent = await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == dto.Id);
             if (agent is null) throw new NotFoundException(dto.Id.ToString());
-            _unitOfWork.Agents.UpdatedOwnedProperty(agent, a => a.PersonName
-                , a => { a.Update(dto.Email, dto.PhoneNumber, dto.Name, dto.Lastname); });
+            agent.Update(dto.Email, dto.PhoneNumber, dto.Name, dto.Lastname);
             await _unitOfWork.CompleteAsync();
             await _cacheStore.RemoveAsync(GetCacheKey(dto.Id));
             return dto;

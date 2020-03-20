@@ -140,16 +140,5 @@ namespace Persistence.Repositories
         {
             return DbSet.Any(where);
         }
-
-        public virtual void UpdatedOwnedProperty<TOwned>(T item, Func<T, TOwned> propertySelector
-            , Action<T> update)
-        {
-            var property = propertySelector(item);
-            if (property is null) throw new ArgumentOutOfRangeException();
-            Context.Entry(property).State = EntityState.Detached;
-            update(item);
-            Context.Entry(property).State = EntityState.Modified;
-            Context.Entry(item).State = EntityState.Modified;
-        }
     }
 }

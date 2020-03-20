@@ -25,9 +25,11 @@ namespace Domain.ValueObjects
         {
         }
 
-        public Location NewLongitude(double longitude) => new Location(Latitude, longitude);
-
-        public Location NewLatitude(double latitude) => new Location(latitude, Longitude);
+        public override void UpdateFrom(Location location)
+        {
+            Longitude = location.Longitude;
+            Latitude = location.Latitude;
+        }
 
         public override bool IsEmpty() =>
             default(double) == Latitude &&

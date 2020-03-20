@@ -23,7 +23,7 @@ namespace Domain
         }
 
         public void UpdateLocation([NotNull] Location location)
-            => Location = location ?? throw new ArgumentNullException("location");
+            => Location.UpdateFrom(location);
 
         public Location Location { get; private set; }
         [Required] public string Name { get; private set; }

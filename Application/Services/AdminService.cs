@@ -30,22 +30,18 @@ namespace Application.Services
         [NeedTest]
         public async Task<AdminDto> UpdateAsync(AdminDto dto)
         {
-            if(!Constants.UserGroup.AllRootAdmins.Contains(_identityProvider.Role) 
-            && _identityProvider.Id != dto.Id)
+            if (!Constants.UserGroup.AllRootAdmins.Contains(_identityProvider.Role)
+                && _identityProvider.Id != dto.Id)
                 throw new ForbiddenException("شما نمی توانید اطلاعات شخص دیگری را تغییر دهید");
-                
+
             var admin = await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == dto.Id);
             if (admin is null) throw new NotFoundException(dto.Id.ToString());
 
-            _unitOfWork.Admins.UpdatedOwnedProperty(admin, a => a.PersonName,
-                a =>
-                {
-                    a.UpdateInfo(dto.PhoneNumber, dto.Name, dto.Lastname,
-                            dto.About, dto.Number)
-                        .UpdateEmail(dto.Email)
-                        .UpdateOrganization(dto.OrganizationId)
-                        .UpdateAdminType(dto.AdminType);
-                });
+            admin.UpdateInfo(dto.PhoneNumber, dto.Name, dto.Lastname,
+                    dto.About, dto.Number)
+                .UpdateEmail(dto.Email)
+                .UpdateOrganization(dto.OrganizationId)
+                .UpdateAdminType(dto.AdminType);
 
             await _unitOfWork.CompleteAsync();
             await _cacheStore.RemoveAsync(GetCacheKey(dto.Id));

@@ -47,7 +47,7 @@ namespace Domain
         {
             Email = email;
             PhoneNumber = phoneNumber;
-            PersonName = new PersonName(name, lastname);
+            PersonName.UpdateFrom(new PersonName(name, lastname));
             return this;
         }
 

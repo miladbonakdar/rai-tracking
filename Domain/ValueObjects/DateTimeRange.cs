@@ -21,7 +21,9 @@ namespace Domain.ValueObjects
         {
         }
 
-        protected DateTimeRange() { }
+        protected DateTimeRange()
+        {
+        }
 
         public int DurationInMinutes()
         {
@@ -32,10 +34,12 @@ namespace Domain.ValueObjects
         {
             return new DateTimeRange(this.Start, newEnd);
         }
+
         public DateTimeRange NewDuration(TimeSpan newDuration)
         {
             return new DateTimeRange(this.Start, newDuration);
         }
+
         public DateTimeRange NewStart(DateTime newStart)
         {
             return new DateTimeRange(newStart, this.End);
@@ -57,9 +61,15 @@ namespace Domain.ValueObjects
                    this.End > dateTimeRange.Start;
         }
 
+        public override void UpdateFrom(DateTimeRange item)
+        {
+            Start = item.Start;
+            End = item.End;
+        }
+
         public override bool IsEmpty() =>
             default(DateTime) == Start &&
-            default(DateTime) == End ;
+            default(DateTime) == End;
 
         public static DateTimeRange CreateEmpty() =>
             new DateTimeRange();

@@ -39,7 +39,7 @@ namespace Domain
             string lastname, string about, string number)
         {
             PhoneNumber = phoneNumber;
-            PersonName = new PersonName(name, lastname);
+            PersonName.UpdateFrom(new PersonName(name, lastname));
             About = about;
             Telephone = number;
             return this;

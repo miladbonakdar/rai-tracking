@@ -24,6 +24,12 @@ namespace Domain.ValueObjects
         [MaxLength(200)] public string Lastname { get; private set; }
         [NotMapped] public string Fullname => $"{Firstname} {Lastname}";
 
+        public override void UpdateFrom(PersonName item)
+        {
+            Firstname = item.Firstname;
+            Lastname = item.Lastname;
+        }
+
         public override bool IsEmpty()
         {
             return (Firstname == "" && Lastname == "");

@@ -37,12 +37,8 @@ namespace Application.Services
         {
             var depo = await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == dto.DomainId);
             if (depo is null) throw new NotFoundException(dto.DomainId.ToString());
-
-            _unitOfWork.Depos.UpdatedOwnedProperty(depo, d => d.Location, d =>
-            {
-                var location = new Location(dto.Latitude, dto.Longitude);
-                d.UpdateLocation(location);
-            });
+            var location = new Location(dto.Latitude, dto.Longitude);
+            depo.UpdateLocation(location);
             await _unitOfWork.CompleteAsync();
             await _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId));
         }
@@ -57,6 +53,7 @@ namespace Application.Services
                 var location = new Location(dto.Location.Latitude, dto.Location.Longitude);
                 depo.UpdateLocation(location);
             }
+
             await _unitOfWork.CompleteAsync(ctx => ctx.Depos.AddAsync(depo));
             dto.Id = depo.Id;
             return dto;
