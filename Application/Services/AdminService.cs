@@ -82,7 +82,8 @@ namespace Application.Services
         [NeedTest]
         public async Task<AdminDto> DeleteAsync(int id)
         {
-            var admin = await _unitOfWork.Admins.SingleAsync(a => a.Id == id);
+            var admin = await _unitOfWork.Admins.SingleAsync(a => a.Id == id)
+                        ?? throw new NotFoundException(id.ToString());
             await _unitOfWork.CompleteAsync((ctx) => ctx.Admins.Remove(admin));
             await _cacheStore.RemoveAsync(GetCacheKey(id));
             return AdminDto.FromDomain(admin);

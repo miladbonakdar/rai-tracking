@@ -112,13 +112,11 @@ namespace Persistence.Repositories
             if (@where != null)
                 query = query.Where(@where);
 
-            var listQuery = query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
+            var listItems = await query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
                 .Take(pageSize).ToListAsync();
-            var listTotal = query.CountAsync();
+            var total = await query.CountAsync();
 
-            await Task.WhenAll(listQuery, listTotal);
-
-            return new Tuple<IList<T>, int>(await listQuery, await listTotal);
+            return new Tuple<IList<T>, int>(listItems, total);
         }
 
         public void Remove(T entity)

@@ -55,7 +55,8 @@ namespace Application.Services
         [NeedTest]
         public async Task<AgentDto> DeleteAsync(int id)
         {
-            var agent = await _unitOfWork.Agents.SingleAsync(a => a.Id == id);
+            var agent = await _unitOfWork.Agents.SingleAsync(a => a.Id == id)
+                        ?? throw new NotFoundException(id.ToString());
             await _unitOfWork.CompleteAsync((ctx) => ctx.Agents.Remove(agent));
             await _cacheStore.RemoveAsync(GetCacheKey(id));
             return AgentDto.FromDomain(agent);
