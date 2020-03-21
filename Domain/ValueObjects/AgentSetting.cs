@@ -4,15 +4,13 @@ namespace Domain.ValueObjects
 {
     public class AgentSetting : ValueObject<AgentSetting>
     {
-        private static readonly AgentSetting DefaultSetting = new AgentSetting
-        {
-            Version = 1
-        };
+        private static readonly AgentSetting DefaultSetting = new AgentSetting(1);
 
         public int Version { get; protected set; }
 
-        public AgentSetting()
+        public AgentSetting(int version)
         {
+            Version = version;
         }
 
         public override void UpdateFrom(AgentSetting item)
@@ -24,9 +22,6 @@ namespace Domain.ValueObjects
         {
             return Version == default(int);
         }
-
-        public static AgentSetting CreateEmpty() =>
-            new AgentSetting();
 
         public static AgentSetting CreateDefault() =>
             DefaultSetting.MemberwiseClone() as AgentSetting;

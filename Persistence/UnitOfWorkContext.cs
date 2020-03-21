@@ -8,6 +8,7 @@ namespace Persistence
     class UnitOfWorkContext : IUnitOfWorkContext
     {
         protected DbContext Context { get; }
+        protected readonly IIdentityProvider IdentityProvider;
 
         public IAgentRepository Agents => _agentsLazy.Value;
         public ICommandRepository Commands => _commandsLazy.Value;
@@ -25,12 +26,13 @@ namespace Persistence
         private readonly Lazy<IStationRepository> _stationsLazy;
         private readonly Lazy<IAdminRepository> _adminsLazy;
 
-        public UnitOfWorkContext(DbContext context)
+        public UnitOfWorkContext(DbContext context, IIdentityProvider identityProvider)
         {
             Context = context;
+            IdentityProvider = identityProvider;
             _agentsLazy = new Lazy<IAgentRepository>(() => new AgentRepository(Context));
             _commandsLazy = new Lazy<ICommandRepository>(() => new CommandRepository(Context));
-            _deposLazy = new Lazy<IDepoRepository>(() => new DepoRepository(Context));
+            _deposLazy = new Lazy<IDepoRepository>(() => new DepoRepository(Context, IdentityProvider));
             _missionsLazy = new Lazy<IMissionRepository>(() => new MissionRepository(Context));
             _organizationsLazy = new Lazy<IOrganizationRepository>(() => new OrganizationRepository(Context));
             _stationsLazy = new Lazy<IStationRepository>(() => new StationRepository(Context));

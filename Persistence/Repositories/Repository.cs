@@ -12,13 +12,17 @@ namespace Persistence.Repositories
 {
     abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
+        protected readonly IQueryable<T> BaseQuery;
         protected readonly AppDbContext Context;
-        protected DbSet<T> DbSet;
+        protected readonly DbSet<T> DbSet;
 
-        protected Repository(DbContext context)
+        protected Repository(DbContext context, Func<DbSet<T>, IQueryable<T>> baseQueryBuilder = null)
         {
             Context = context as AppDbContext;
             DbSet = context.Set<T>();
+            BaseQuery = baseQueryBuilder is null
+                ? DbSet.AsQueryable()
+                : baseQueryBuilder(DbSet);
         }
 
         public int Add(T entity)
@@ -55,60 +59,67 @@ namespace Persistence.Repositories
 
         public virtual T First(Expression<Func<T, bool>> @where)
         {
-            return DbSet.First(where);
+            return BaseQuery.First(where);
         }
 
         public virtual Task<T> FirstAsync(Expression<Func<T, bool>> @where)
         {
-            return DbSet.FirstAsync(where);
+            return BaseQuery.FirstAsync(where);
         }
 
         public virtual T FirstOrDefault(Expression<Func<T, bool>> @where)
         {
-            return DbSet.FirstOrDefault(where);
+            return BaseQuery.FirstOrDefault(where);
         }
 
         public virtual Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> @where)
         {
-            return DbSet.FirstOrDefaultAsync(where);
+            return BaseQuery.FirstOrDefaultAsync(where);
         }
 
         public virtual T Single(Expression<Func<T, bool>> @where)
         {
-            return DbSet.Single(where);
+            return BaseQuery.Single(where);
         }
 
         public virtual Task<T> SingleAsync(Expression<Func<T, bool>> @where)
         {
-            return DbSet.SingleAsync(where);
+            return BaseQuery.SingleAsync(where);
         }
 
         public virtual T SingleOrDefault(Expression<Func<T, bool>> @where)
         {
-            return DbSet.SingleOrDefault(where);
+            return BaseQuery.SingleOrDefault(where);
         }
 
         public virtual Task<T> SingleOrDefaultAsync(Expression<Func<T, bool>> @where)
         {
-            return DbSet.SingleOrDefaultAsync(where);
+            return BaseQuery.SingleOrDefaultAsync(where);
         }
 
         public virtual IList<T> Get(Expression<Func<T, bool>> @where = null)
         {
-            return @where is null ? DbSet.ToList() : DbSet.Where(@where).ToList();
+            return @where is null ? BaseQuery.ToList() : BaseQuery.Where(@where).ToList();
         }
 
         public virtual async Task<IList<T>> GetAsync(Expression<Func<T, bool>> @where = null)
         {
             return @where is null
-                ? await DbSet.ToListAsync()
-                : await DbSet.Where(@where).ToListAsync();
+                ? await BaseQuery.ToListAsync()
+                : await BaseQuery.Where(@where).ToListAsync();
         }
 
         public virtual async Task<Tuple<IList<T>, int>> GetPageAsync(int pageSize, int pageNumber,
             Expression<Func<T, bool>> @where = null)
         {
-            var query = DbSet.AsQueryable();
+            void PageParameterGuard(ref int pageSize, ref int pageNumber)
+            {
+                pageSize = Math.Min(Math.Max(pageSize, 1), 50);
+                pageNumber = Math.Max(pageNumber, 0);
+            }
+
+            PageParameterGuard(ref pageSize, ref pageNumber);
+            var query = BaseQuery;
             if (@where != null)
                 query = query.Where(@where);
 
@@ -118,6 +129,7 @@ namespace Persistence.Repositories
 
             return new Tuple<IList<T>, int>(listItems, total);
         }
+
 
         public void Remove(T entity)
         {
@@ -131,12 +143,12 @@ namespace Persistence.Repositories
 
         public virtual Task<bool> AnyAsync(Expression<Func<T, bool>> @where)
         {
-            return DbSet.AnyAsync(where);
+            return BaseQuery.AnyAsync(where);
         }
 
         public virtual bool Any(Expression<Func<T, bool>> @where)
         {
-            return DbSet.Any(where);
+            return BaseQuery.Any(where);
         }
     }
 }

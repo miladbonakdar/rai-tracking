@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.DTO;
 using Application.Interfaces;
 using Application.Services.Contracts;
+using Domain;
 using Domain.ValueObjects;
 using SharedKernel;
 using SharedKernel.Constants;
@@ -27,10 +28,13 @@ namespace Application.Services
             _identityProvider = identityProvider;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AgentDto> CreateAsync(AgentDto dto)
         {
-            var agent = new Domain.Agent(new PersonName(dto.Name, dto.Lastname)
+            await _unitOfWork.Agents.GuardForDuplicateEmailAddress(dto.Email);
+            await _unitOfWork.Agents.GuardForDuplicatePhoneNumber(dto.PhoneNumber);
+
+            var agent = new Agent(new PersonName(dto.Name, dto.Lastname)
                 , dto.PhoneNumber, AgentSetting.CreateDefault()
                 , dto.DepoId);
             agent.Register(dto.Email, _hasher.HashPassword(dto.Password));
@@ -40,29 +44,27 @@ namespace Application.Services
             return dto;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AgentDto> GetAsync(int id)
         {
             var agentDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var agent = await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == id);
-                if (agent is null) throw new NotFoundException(id.ToString());
+                var agent = await Get(id);
                 return AgentDto.FromDomain(agent);
             });
             return agentDto;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AgentDto> DeleteAsync(int id)
         {
-            var agent = await _unitOfWork.Agents.SingleAsync(a => a.Id == id)
-                        ?? throw new NotFoundException(id.ToString());
-            await _unitOfWork.CompleteAsync((ctx) => ctx.Agents.Remove(agent));
-            await _cacheStore.RemoveAsync(GetCacheKey(id));
+            var agent = await Get(id);
+            await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Agents.Remove(agent)),
+                _cacheStore.RemoveAsync(GetCacheKey(id)));
             return AgentDto.FromDomain(agent);
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<PageDto<AgentDto>> GetPageAsync(int pageSize, int pageNumber)
         {
             var page = new PageDto<AgentDto>(pageSize, pageNumber);
@@ -71,30 +73,44 @@ namespace Application.Services
             return page;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AgentDto> UpdateAsync(AgentDto dto)
         {
-            var agent = await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == dto.Id);
-            if (agent is null) throw new NotFoundException(dto.Id.ToString());
+            await _unitOfWork.Agents.GuardForDuplicateEmailAddress(dto.Email, dto.Id);
+            await _unitOfWork.Agents.GuardForDuplicatePhoneNumber(dto.PhoneNumber, dto.Id);
+
+            var agent = await Get(dto.Id);
             agent.Update(dto.Email, dto.PhoneNumber, dto.Name, dto.Lastname);
-            await _unitOfWork.CompleteAsync();
-            await _cacheStore.RemoveAsync(GetCacheKey(dto.Id));
+
+            await Task.WhenAll(_unitOfWork.CompleteAsync(), _cacheStore.RemoveAsync(GetCacheKey(dto.Id)));
             return dto;
         }
 
+        [WasFine]
         public async Task ResetPasswordAsync(ResetPasswordDto dto)
         {
             if (!_identityProvider.HasValue || !_identityProvider.IsAdmin)
                 throw new ForbiddenException();
 
-            var agent = await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == dto.DomainId);
-            if (agent is null) throw new NotFoundException(dto.DomainId.ToString());
+            var agent = await Get(dto.DomainId);
 
             agent.UpdatePassword(_hasher.HashPassword(dto.Password));
 
             await _unitOfWork.CompleteAsync();
-            await _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId));
         }
+
+        [WasFine]
+        public async Task UpdateSettingAsync(UpdateAgentSettingDto dto)
+        {
+            var agent = await Get(dto.AgentId);
+            await Task.WhenAll(_unitOfWork.CompleteAsync(ctx =>
+                    agent.UpdateSetting(new AgentSetting(dto.Version))),
+                _cacheStore.RemoveAsync(GetCacheKey(dto.AgentId)));
+        }
+
+        private async Task<Agent> Get(int id) =>
+            await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == id)
+            ?? throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Agent_{id}";
     }

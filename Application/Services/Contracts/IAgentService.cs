@@ -11,5 +11,6 @@ namespace Application.Services.Contracts
         Task<PageDto<AgentDto>> GetPageAsync(int pageSize, int pageNumber);
         Task<AgentDto> UpdateAsync(AgentDto dto);
         Task ResetPasswordAsync(ResetPasswordDto dto);
+        Task UpdateSettingAsync(UpdateAgentSettingDto dto);
     }
 }

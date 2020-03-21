@@ -19,7 +19,7 @@ namespace RaiTracking.Controllers.Admin
             _agentService = agentService;
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPost]
         [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
         public async Task<Result<AgentDto>> Create([FromBody] AgentDto dto)
@@ -28,7 +28,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<AgentDto>.Success(data: agent);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPut]
         [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
         public async Task<Result<AgentDto>> Update([FromBody] AgentDto dto)
@@ -36,17 +36,26 @@ namespace RaiTracking.Controllers.Admin
             var agent = await _agentService.UpdateAsync(dto);
             return Result<AgentDto>.Success(data: agent);
         }
-
-        [NeedTest]
-        [HttpPatch(nameof(UpdatePassword))]
+ 
+        [WasFine]
+        [HttpPatch(nameof(ResetPassword))]
         [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
-        public async Task<Result> UpdatePassword([FromBody] ResetPasswordDto dto)
+        public async Task<Result> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             await _agentService.ResetPasswordAsync(dto);
             return Result.Success();
         }
+        
+        [WasFine]
+        [HttpPatch(nameof(UpdateSetting))]
+        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        public async Task<Result> UpdateSetting([FromBody] UpdateAgentSettingDto dto)
+        {
+            await _agentService.UpdateSettingAsync(dto);
+            return Result.Success();
+        }
 
-        [NeedTest]
+        [WasFine]
         [HttpDelete("{id}")]
         [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
         public async Task<Result> Delete(int id)
@@ -55,7 +64,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{id}")]
         public async Task<Result<AgentDto>> Get(int id)
         {
@@ -63,7 +72,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<AgentDto>.Success(data: res);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{pageSize}/{pageNumber}")]
         public async Task<Result<PageDto<AgentDto>>> Get(int pageSize, int pageNumber)
         {

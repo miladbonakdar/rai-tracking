@@ -9,11 +9,8 @@ namespace Persistence
 {
     class UnitOfWork : UnitOfWorkContext, IUnitOfWork
     {
-        private readonly IIdentityProvider _identityProvider;
-
-        public UnitOfWork(AppDbContext context, IIdentityProvider identityProvider) : base(context)
+        public UnitOfWork(AppDbContext context, IIdentityProvider identityProvider) : base(context, identityProvider)
         {
-            _identityProvider = identityProvider;
         }
 
         public int Complete(Action<IUnitOfWorkContext> beforeComplete = null)
@@ -55,15 +52,15 @@ namespace Persistence
                 if (entry.State == EntityState.Added)
                 {
                     entry.Property(ShadowPropertyKeys.CreatedAt).CurrentValue = DateTime.Now;
-                    entry.Property(ShadowPropertyKeys.CreatedBy).CurrentValue = _identityProvider.Fullname;
-                    entry.Property(ShadowPropertyKeys.CreatedById).CurrentValue = _identityProvider.Id;
+                    entry.Property(ShadowPropertyKeys.CreatedBy).CurrentValue = IdentityProvider.Fullname;
+                    entry.Property(ShadowPropertyKeys.CreatedById).CurrentValue = IdentityProvider.Id;
                 }
 
                 if (entry.State == EntityState.Modified)
                 {
                     entry.Property(ShadowPropertyKeys.UpdatedAt).CurrentValue = DateTime.Now;
-                    entry.Property(ShadowPropertyKeys.UpdatedBy).CurrentValue = _identityProvider.Fullname;
-                    entry.Property(ShadowPropertyKeys.UpdatedById).CurrentValue = _identityProvider.Id;
+                    entry.Property(ShadowPropertyKeys.UpdatedBy).CurrentValue = IdentityProvider.Fullname;
+                    entry.Property(ShadowPropertyKeys.UpdatedById).CurrentValue = IdentityProvider.Id;
                 }
             }
         }

@@ -24,7 +24,7 @@ namespace SharedKernel.Constants
             public const string OrganizationMonitor = nameof(UserType) + "." + nameof(OrganizationMonitor);
             public const string Agent = nameof(UserType) + "." + nameof(Agent);
 
-            public static IEnumerable<string> All = new string[]
+            public static readonly IEnumerable<string> All = new[]
             {
                 SysAdmin,
                 Agent,
@@ -46,6 +46,7 @@ namespace SharedKernel.Constants
             public const string AllRootAdmins = UserType.SysAdmin + "," + UserType.RootAdmin;
 
             public const string AllMonitors = UserType.Monitor + "," + UserType.OrganizationMonitor;
+            public const string AllLimitedAdmins = UserType.OrganizationAdmin + "," + UserType.OrganizationMonitor;
             public const string Agent = UserType.Agent;
         }
     }

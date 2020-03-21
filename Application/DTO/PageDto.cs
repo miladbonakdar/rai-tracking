@@ -15,7 +15,7 @@ namespace Application.DTO
         {
             List = list ?? new List<TContent>();
             TotalItems = Math.Max(total, 0);
-            TotalPages = (TotalItems / Size) + 1;
+            TotalPages = (int)Math.Ceiling(((float)TotalItems / Size));
         }
 
         public int Size { get; }

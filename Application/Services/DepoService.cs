@@ -26,23 +26,21 @@ namespace Application.Services
         [WasFine]
         public async Task<DepoDto> UpdateAsync(DepoDto dto)
         {
-            var depo = await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == dto.Id);
-            if (depo is null) throw new NotFoundException(dto.Id.ToString());
-            await _unitOfWork.CompleteAsync(ctx =>
-                depo.Update(dto.Name, dto.OrganizationId, dto.StationId));
-            await _cacheStore.RemoveAsync(GetCacheKey(dto.Id));
+            await _unitOfWork.Depos.GuardForDuplicateDepoName(dto.Name, dto.Id);
+            var depo = await Get(dto.Id);
+            await Task.WhenAll(_unitOfWork.CompleteAsync(ctx =>
+                    depo.Update(dto.Name, dto.OrganizationId, dto.StationId)),
+                _cacheStore.RemoveAsync(GetCacheKey(dto.Id)));
             return dto;
         }
 
         [WasFine]
         public async Task UpdateLocationAsync(LocationUpdateDto dto)
         {
-            var depo = await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == dto.DomainId);
-            if (depo is null) throw new NotFoundException(dto.DomainId.ToString());
+            var depo = await Get(dto.DomainId);
             var location = new Location(dto.Latitude, dto.Longitude);
             depo.UpdateLocation(location);
-            await _unitOfWork.CompleteAsync();
-            await _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId));
+            await Task.WhenAll(_unitOfWork.CompleteAsync(), _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId)));
         }
 
         [WasFine]
@@ -64,10 +62,9 @@ namespace Application.Services
         [WasFine]
         public async Task<DepoDto> DeleteAsync(int id)
         {
-            var depo = await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == id) ??
-                       throw new NotFoundException(id.ToString());
-            await _unitOfWork.CompleteAsync((ctx) => ctx.Depos.Remove(depo));
-            await _cacheStore.RemoveAsync(GetCacheKey(id));
+            var depo = await Get(id);
+            await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Depos.Remove(depo)),
+                _cacheStore.RemoveAsync(GetCacheKey(id)));
             return DepoDto.FromDomain(depo);
         }
 
@@ -76,8 +73,7 @@ namespace Application.Services
         {
             var depoDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var depo = await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == id);
-                if (depo is null) throw new NotFoundException(id.ToString());
+                var depo = await Get(id);
                 return DepoDto.FromDomain(depo);
             });
             return depoDto;
@@ -95,19 +91,15 @@ namespace Application.Services
         [WasFine]
         public async Task<PageDto<DepoDto>> GetPageAsync(int pageSize, int pageNumber)
         {
-            PageParameterGuard(ref pageSize, ref pageNumber);
             var page = new PageDto<DepoDto>(pageSize, pageNumber);
             var items = await _unitOfWork.Depos.GetPageAsync(pageSize, pageNumber);
             page.SetData(items.Item2, items.Item1.Select(i => DepoDto.FromDomain(i)).ToList());
             return page;
         }
 
-        private void PageParameterGuard(ref int pageSize, ref int pageNumber)
-        {
-            pageSize = Math.Min(Math.Max(pageSize, 1), 50);
-            pageNumber = Math.Max(pageNumber, 0);
-            return;
-        }
+        private async Task<Depo> Get(int id) =>
+            await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == id)
+            ?? throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Depo_{id}";
     }

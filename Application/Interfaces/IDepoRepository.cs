@@ -5,6 +5,6 @@ namespace Application.Interfaces
 {
     public interface IDepoRepository : IRepository<Depo>
     {
-        Task GuardForDuplicateDepoName(string dtoName);
+        Task GuardForDuplicateDepoName(string dtoName, int? currentItemId = null);
     }
 }
