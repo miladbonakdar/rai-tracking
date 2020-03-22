@@ -3,19 +3,33 @@ import GridContainer from "../../../components/Grid/GridContainer";
 import GridItem from "../../../components/Grid/GridItem";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import Button from "../../../components/CustomButtons/Button";
+import axiosInstance from 'config/axios/axiosInstance';
 
 const Login = () => {
   const [loginInfo, setLoginInfo] = useState({
-    email: "",
+    emailOrPhoneNumber: "",
     password: ""
   });
   const [emailError, setEmailError] = useState(false)
   const [passError, setPassError] = useState(false)
 
-  const login = () => {
-    loginInfo.email === "" ? setEmailError(true) : setEmailError(false)
-
+  const login = async () => {
+    loginInfo.emailOrPhoneNumber === "" ? setEmailError(true) : setEmailError(false)
     loginInfo.password === "" ? setPassError(true) : setPassError(false)
+    if(loginInfo.emailOrPhoneNumber !== "" && loginInfo.password !== "" ){
+        try {
+          const response =  await axiosInstance.post('/Public/v1/Auth/SignInAdmin',{
+            emailOrPhoneNumber: loginInfo.emailOrPhoneNumber,
+            password: loginInfo.password
+          });
+          debugger;
+        } catch (error) {
+          console.log(error);
+          
+        }
+    }
+
+
   }
   return(
       <React.Fragment>
@@ -29,13 +43,13 @@ const Login = () => {
               formControlProps={{
                 fullWidth: true
               }}
-              value={loginInfo.email}
+              value={loginInfo.emailOrPhoneNumber}
              inputProps={{
                type: "text",
                onChange: (event) => {
                    setLoginInfo({
                      ...loginInfo,
-                     email: event.target.value
+                     emailOrPhoneNumber: event.target.value
                    })
                  }
                }}
