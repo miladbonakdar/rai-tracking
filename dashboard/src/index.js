@@ -19,12 +19,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
-
-// core components
+// core components11
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
 
 import "assets/css/material-dashboard-react.css?v=1.8.0";
+import "react-toastify/dist/ReactToastify.css";
+import {ToastContainer, toast} from 'react-toastify';
+toast.configure({
+  autoClose: 8000,
+  draggable: false
+});
 
 const hist = createBrowserHistory();
 
@@ -35,6 +40,7 @@ ReactDOM.render(
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/rtl/dashboard" />
     </Switch>
+    <ToastContainer />
   </Router>,
   document.getElementById("root")
 );
