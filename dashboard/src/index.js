@@ -19,6 +19,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import {Provider} from "react-redux";
+import store from "./config/redux/store";
 // core components11
 import Admin from "layouts/Admin.js";
 import RTL from "layouts/RTL.js";
@@ -34,13 +36,15 @@ toast.configure({
 const hist = createBrowserHistory();
 
 ReactDOM.render(
-  <Router history={hist}>
+  <Provider store={store}>
+    <Router history={hist}>
     <Switch>
       <Route path="/admin" component={Admin} />
       <Route path="/rtl" component={RTL} />
       <Redirect from="/" to="/rtl/dashboard" />
     </Switch>
     <ToastContainer />
-  </Router>,
+  </Router>
+  </Provider>,
   document.getElementById("root")
 );

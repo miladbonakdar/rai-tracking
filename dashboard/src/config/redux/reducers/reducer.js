@@ -9,6 +9,13 @@ const reducer = (state = initialState, action) => {
         loading: action.loading
       }
     }
+    case 'USER_AUTH': {
+      return {
+        ...state,
+        user: action.user
+      }
+    }
+
     default:
       return state
   }
