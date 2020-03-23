@@ -8,7 +8,7 @@ using SharedKernel.Constants;
 
 namespace Application.Services
 {
-    public class OrganizationService : IOrganizationService
+    class OrganizationService : IOrganizationService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICacheStore _cacheStore;

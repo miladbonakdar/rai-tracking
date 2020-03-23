@@ -12,7 +12,7 @@ using SharedKernel.Exceptions;
 
 namespace Application.Services
 {
-    public class DepoService : IDepoService
+    class DepoService : IDepoService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICacheStore _cacheStore;

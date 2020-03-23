@@ -26,7 +26,7 @@ namespace Persistence.Repositories
             var isAny = currentItemId is null
                 ? await DbSet.AnyAsync(d => d.Name == depoName)
                 : await DbSet.AnyAsync(d => d.Name == depoName && d.Id != currentItemId);
-            if (isAny) throw new BadRequestException("Name", "نام دپو نکراریست");
+            if (isAny) throw new BadRequestException("Name", "نام دپو تکراریست");
         }
     }
 }

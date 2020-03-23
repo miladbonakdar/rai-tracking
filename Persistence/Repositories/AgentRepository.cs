@@ -24,7 +24,7 @@ namespace Persistence.Repositories
             var isAny = currentItemId is null
                 ? await DbSet.AnyAsync(d => d.Email == email)
                 : await DbSet.AnyAsync(d => d.Email == email && d.Id != currentItemId);
-            if (isAny) throw new BadRequestException("Email", "ایمیل نکراریست");
+            if (isAny) throw new BadRequestException("Email", "ایمیل تکراریست");
         }
 
         public async Task GuardForDuplicatePhoneNumber(string number, int? currentItemId = null)
@@ -32,7 +32,7 @@ namespace Persistence.Repositories
             var isAny = currentItemId is null
                 ? await DbSet.AnyAsync(d => d.PhoneNumber == number)
                 : await DbSet.AnyAsync(d => d.PhoneNumber == number && d.Id != currentItemId);
-            if (isAny) throw new BadRequestException("PhoneNumber", "شماره تلفن همراه نکراریست");
+            if (isAny) throw new BadRequestException("PhoneNumber", "شماره تلفن همراه تکراریست");
         }
     }
 }

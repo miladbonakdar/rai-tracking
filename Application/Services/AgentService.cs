@@ -11,7 +11,7 @@ using SharedKernel.Exceptions;
 
 namespace Application.Services
 {
-    public class AgentService : IAgentService
+    class AgentService : IAgentService
     {
         private readonly IPasswordService _hasher;
         private readonly IUnitOfWork _unitOfWork;

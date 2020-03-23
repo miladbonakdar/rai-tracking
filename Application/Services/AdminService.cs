@@ -11,7 +11,7 @@ using SharedKernel.Exceptions;
 
 namespace Application.Services
 {
-    public class AdminService : IAdminService
+    class AdminService : IAdminService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICacheStore _cacheStore;
@@ -27,15 +27,15 @@ namespace Application.Services
             _identityProvider = identityProvider;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AdminDto> UpdateAsync(AdminDto dto)
         {
+            await _unitOfWork.Admins.GuardForDuplicateEmailAddress(dto.Email, dto.Id);
             if (!Constants.UserGroup.AllRootAdmins.Contains(_identityProvider.Role)
                 && _identityProvider.Id != dto.Id)
                 throw new ForbiddenException("شما نمی توانید اطلاعات شخص دیگری را تغییر دهید");
 
-            var admin = await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == dto.Id);
-            if (admin is null) throw new NotFoundException(dto.Id.ToString());
+            var admin = await Get(dto.Id);
 
             admin.UpdateInfo(dto.PhoneNumber, dto.Name, dto.Lastname,
                     dto.About, dto.Number)
@@ -48,17 +48,17 @@ namespace Application.Services
             return dto;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task UpdatePasswordAsync(PasswordUpdateDto dto)
         {
-            if (!_identityProvider.HasValue || !_identityProvider.IsAdmin)
+            if (!_identityProvider.HasValue)
                 throw new ForbiddenException();
             if (_identityProvider.Id != dto.DomainId &&
                 !Constants.UserGroup.AllRootAdmins.Contains(_identityProvider.Role))
                 throw new ForbiddenException("شما نمی توانید پسورد فرد دیگری را تغییر دهید");
 
-            var admin = await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == dto.DomainId);
-            if (admin is null) throw new NotFoundException(dto.DomainId.ToString());
+            var admin = await Get(dto.DomainId);
+
             if (!_hasher.Verify(dto.OldPassword, admin.Password))
                 throw new BadRequestException(nameof(dto.OldPassword), "پسورد قدیمی اشتباه می باشد");
 
@@ -68,40 +68,42 @@ namespace Application.Services
             await _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId));
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AdminDto> CreateAsync(AdminDto dto)
         {
+            await _unitOfWork.Admins.GuardForDuplicateEmailAddress(dto.Email);
+
             var admin = new Admin(new PersonName(dto.Name, dto.Lastname), dto.AdminType, dto.OrganizationId
                 , dto.PhoneNumber, dto.Number, dto.About);
+
+            admin.Register(dto.Email, _hasher.HashPassword(dto.Password));
 
             await _unitOfWork.CompleteAsync(ctx => ctx.Admins.AddAsync(admin));
             dto.Id = admin.Id;
             return dto;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AdminDto> DeleteAsync(int id)
         {
-            var admin = await _unitOfWork.Admins.SingleAsync(a => a.Id == id)
-                        ?? throw new NotFoundException(id.ToString());
+            var admin = await Get(id);
             await _unitOfWork.CompleteAsync((ctx) => ctx.Admins.Remove(admin));
             await _cacheStore.RemoveAsync(GetCacheKey(id));
             return AdminDto.FromDomain(admin);
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<AdminDto> GetAsync(int id)
         {
             var adminDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var admin = await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == id);
-                if (admin is null) throw new NotFoundException(id.ToString());
+                var admin = await Get(id);
                 return AdminDto.FromDomain(admin);
             });
             return adminDto;
         }
 
-        [NeedTest]
+        [WasFine]
         public async Task<PageDto<AdminDto>> GetPageAsync(int pageSize, int pageNumber)
         {
             var page = new PageDto<AdminDto>(pageSize, pageNumber);
@@ -109,6 +111,10 @@ namespace Application.Services
             page.SetData(items.Item2, items.Item1.Select(i => AdminDto.FromDomain(i)).ToList());
             return page;
         }
+
+        private async Task<Admin> Get(int id) =>
+            await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == id) ??
+            throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Admin_{id}";
     }

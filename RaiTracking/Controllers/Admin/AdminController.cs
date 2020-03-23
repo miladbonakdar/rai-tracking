@@ -18,25 +18,25 @@ namespace RaiTracking.Controllers.Admin
             _adminService = adminService;
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPost]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
         public async Task<Result<AdminDto>> Create([FromBody] AdminDto dto)
         {
             var admin = await _adminService.CreateAsync(dto);
             return Result<AdminDto>.Success(data: admin);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPut]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
         public async Task<Result<AdminDto>> Update([FromBody] AdminDto dto)
         {
             var admin = await _adminService.UpdateAsync(dto);
             return Result<AdminDto>.Success(data: admin);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPatch(nameof(UpdatePassword))]
         public async Task<Result> UpdatePassword([FromBody] PasswordUpdateDto dto)
         {
@@ -44,7 +44,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpDelete("{id}")]
         [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
         public async Task<Result> Delete(int id)
@@ -53,7 +53,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{id}")]
         public async Task<Result<AdminDto>> Get(int id)
         {
@@ -61,7 +61,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<AdminDto>.Success(data: admin);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{pageSize}/{pageNumber}")]
         public async Task<Result<PageDto<AdminDto>>> Get(int pageSize, int pageNumber)
         {
