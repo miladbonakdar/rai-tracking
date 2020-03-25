@@ -1,5 +1,7 @@
 const initialState = {
-  loading: false
+  loading: false,
+  token: localStorage.getItem('userToken') || null,
+  user: localStorage.getItem('user') ? localStorage.getItem('user') : 'user'
 }
 const reducer = (state = initialState, action) => {
   switch (action.type) {
@@ -9,10 +11,16 @@ const reducer = (state = initialState, action) => {
         loading: action.loading
       }
     }
-    case 'USER_AUTH': {
+    case 'SET_USER': {
       return {
         ...state,
         user: action.user
+      }
+    }
+    case 'SET_TOKEN': {
+      return {
+        ...state,
+        token: action.token
       }
     }
 

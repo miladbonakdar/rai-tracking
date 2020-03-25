@@ -29,7 +29,9 @@ export default function Sidebar(props) {
   var links = (
     <List className={classes.list}>
       {routes.map((prop, key) => {
-        var activePro = " ";
+        if(!prop.needAuth)
+        {
+          var activePro = " ";
         var listItemClasses;
         if (prop.path === "/upgrade-to-pro") {
           activePro = classes.activePro + " ";
@@ -77,6 +79,7 @@ export default function Sidebar(props) {
             </ListItem>
           </NavLink>
         );
+        }
       })}
     </List>
   );

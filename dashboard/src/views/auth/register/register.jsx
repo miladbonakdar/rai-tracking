@@ -8,10 +8,11 @@ import {Select, MenuItem, InputLabel} from "@material-ui/core";
 import {useHistory} from "react-router-dom";
 import axiosInstance from "config/axios/axiosInstance";
 import { toast } from "react-toastify";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 
 const Register = () => {
   const dispatch = useDispatch();
+  const token = useSelector(state => state.token);
   const history = useHistory();
   const [regInfo, setRegInfo] = useState({
     name: "",
@@ -84,9 +85,12 @@ const Register = () => {
     if(checkValidations()){
       try {
         const response = await axiosInstance.post('/Public/v1/Auth/SignUpAdmin',regInfo);
-        dispatch({user: response.data.data.client});
+        debugger
+        localStorage.setItem('user', `${response.data.data.client.name} ${response.data.data.client.lastname}`);
+        dispatch({user: `${response.data.data.client.name} ${response.data.data.client.lastname}`, type: 'SET_USER'});
         toast.success(response.data.message);
         localStorage.setItem('userToken', response.data.data.token);
+        dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
         history.push('/rtl/dashboard');
       } catch (error) {
         console.log(error);
@@ -104,6 +108,9 @@ const Register = () => {
   const getOrganizations = async () => {
   }
   useEffect(()=>{
+    (token) ?
+     history.push('/rtl/dashboard')
+    :
     getAdminTypes();
     getOrganizations();
   },[])
