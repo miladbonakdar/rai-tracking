@@ -21,6 +21,7 @@ namespace Application
             builder.RegisterType<AgentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<DepoService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<AdminService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<MissionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<IdentityProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }

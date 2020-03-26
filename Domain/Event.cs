@@ -1,7 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.Dynamic;
+using System.Linq;
 using Domain.Enums;
+using Domain.Events;
 using Domain.Interfaces;
 using Domain.ValueObjects;
 using JetBrains.Annotations;
@@ -17,6 +19,7 @@ namespace Domain
             OccurredAt = occurredAt;
             AgentId = agentId;
             Seen = false;
+            IsAlarm = TrackingEvent.AlarmTrackingEventTypes.Contains(EventType);
         }
 
         protected Event()
@@ -33,6 +36,7 @@ namespace Domain
         public TrackingEventType EventType { get; private set; }
         public Location AgentLocation { get; private set; }
         public bool IsValidLocation { get; private set; }
+        public bool IsAlarm { get; private set; }
         public bool Seen { get; private set; }
         [Required] public string EventData { get; private set; }
 

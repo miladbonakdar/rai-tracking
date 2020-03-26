@@ -1,15 +1,14 @@
 ﻿using System;
 using Domain.Interfaces;
-using SharedKernel.Interfaces;
 
 namespace Domain.Events
 {
     public abstract class ApplicationEvent : IApplicationEvent
     {
-        protected ApplicationEvent()
+        protected ApplicationEvent(string name = null, DateTime? occurredAt = null)
         {
-            OccurredAt = DateTime.Now;
-            Name = GetType().Name;
+            OccurredAt = occurredAt ?? DateTime.Now;
+            Name = name ?? GetType().Name;
         }
 
         public DateTime OccurredAt { get; }

@@ -29,6 +29,5 @@ namespace RaiTracking.Controllers
                 new KeyValuePairDto<string, string>(Constants.UserType.RootAdmin, "ادمین کل"),
                 new KeyValuePairDto<string, string>(Constants.UserType.SysAdmin, "ادمین سیستم"),
             });
-
     }
 }

@@ -20,7 +20,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPost]
-        [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
+        [Authorize(Roles = PermissionSet.Admin.Create)]
         public async Task<Result<AdminDto>> Create([FromBody] AdminDto dto)
         {
             var admin = await _adminService.CreateAsync(dto);
@@ -29,7 +29,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPut]
-        [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
+        [Authorize(Roles = PermissionSet.Admin.Update)]
         public async Task<Result<AdminDto>> Update([FromBody] AdminDto dto)
         {
             var admin = await _adminService.UpdateAsync(dto);
@@ -38,6 +38,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPatch(nameof(UpdatePassword))]
+        [Authorize(Roles = PermissionSet.Admin.UpdatePassword)]
         public async Task<Result> UpdatePassword([FromBody] PasswordUpdateDto dto)
         {
             await _adminService.UpdatePasswordAsync(dto);
@@ -46,7 +47,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpDelete("{id}")]
-        [Authorize(Roles = Constants.UserGroup.AllRootAdmins)]
+        [Authorize(Roles = PermissionSet.Admin.Delete)]
         public async Task<Result> Delete(int id)
         {
             await _adminService.DeleteAsync(id);

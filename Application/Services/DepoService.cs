@@ -60,12 +60,11 @@ namespace Application.Services
         }
 
         [WasFine]
-        public async Task<DepoDto> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var depo = await Get(id);
             await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Depos.Remove(depo)),
                 _cacheStore.RemoveAsync(GetCacheKey(id)));
-            return DepoDto.FromDomain(depo);
         }
 
         [WasFine]
