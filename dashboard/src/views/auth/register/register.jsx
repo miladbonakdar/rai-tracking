@@ -1,12 +1,19 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import './register.css';
 import GridItem from "../../../components/Grid/GridItem";
 import GridContainer from "../../../components/Grid/GridContainer";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import Button from "../../../components/CustomButtons/Button";
 import {Select, MenuItem, InputLabel} from "@material-ui/core";
+import {useHistory} from "react-router-dom";
+import axiosInstance from "config/axios/axiosInstance";
+import { toast } from "react-toastify";
+import {useDispatch, useSelector} from "react-redux";
 
 const Register = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.token);
+  const history = useHistory();
   const [regInfo, setRegInfo] = useState({
     name: "",
     lastName: "",
@@ -14,11 +21,14 @@ const Register = () => {
     phoneNumber: "",
     password: "",
     number: "",
-    adminType: 0,
-    organization: 0,
-    rootUsername: "",
-    rootPass: ""
+    adminType: "UserType.SysAdmin",
+    organizationId: 1,
+    adminEmailAddress: "",
+    rootPassword: ""
   });
+  const [adminTypes, setAdminTypes] = useState({list: []});
+  const [organizations, setOrganizations] = useState({list: []})
+
   const [repeatPass, setRepeatPass] = useState("");
   const [error, setError] = useState({
       name: false,
@@ -29,7 +39,7 @@ const Register = () => {
       adminType: false,
       organization: false,
       rootUsername: false,
-      rootPass: false
+      rootPassword: false
   });
   const [hasError, setHasError] = useState(false)
   const checkValidations = () => {
@@ -61,7 +71,7 @@ const Register = () => {
       setError({...error, rootUsername: true});
       setHasError(true);
     }
-    if(regInfo.rootPass === "") {
+    if(regInfo.rootPassword === "") {
       setError({...error, rootUsername: true});
       setHasError(true);
     }
@@ -70,11 +80,40 @@ const Register = () => {
     else
       return true;
   }
-  const register = () => {
+  const register = async () => {
+    debugger;
     if(checkValidations()){
-      // register();
+      try {
+        const response = await axiosInstance.post('/Public/v1/Auth/SignUpAdmin',regInfo);
+        debugger
+        localStorage.setItem('user', `${response.data.data.client.name} ${response.data.data.client.lastname}`);
+        dispatch({user: `${response.data.data.client.name} ${response.data.data.client.lastname}`, type: 'SET_USER'});
+        toast.success(response.data.message);
+        localStorage.setItem('userToken', response.data.data.token);
+        dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
+        history.push('/rtl/dashboard');
+      } catch (error) {
+        console.log(error);
+        toast.error(error.response.data.Message)
+      }      
     }
   }
+  const getAdminTypes = async () => {
+    const response = await axiosInstance.get('/Public/v1/Auth/AdminTypes');
+    setAdminTypes({
+      ...adminTypes,
+      list: response.data.data
+    });
+  }
+  const getOrganizations = async () => {
+  }
+  useEffect(()=>{
+    (token) ?
+     history.push('/rtl/dashboard')
+    :
+    getAdminTypes();
+    getOrganizations();
+  },[])
   return(
     <React.Fragment>
       <GridContainer>
@@ -236,12 +275,12 @@ const Register = () => {
             formControlProps={{
               fullWidth: true
             }}
-            error={error.rootUsername}
+            error={error.adminEmailAddress}
             inputProps={{
               onChange: (event) => {
                 setRegInfo({
                   ...regInfo,
-                  rootUsername: event.target.value
+                  adminEmailAddress: event.target.value
                 })
               }
             }
@@ -254,12 +293,12 @@ const Register = () => {
             formControlProps={{
               fullWidth: true
             }}
-            error={error.rootPass}
+            error={error.rootPassword}
             inputProps={{
               onChange: (event) => {
                 setRegInfo({
                   ...regInfo,
-                  rootPass: event.target.value
+                  rootPassword: event.target.value
                 })
               }
             }
@@ -267,7 +306,7 @@ const Register = () => {
           />
         </GridItem>
       </GridContainer>
-      <Button color="primary" onClick={register()}>ثبت‌نام</Button>
+      <Button color="primary" onClick={register}>ثبت‌نام</Button>
     </React.Fragment>
   )
 }

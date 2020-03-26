@@ -1,11 +1,17 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import GridContainer from "../../../components/Grid/GridContainer";
 import GridItem from "../../../components/Grid/GridItem";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import Button from "../../../components/CustomButtons/Button";
 import axiosInstance from 'config/axios/axiosInstance';
+import {useDispatch, useSelector} from 'react-redux';
+import {toast} from 'react-toastify';
+import {useHistory} from 'react-router-dom';
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.token);
+  const history = useHistory();
   const [loginInfo, setLoginInfo] = useState({
     emailOrPhoneNumber: "",
     password: ""
@@ -22,7 +28,13 @@ const Login = () => {
             emailOrPhoneNumber: loginInfo.emailOrPhoneNumber,
             password: loginInfo.password
           });
-          debugger;
+          debugger
+          localStorage.setItem('user', `${response.data.data.client.name} ${response.data.data.client.lastname}`);
+          dispatch({user: `${response.data.data.client.name} ${response.data.data.client.lastname}`, type: 'SET_USER'});        
+          toast.success(response.data.message);
+          localStorage.setItem('userToken', response.data.data.token);
+          dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
+          history.push('/rtl/dashboard');
         } catch (error) {
           console.log(error);
           
@@ -31,6 +43,9 @@ const Login = () => {
 
 
   }
+  useEffect(() => {
+    if(token) history.push('/rtl/dashboard');
+  },[])
   return(
       <React.Fragment>
         <GridContainer direction="row"

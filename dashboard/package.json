@@ -3,7 +3,7 @@
   "version": "1.8.0",
   "description": "Material Dashboard React. Coded by Creative Tim",
   "private": false,
-  "proxy":"http://localhost:5000",
+  "proxy": "http://localhost:5000",
   "main": "dist/index.js",
   "dependencies": {
     "@material-ui/core": "4.3.2",
@@ -18,10 +18,13 @@
     "react-chartist": "0.13.3",
     "react-dom": "16.9.0",
     "react-google-maps": "9.4.5",
-    "react-router-dom": "5.0.1",
+    "react-redux": "^7.2.0",
+    "react-router": "^5.1.2",
+    "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.0",
     "react-swipeable-views": "0.13.3",
-    "react-toastify": "^5.4.0"
+    "react-toastify": "^5.4.0",
+    "redux": "^4.0.5"
   },
   "scripts": {
     "start": "react-scripts start",

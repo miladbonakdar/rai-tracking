@@ -1,4 +1,5 @@
 import React from "react";
+import {useSelector} from "react-redux";
 import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -23,6 +24,7 @@ import styles from "assets/jss/material-dashboard-react/components/rtlHeaderLink
 const useStyles = makeStyles(styles);
 
 export default function RTLNavbarLinks() {
+  const user = useSelector(state => state.user);
   const classes = useStyles();
   const [open, setOpen] = React.useState(null);
   const handleToggle = event => {
@@ -152,6 +154,8 @@ export default function RTLNavbarLinks() {
         aria-label="Person"
         className={classes.buttonLink}
       >
+        <span>{user}</span>
+
         <Person className={classes.icons} />
         <Hidden mdUp implementation="css">
           <p className={classes.linkText}>حساب کاربری</p>
