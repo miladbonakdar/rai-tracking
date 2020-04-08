@@ -3,13 +3,15 @@ using System.Linq;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedKernel;
 
 namespace Persistence
 {
     class UnitOfWork : UnitOfWorkContext, IUnitOfWork
     {
-        public UnitOfWork(AppDbContext context, IIdentityProvider identityProvider) : base(context, identityProvider)
+        public UnitOfWork(AppDbContext context, IIdentityProvider identityProvider, ILogger logger) : base(context,
+            identityProvider, logger)
         {
         }
 

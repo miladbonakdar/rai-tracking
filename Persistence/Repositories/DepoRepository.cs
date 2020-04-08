@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedKernel.Constants;
 using SharedKernel.Exceptions;
 
@@ -10,8 +11,8 @@ namespace Persistence.Repositories
 {
     class DepoRepository : Repository<Depo>, IDepoRepository
     {
-        public DepoRepository(DbContext context, IIdentityProvider provider) : base(context
-            , set =>
+        public DepoRepository(DbContext context, ILogger logger, IIdentityProvider provider) : base(context
+            , logger, set =>
             {
                 if (provider.HasValue && provider.IsAdmin &&
                     Constants.UserGroup.AllLimitedAdmins.Contains(provider.Role))

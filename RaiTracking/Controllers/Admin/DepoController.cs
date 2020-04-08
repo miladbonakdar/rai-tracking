@@ -77,7 +77,7 @@ namespace RaiTracking.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [WasFine]
-        [HttpGet("organization/{id?}")]
+        [HttpGet("by_organization/{id?}")]
         public async Task<Result<IEnumerable<DepoDto>>> GetByOrganization(int? id)
         {
             var res = await _depoService.GetByOrganizationAsync(id);

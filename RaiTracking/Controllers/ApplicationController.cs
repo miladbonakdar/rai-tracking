@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using Application.DTO;
-using Application.Interfaces;
-using Application.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 using SharedKernel.Constants;
