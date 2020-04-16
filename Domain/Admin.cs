@@ -17,13 +17,14 @@ namespace Domain
 
         public Admin([NotNull] PersonName personName, [NotNull] string adminType, int organizationId
             , string phoneNumber = null
-            , string telephone = null)
+            , string telephone = null, string about = null)
         {
             PersonName = personName;
             AdminType = adminType ?? throw new ArgumentNullException();
             OrganizationId = organizationId;
             PhoneNumber = phoneNumber;
             Telephone = telephone;
+            About = about;
             Missions = new List<Mission>();
         }
 
@@ -31,6 +32,35 @@ namespace Domain
         {
             Email = email ?? throw new ArgumentNullException();
             Password = hashPassword ?? throw new ArgumentNullException();
+        }
+
+
+        public Admin UpdateInfo(string phoneNumber, string name,
+            string lastname, string about, string number)
+        {
+            PhoneNumber = phoneNumber;
+            PersonName.UpdateFrom(new PersonName(name, lastname));
+            About = about;
+            Telephone = number;
+            return this;
+        }
+
+        public Admin UpdateOrganization(int organId)
+        {
+            OrganizationId = organId;
+            return this;
+        }
+
+        public Admin UpdateAdminType(string adminType)
+        {
+            AdminType = adminType;
+            return this;
+        }
+
+        public Admin UpdateEmail(string email)
+        {
+            Email = email;
+            return this;
         }
 
         public void UpdatePassword(string hashPassword) => Password = hashPassword ?? throw new ArgumentNullException();

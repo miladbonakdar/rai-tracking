@@ -4,13 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
+using SharedKernel.Constants;
 
 namespace RaiTracking.Controllers
 {
-
-    [Authorize]
-    [Route("Admins/v1/[controller]")]
+    [Authorize(Roles = Constants.UserGroup.AllAdmins)]
     public abstract class BaseAdminApiController : BaseApiController
     {
+        public const string RouteBase = "Admins/v1/[controller]";
     }
 }

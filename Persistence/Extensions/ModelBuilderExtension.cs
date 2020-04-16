@@ -21,8 +21,8 @@ namespace Persistence.Extensions
         private static void SharedConfiguration<TEntity>(this ModelBuilder builder) where
             TEntity : class
         {
-            builder.Entity<TEntity>().Property<DateTime>(ShadowPropertyKeys.CreatedById).IsRequired();
-            builder.Entity<TEntity>().Property<DateTime>(ShadowPropertyKeys.UpdatedById);
+            builder.Entity<TEntity>().Property<int>(ShadowPropertyKeys.CreatedById).IsRequired();
+            builder.Entity<TEntity>().Property<int>(ShadowPropertyKeys.UpdatedById);
             builder.Entity<TEntity>().Property<DateTime>(ShadowPropertyKeys.CreatedAt).IsRequired();
             builder.Entity<TEntity>().Property<DateTime>(ShadowPropertyKeys.UpdatedAt);
             builder.Entity<TEntity>().Property<string>(ShadowPropertyKeys.CreatedBy)

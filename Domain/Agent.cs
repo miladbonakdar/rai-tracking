@@ -32,14 +32,43 @@ namespace Domain
         public Agent UpdateLocation([NotNull] Location newLocation)
         {
             LastUpdate = DateTime.Now;
-            LastLocation = newLocation;
+
+            if (LastLocation is null) LastLocation = newLocation;
+            else LastLocation.UpdateFrom(newLocation);
             return this;
         }
 
-        public Agent UpdateLocation([NotNull] AgentInfo info)
+        public Agent UpdateInfo([NotNull] AgentInfo info)
         {
             LastUpdate = DateTime.Now;
-            AgentInfo = info;
+
+            if (AgentInfo is null) AgentInfo = info;
+            else AgentInfo.UpdateFrom(info);
+
+            return this;
+        }
+
+        public Agent UpdateSetting([NotNull] AgentSetting setting)
+        {
+            LastUpdate = DateTime.Now;
+
+            if (AgentSetting is null) AgentSetting = setting;
+            else AgentSetting.UpdateFrom(setting);
+
+            return this;
+        }
+
+        public Agent Update(string email, string phoneNumber, string name, string lastname)
+        {
+            Email = email;
+            PhoneNumber = phoneNumber;
+            PersonName.UpdateFrom(new PersonName(name, lastname));
+            return this;
+        }
+
+        public Agent UpdatePassword(string newPasswordHash)
+        {
+            Password = newPasswordHash;
             return this;
         }
 
@@ -54,10 +83,10 @@ namespace Domain
         [Required] public string Password { get; private set; }
         public string Email { get; private set; }
         public DateTime LastUpdate { get; private set; }
-        public Location LastLocation { get; private set; }
         public PersonName PersonName { get; private set; }
         public AgentInfo AgentInfo { get; private set; }
         public AgentSetting AgentSetting { get; private set; }
+        public Location LastLocation { get; private set; }
 
         //navigation properties
         public int DepoId { get; private set; }

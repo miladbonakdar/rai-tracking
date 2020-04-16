@@ -15,7 +15,7 @@ using SharedKernel.Exceptions;
 
 namespace Application.Services
 {
-    public class AuthService : IAuthService
+    class AuthService : IAuthService
     {
         private readonly IUnitOfWork _unitOfWork;
         private readonly IPasswordService _passwordService;

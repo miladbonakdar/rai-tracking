@@ -10,5 +10,7 @@ namespace Application.Interfaces
     public interface IAgentRepository : IRepository<Agent>
     {
         Task<Agent> GetWithDepoAsync(Expression<Func<Agent, bool>> predicate);
+        Task GuardForDuplicateEmailAddress(string email, int? currentItemId = null);
+        Task GuardForDuplicatePhoneNumber(string number, int? currentItemId = null);
     }
 }

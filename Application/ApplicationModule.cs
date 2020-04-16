@@ -18,6 +18,11 @@ namespace Application
                 .Where(t => t.IsAssignableToGenericType(typeof(IHandler<>))).AsImplementedInterfaces();
             builder.RegisterType<AuthService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<OrganizationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<AgentService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<DepoService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<AdminService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<StationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<MissionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<IdentityProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }

@@ -11,7 +11,5 @@ namespace Application.DTO
         public string AdminEmailAddress { get; set; }
 
         [Required] public string RootPassword { get; set; }
-        [Required] public string AdminType { get; set; }
-        [Required] public int OrganizationId { get; set; }
     }
 }

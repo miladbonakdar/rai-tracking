@@ -55,5 +55,14 @@ namespace Persistence
             yield return typeof(Admin);
             yield return typeof(Station);
         }
+        
+        public static IEnumerable<Type> OwnedProperties()
+        {
+            yield return typeof(Location);
+            yield return typeof(PersonName);
+            yield return typeof(AgentInfo);
+            yield return typeof(AgentSetting);
+            yield return typeof(DateTimeRange);
+        }
     }
 }

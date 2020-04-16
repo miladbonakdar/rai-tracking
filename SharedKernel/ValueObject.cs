@@ -9,6 +9,7 @@ namespace SharedKernel
         where T : ValueObject<T>
     {
 
+        public abstract void UpdateFrom(T item); 
         public abstract bool IsEmpty();
 
         public override bool Equals(object obj)

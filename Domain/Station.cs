@@ -31,6 +31,22 @@ namespace Domain
             Longitude = longitude;
         }
 
+        public Station SetPosition(double latitude, double longitude, double altitude)
+        {
+            Latitude = latitude;
+            Longitude = longitude;
+            Altitude = altitude;
+            return this;
+        }
+        
+        public void Update(string name, in int organizationId, int? preStationId, int? postStationId)
+        {
+            Name = name;
+            PreStationId = preStationId;
+            PostStationId = postStationId;
+            OrganizationId = organizationId;
+        }
+
         [Required] [MaxLength(150)] public string Name { get; private set; }
 
         public double Latitude { get; private set; }
@@ -45,5 +61,6 @@ namespace Domain
 
         public int OrganizationId { get; private set; }
         public Organization Organization { get; private set; }
+
     }
 }

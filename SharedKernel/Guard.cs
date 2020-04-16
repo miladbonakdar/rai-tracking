@@ -13,7 +13,7 @@ namespace SharedKernel
         {
             if (!Constants.Constants.UserType.All.Contains(role))
             {
-                throw new BadRequestException("role", "Role(admin type) is not valid");
+                throw new BadRequestException("role", "نوع ادمین نامعتبر می باشد");
             }
         }
 
