@@ -21,25 +21,25 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPost]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Depo.Create)]
         public async Task<Result<DepoDto>> Create([FromBody] DepoDto dto)
         {
-            var agent = await _depoService.CreateAsync(dto);
-            return Result<DepoDto>.Success(data: agent);
+            var depo = await _depoService.CreateAsync(dto);
+            return Result<DepoDto>.Success(data: depo);
         }
 
         [WasFine]
         [HttpPut]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Depo.Update)]
         public async Task<Result<DepoDto>> Update([FromBody] DepoDto dto)
         {
-            var agent = await _depoService.UpdateAsync(dto);
-            return Result<DepoDto>.Success(data: agent);
+            var depo = await _depoService.UpdateAsync(dto);
+            return Result<DepoDto>.Success(data: depo);
         }
 
         [WasFine]
         [HttpPatch(nameof(UpdateLocation))]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Depo.UpdateLocation)]
         public async Task<Result> UpdateLocation([FromBody] LocationUpdateDto dto)
         {
             await _depoService.UpdateLocationAsync(dto);
@@ -48,10 +48,10 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpDelete("{id}")]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Depo.Delete)]
         public async Task<Result> Delete(int id)
         {
-            var res = await _depoService.DeleteAsync(id);
+             await _depoService.DeleteAsync(id);
             return Result.Success();
         }
 
@@ -77,7 +77,7 @@ namespace RaiTracking.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [WasFine]
-        [HttpGet("organization/{id?}")]
+        [HttpGet("by_organization/{id?}")]
         public async Task<Result<IEnumerable<DepoDto>>> GetByOrganization(int? id)
         {
             var res = await _depoService.GetByOrganizationAsync(id);

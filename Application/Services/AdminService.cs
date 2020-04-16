@@ -51,12 +51,6 @@ namespace Application.Services
         [WasFine]
         public async Task UpdatePasswordAsync(PasswordUpdateDto dto)
         {
-            if (!_identityProvider.HasValue)
-                throw new ForbiddenException();
-            if (_identityProvider.Id != dto.DomainId &&
-                !Constants.UserGroup.AllRootAdmins.Contains(_identityProvider.Role))
-                throw new ForbiddenException("شما نمی توانید پسورد فرد دیگری را تغییر دهید");
-
             var admin = await Get(dto.DomainId);
 
             if (!_hasher.Verify(dto.OldPassword, admin.Password))

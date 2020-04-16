@@ -1,9 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
+using System.Collections.Generic;
 using Application.DTO;
-using Application.Interfaces;
-using Application.Services.Contracts;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
 using SharedKernel.Constants;
@@ -29,6 +26,5 @@ namespace RaiTracking.Controllers
                 new KeyValuePairDto<string, string>(Constants.UserType.RootAdmin, "ادمین کل"),
                 new KeyValuePairDto<string, string>(Constants.UserType.SysAdmin, "ادمین سیستم"),
             });
-
     }
 }

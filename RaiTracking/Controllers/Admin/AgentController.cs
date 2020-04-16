@@ -21,7 +21,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPost]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Agent.Create)]
         public async Task<Result<AgentDto>> Create([FromBody] AgentDto dto)
         {
             var agent = await _agentService.CreateAsync(dto);
@@ -30,7 +30,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpPut]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Agent.Update)]
         public async Task<Result<AgentDto>> Update([FromBody] AgentDto dto)
         {
             var agent = await _agentService.UpdateAsync(dto);
@@ -39,7 +39,7 @@ namespace RaiTracking.Controllers.Admin
  
         [WasFine]
         [HttpPatch(nameof(ResetPassword))]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Agent.ResetPassword)]
         public async Task<Result> ResetPassword([FromBody] ResetPasswordDto dto)
         {
             await _agentService.ResetPasswordAsync(dto);
@@ -48,7 +48,7 @@ namespace RaiTracking.Controllers.Admin
         
         [WasFine]
         [HttpPatch(nameof(UpdateSetting))]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Agent.UpdateSetting)]
         public async Task<Result> UpdateSetting([FromBody] UpdateAgentSettingDto dto)
         {
             await _agentService.UpdateSettingAsync(dto);
@@ -57,7 +57,7 @@ namespace RaiTracking.Controllers.Admin
 
         [WasFine]
         [HttpDelete("{id}")]
-        [Authorize(Roles = Constants.UserGroup.AllMainAdmins)]
+        [Authorize(Roles = PermissionSet.Agent.Delete)]
         public async Task<Result> Delete(int id)
         {
             var res = await _agentService.DeleteAsync(id);

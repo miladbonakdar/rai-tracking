@@ -6,18 +6,21 @@ using System.Threading.Tasks;
 using Application.DTO;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedKernel.Interfaces;
 
 namespace Persistence.Repositories
 {
     abstract class Repository<T> : IRepository<T> where T : class, IAggregateRoot
     {
+        protected readonly ILogger Logger;
         protected readonly IQueryable<T> BaseQuery;
         protected readonly AppDbContext Context;
         protected readonly DbSet<T> DbSet;
 
-        protected Repository(DbContext context, Func<DbSet<T>, IQueryable<T>> baseQueryBuilder = null)
+        protected Repository(DbContext context, ILogger logger, Func<DbSet<T>, IQueryable<T>> baseQueryBuilder = null)
         {
+            Logger = logger;
             Context = context as AppDbContext;
             DbSet = context.Set<T>();
             BaseQuery = baseQueryBuilder is null
@@ -27,23 +30,27 @@ namespace Persistence.Repositories
 
         public int Add(T entity)
         {
+            Logger.Information($"new entity of type {entity.GetType().Name} is going to add");
             var res = DbSet.Add(entity);
             return res.Entity.Id;
         }
 
         public async Task<int> AddAsync(T entity)
         {
+            Logger.Information($"new entity of type {entity.GetType().Name} is going to add");
             var res = await DbSet.AddAsync(entity);
             return res.Entity.Id;
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
+            Logger.Information($"some new entities of type {typeof(T).Name} are going to add");
             DbSet.AddRange(entities);
         }
 
         public Task AddRangeAsync(IEnumerable<T> entities)
         {
+            Logger.Information($"some new entities of type {typeof(T).Name} are going to add");
             return DbSet.AddRangeAsync(entities);
         }
 
@@ -133,11 +140,13 @@ namespace Persistence.Repositories
 
         public void Remove(T entity)
         {
+            Logger.Information($"An entity of type {entity.GetType().Name} is going to be removed.");
             DbSet.Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)
         {
+            Logger.Information($"some entities of type {typeof(T).Name} are going to be removed.");
             DbSet.RemoveRange(entities);
         }
 

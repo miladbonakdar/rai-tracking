@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Repositories;
+using Serilog;
 
 namespace Persistence
 {
@@ -26,17 +27,30 @@ namespace Persistence
         private readonly Lazy<IStationRepository> _stationsLazy;
         private readonly Lazy<IAdminRepository> _adminsLazy;
 
-        public UnitOfWorkContext(DbContext context, IIdentityProvider identityProvider)
+        public UnitOfWorkContext(DbContext context, IIdentityProvider identityProvider, ILogger logger)
         {
             Context = context;
             IdentityProvider = identityProvider;
-            _agentsLazy = new Lazy<IAgentRepository>(() => new AgentRepository(Context));
-            _commandsLazy = new Lazy<ICommandRepository>(() => new CommandRepository(Context));
-            _deposLazy = new Lazy<IDepoRepository>(() => new DepoRepository(Context, IdentityProvider));
-            _missionsLazy = new Lazy<IMissionRepository>(() => new MissionRepository(Context));
-            _organizationsLazy = new Lazy<IOrganizationRepository>(() => new OrganizationRepository(Context));
-            _stationsLazy = new Lazy<IStationRepository>(() => new StationRepository(Context));
-            _adminsLazy = new Lazy<IAdminRepository>(() => new AdminRepository(Context));
+            _agentsLazy = new Lazy<IAgentRepository>
+                (() => new AgentRepository(Context, logger));
+            
+            _commandsLazy = new Lazy<ICommandRepository>(
+                () => new CommandRepository(Context, logger));
+            
+            _deposLazy = new Lazy<IDepoRepository>(
+                () => new DepoRepository(Context, logger, IdentityProvider));
+            
+            _missionsLazy = new Lazy<IMissionRepository>(
+                () => new MissionRepository(Context, logger));
+            
+            _organizationsLazy = new Lazy<IOrganizationRepository>(
+                () => new OrganizationRepository(Context, logger));
+            
+            _stationsLazy = new Lazy<IStationRepository>(
+                () => new StationRepository(Context, logger));
+            
+            _adminsLazy = new Lazy<IAdminRepository>(
+                () => new AdminRepository(Context, logger));
         }
     }
 }

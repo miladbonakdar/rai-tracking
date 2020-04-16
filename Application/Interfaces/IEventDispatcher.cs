@@ -1,10 +1,11 @@
-﻿using Domain.Interfaces;
+﻿using System.Threading.Tasks;
+using Domain.Interfaces;
 using SharedKernel.Interfaces;
 
 namespace Application.Interfaces
 {
     public interface IEventDispatcher
     {
-        void Raise<TEvent>(TEvent @event) where TEvent : IApplicationEvent;
+        Task Raise<TEvent>(TEvent @event) where TEvent : IApplicationEvent;
     }
 }

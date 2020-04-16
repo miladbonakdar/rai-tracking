@@ -2,13 +2,14 @@
 using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedKernel.Exceptions;
 
 namespace Persistence.Repositories
 {
     class AdminRepository : Repository<Admin>, IAdminRepository
     {
-        public AdminRepository(DbContext context) : base(context)
+        public AdminRepository(DbContext context,ILogger logger) : base(context,logger)
         {
         }
 

@@ -149,6 +149,9 @@ namespace Persistence.Migrations
                     b.Property<int>("EventType")
                         .HasColumnType("integer");
 
+                    b.Property<bool>("IsAlarm")
+                        .HasColumnType("boolean");
+
                     b.Property<bool>("IsValidLocation")
                         .HasColumnType("boolean");
 
@@ -367,6 +370,9 @@ namespace Persistence.Migrations
 
                     b.Property<int>("EventType")
                         .HasColumnType("integer");
+
+                    b.Property<bool>("IsAlarm")
+                        .HasColumnType("boolean");
 
                     b.Property<bool>("IsValidLocation")
                         .HasColumnType("boolean");

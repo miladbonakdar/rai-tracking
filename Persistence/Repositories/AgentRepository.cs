@@ -4,13 +4,14 @@ using System.Threading.Tasks;
 using Application.Interfaces;
 using Domain;
 using Microsoft.EntityFrameworkCore;
+using Serilog;
 using SharedKernel.Exceptions;
 
 namespace Persistence.Repositories
 {
     class AgentRepository : Repository<Agent>, IAgentRepository
     {
-        public AgentRepository(DbContext context) : base(context)
+        public AgentRepository(DbContext context, ILogger logger) : base(context, logger)
         {
         }
 
