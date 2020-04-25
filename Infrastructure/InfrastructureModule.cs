@@ -1,13 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Text;
 using Application.Interfaces;
 using Autofac;
-using Domain.Interfaces;
-using DomainEvent.Extensions;
 using Infrastructure.Interfaces;
-using SharedKernel.Interfaces;
 using Module = Autofac.Module;
 
 namespace Infrastructure
@@ -27,9 +21,6 @@ namespace Infrastructure
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<EventDispatcher>().As<IEventDispatcher>().SingleInstance();
-
-            builder.RegisterType<ApplicationCommandFactory>().As<IApplicationCommandFactory>()
-                .InstancePerDependency();
 
             builder.RegisterType<CacheMultiplexer>().As<ICacheMultiplexer>()
                 .SingleInstance();

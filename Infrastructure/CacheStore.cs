@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Application.Enums;
 using Application.Interfaces;
 using Infrastructure.Interfaces;
-using Newtonsoft.Json;
 using Serilog;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 

@@ -12,8 +12,8 @@ namespace Domain
     {
         private Mission()
         {
-            
         }
+
         public Mission(int agentId, int remainingTime, int stationOneId,
             int? stationTwoId = null, string description = null)
         {
@@ -22,23 +22,27 @@ namespace Domain
             StationOneId = stationOneId;
             StationTwoId = stationTwoId;
             Description = description;
-            Phase = ProjectPhase.Unknown;
+            Phase = MissionPhase.NotStarted;
             Locations = new List<MissionLocation>();
             Events = new List<MissionEvent>();
         }
 
         public void Start()
-            => (Phase, StartedAt) = (ProjectPhase.Started, DateTime.Now);
+            => (Phase, StartedAt) = (MissionPhase.Started, DateTime.Now);
 
         public void Finish()
-            => (Phase, FinishedAt) = (ProjectPhase.Finished, DateTime.Now);
+            => (Phase, FinishedAt) = (MissionPhase.Finished, DateTime.Now);
 
         public void Cancel()
-            => (Phase, FinishedAt) = (ProjectPhase.Canceled, DateTime.Now);
+            => (Phase, FinishedAt) = (MissionPhase.Canceled, DateTime.Now);
 
         public void UpdateOtdr(int otdr) => OTDR = otdr;
+
         public void UpdateFailureLocation(Location location)
-            => FailureLocation = location;
+        {
+            if (FailureLocation is null) FailureLocation = location;
+            else FailureLocation.UpdateFrom(location);
+        }
 
         public void UpdateMission(int remainingTime, int stationOneId,
             int? stationTwoId = null, string description = null)
@@ -53,8 +57,9 @@ namespace Domain
         public int? OTDR { get; private set; }
         public DateTime? StartedAt { get; private set; }
         public DateTime? FinishedAt { get; private set; }
-        public ProjectPhase Phase { get; private set; }
+        public MissionPhase Phase { get; private set; }
         public Location FailureLocation { get; private set; }
+        public Zone ProbableFailureZone { get; private set; }
         public string Description { get; private set; }
 
         public int StationOneId { get; private set; }

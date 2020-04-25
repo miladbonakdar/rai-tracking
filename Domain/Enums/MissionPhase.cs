@@ -3,10 +3,10 @@ using SharedKernel.Constants;
 
 namespace Domain.Enums
 {
-    public enum ProjectPhase
+    public enum MissionPhase
     {
         [Description(Dic.ProjectPhases.Unknown)]
-        Unknown,
+        NotStarted,
         [Description(Dic.ProjectPhases.Started)]
         Started,
 
