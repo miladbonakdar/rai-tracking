@@ -6,18 +6,19 @@ import CreateOrEdit from './actions/createOrEdit';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import DeleteConfirmation from './actions/deleteOnfirmation';
-import ChangePass from './actions/changePass';
+import ChangePass from './actions/updateLocation';
 
-const AgentList = () => {
+const DepoList = () => {
     const dispatch = useDispatch();
+    const stations = useSelector(state => state.stations);
     const depos = useSelector(state => state.depos);
-    const agents = useSelector(state => state.agents);
     const [modal, setModal] = useState(false);
     const [passModal, setPassModal] = useState(false);
     const [edit, setEdit] = useState(false);
     const [editedItem, setEditedItem] = useState({})
 
     const toggle = () => {
+      debugger
       setModal(!modal)
       if(edit) setEdit(!edit)
     }
@@ -26,20 +27,20 @@ const AgentList = () => {
       setPassModal(!passModal);
     }
     const notify = (value) => {
-      toast(<DeleteConfirmation getAgents={getAgents} id={value.id}/>)
+      toast(<DeleteConfirmation getDepos={getDepos} id={value.id}/>)
     }
 
-    const renderAgents = () => {
+    const renderDepos = () => {
       return(
-        agents && agents.length > 0 ?
-        agents.map((value, index)=> {
+        depos && depos.length > 0 ?
+        depos.map((value, index)=> {
           return(
             <tr>
               <td>{index+1}</td>
               <td>{value.name} {value.lastname}</td>
               <td>{value.phoneNumber}</td>
               <td>{value.email}</td>
-              <td>{value.depoId}</td>
+              <td>{value.organizationId}</td>
               <td>{value.adminType}</td>
               <td>
                 <MDBIcon onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
@@ -53,23 +54,41 @@ const AgentList = () => {
       )
     }
     
-    const getAgents = async () => {
+    const getDepos = async () => {
+      dispatch({loading: true, type: 'SHOW_LOADING'})
+
         try {
-        const response = await axiosInstance.get(`/Admins/v1/Agent/10/0`);
-        dispatch({agents: response.data.data.list, type: 'SET_AGENTS'})
+        const response = await axiosInstance.get(`/Admins/v1/Depo/10/0`);
+        dispatch({depos: response.data.data.list, type: 'SET_DEPOS'})
         
         } catch (error) {
             console.log(error);
         }
-    }
+        dispatch({loading: false, type: 'SHOW_LOADING'})
+
+      }
+
+      const getStations = async () => {
+        dispatch({loading: true, type: 'SHOW_LOADING'});
+        try {
+        const response = await axiosInstance.get(`/Admins/v1/Station/10/0`);
+        dispatch({stations: response.data.data.list, type: 'SET_STATIONS'})
+        
+        } catch (error) {
+            console.log(error);
+        }
+        dispatch({loading: false, type: 'SHOW_LOADING'})
+
+      }
     useEffect(() => {
-        getAgents();
+      if(stations.length === 0) getStations();
+        getDepos();
     },[])
     return(
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title={edit ? 'ویرایش تعمیرکار':'ایحاد تعمیر کار'} openModal={toggle} />
+      <BreadcrumSection title= 'ایحاد depo' openModal={toggle} />
 
         <MDBCard className="mt-2">
           <MDBCardBody>
@@ -86,7 +105,7 @@ const AgentList = () => {
                 </tr>
               </MDBTableHead>
               <MDBTableBody>
-                {renderAgents()}
+                {renderDepos()}
               </MDBTableBody>
             </MDBTable>
             </MDBCardBody>
@@ -97,7 +116,7 @@ const AgentList = () => {
               <MDBModal size="lg" isOpen={modal} toggle={toggle}>
                 <MDBModalHeader toggle={toggle}>{edit ? 'فرم ویرایش' : 'فرم ایجاد'}</MDBModalHeader>
                 <MDBModalBody>
-                  <CreateOrEdit openModal={toggle} getAgents={getAgents} editItem={{edit:edit, item:editedItem }}/>
+                  <CreateOrEdit openModal={toggle} getDepos={getDepos} editItem={{edit:edit, item:editedItem }}/>
                 </MDBModalBody>
               </MDBModal>
             </MDBContainer>
@@ -117,4 +136,4 @@ const AgentList = () => {
             
     )
 }
-export default AgentList;
+export default DepoList;

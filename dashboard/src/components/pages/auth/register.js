@@ -270,7 +270,7 @@ useEffect(() =>{
                         {
                           adminTypes.map((type) => {
                             return(
-                            <option value={type.value} key={type.key}>{type.value}</option>
+                            <option value={type.key} key={type.key}>{type.value}</option>
                             )
                           })
                         }
@@ -297,13 +297,13 @@ useEffect(() =>{
                           onChange={(event) => {
                             setRegForm({
                               ...regForm,
-                              organizationId: event.target.value
+                              organizationId: Number(event.target.value)
                             })
                           }}>
                       {
                           organizations.map((org) => {
                             return(
-                            <option value={org.name} key={org.id}>{org.name}</option>
+                            <option value={org.id} key={org.id}>{org.name}</option>
                             )
                           })
                         }

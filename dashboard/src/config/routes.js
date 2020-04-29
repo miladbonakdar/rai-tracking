@@ -6,6 +6,8 @@ import MapsPage from "../components/pages/MapsPage";
 import Auth from '../components/pages/auth/auth';
 import AdminList from '../components/pages/basic-information/admins/adminList';
 import AgentList from '../components/pages/basic-information/agents/agentList';
+import StationList from '../components/pages/basic-information/stations/stationList';
+import DepoList from '../components/pages/basic-information/depos/depoList';
 const routes = [
     {
         path: '/dashboard',
@@ -69,10 +71,19 @@ const routes = [
                 }
             },
             {
-                path: '/basic-information/test2',
-                name: 'test',
-                perName: 'test',
-                component: TablesPage,
+                path: '/basic-information/depos',
+                name: 'depos',
+                perName: 'depos',
+                component: DepoList,
+                meta: {
+                    icon: 'fa-dashboard'
+                }
+            },
+            {
+                path: '/basic-information/stations',
+                name: 'stations',
+                perName: 'ایستگاهها',
+                component: StationList,
                 meta: {
                     icon: 'fa-dashboard'
                 }

@@ -5,6 +5,7 @@ const initialState = {
     admins: [],
     agents: [],
     depos: [],
+    stations: [],
     adminTypes: [],
     organizations: []
   }
@@ -38,6 +39,12 @@ const initialState = {
         return {
           ...state,
           agents: action.agents
+        }
+      }
+      case 'SET_STATIONS': {
+        return {
+          ...state,
+          stations: action.stations
         }
       }
       case 'SET_DEPOS': {

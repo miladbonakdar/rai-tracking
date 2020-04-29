@@ -73,7 +73,7 @@ const AdminList = () => {
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title={edit ? 'ویرایش ادمین':'ایحاد ادمین'} openModal={toggle} />
+      <BreadcrumSection title= 'ایحاد ادمین' openModal={toggle} />
 
         <MDBCard className="mt-2">
           <MDBCardBody>

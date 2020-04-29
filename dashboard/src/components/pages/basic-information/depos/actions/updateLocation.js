@@ -2,9 +2,12 @@ import React, { useState } from 'react';
 import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
 import axiosInstance from '../../../../../config/axiosInstance';
 import { toast } from 'react-toastify';
-const ChangePass = (props) => {
+import { useDispatch } from 'react-redux';
+const UpdateLocation = (props) => {
+    const dispatch = useDispatch();
     const [change, setChange] = useState({
-        password: '',
+        latitude: '',
+        longitude: '',
         domainId: props.editItem.item.id
     });
     const submitHandler = event => {
@@ -17,14 +20,17 @@ const ChangePass = (props) => {
             [event.target.name]: event.target.value
            });
     }
-    const changePassFunc = async () => {
+    const updateLocFunc = async () => {
+        dispatch({loading: true, type: 'SHOW_LOADING'})
         try {
-            const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
-            debugger;
+            const response = await axiosInstance.patch('/Admins/v1/Depo/UpdateLocation', change );
             toast.success(response.data.message);
+            props.openModal();
         } catch (error) {
             console.log(error)
         }
+        dispatch({loading: false, type: 'SHOW_LOADING'})
+
     }
     return(
         <MDBContainer>
@@ -44,8 +50,8 @@ const ChangePass = (props) => {
                          رمز عبور فعلی
                     </label>
                     <input
-                      value={change.password}
-                      name="password"
+                      value={change.oldPassword}
+                      name="oldPassword"
                       onChange={changeHandler}
                       type="text"
                       id="defaultFormRegisterNameEx"
@@ -60,11 +66,11 @@ const ChangePass = (props) => {
                       htmlFor="defaultFormRegisterEmailEx2"
                       className="grey-text"
                     >
-                      رمزعبور جدید
+                      رمز عبور جدید
                     </label>
                     <input
-                      value={change.password}
-                      name="password"
+                      value={change.newPassword}
+                      name="newPassword"
                       onChange={changeHandler}
                       type="text"
                       id="defaultFormRegisterEmailEx2"
@@ -75,7 +81,7 @@ const ChangePass = (props) => {
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
                   </MDBCol>
                   </MDBRow>
-                  <MDBBtn onClick={changePassFunc} color="primary" type="submit">
+                  <MDBBtn onClick={updateLocFunc} color="primary" type="submit">
                   ثبت
                 </MDBBtn>
               </form>
@@ -84,4 +90,4 @@ const ChangePass = (props) => {
         </MDBContainer>
     )
 }
-export default ChangePass;
+export default UpdateLocation;
