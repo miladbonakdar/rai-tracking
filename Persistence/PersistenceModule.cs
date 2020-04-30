@@ -11,7 +11,7 @@ namespace Persistence
         public static string PgConnectionString
         {
             get => _pgConnectionString ??
-                   "User ID=postgres;Password=Xx123456P@ssw0rd;Host=localhost;Port=5432;Database=raitracking;Pooling=true;"
+                   "User ID=root;Password=b8xBv7L9yBu7e4K15IUwBn8t;Host=s9.liara.ir;Port=34436;Database=raitracking;Pooling=true;"
             ;
             set => _pgConnectionString = string.IsNullOrWhiteSpace(_pgConnectionString)
                 ? value
