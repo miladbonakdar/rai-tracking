@@ -8,6 +8,7 @@ namespace Persistence.EntityConfigurations
         public void Configure(EntityTypeBuilder<Mission> builder)
         {
             builder.OwnsOne(m => m.FailureLocation);
+            builder.OwnsOne(m => m.ProbableFailureZone);
         }
     }
 }

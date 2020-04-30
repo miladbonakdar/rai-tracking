@@ -54,5 +54,11 @@ namespace SharedKernel
                 throw new ArgumentOutOfRangeException(longitudeParamName);
             }
         }
+
+        public static void ValidateRadius(double radius, string radiusParamName)
+        {
+            if (radius < 0)
+                throw new ArgumentOutOfRangeException(radiusParamName);
+        }
     }
 }

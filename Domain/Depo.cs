@@ -23,7 +23,14 @@ namespace Domain
         }
 
         public void UpdateLocation([NotNull] Location location)
-            => Location.UpdateFrom(location);
+        {
+            if (Location is null)
+            {
+                Location = location;
+                return;
+            }
+            Location.UpdateFrom(location);
+        }
 
         public Location Location { get; private set; }
         [Required] public string Name { get; private set; }

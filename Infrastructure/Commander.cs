@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Application.Interfaces;
+using Domain;
 using Domain.Interfaces;
 using SharedKernel;
 
@@ -8,29 +9,27 @@ namespace Infrastructure
 {
     class Commander : ICommander
     {
-        private readonly IApplicationCommandFactory _factory;
-        private readonly ICommandRepository _commandRepository;
+        private readonly IUnitOfWork _unitOfWork;
         private readonly ISmsService _smsService;
 
-        public Commander(IApplicationCommandFactory factory,ICommandRepository commandRepository,
+        public Commander( IUnitOfWork unitOfWork,
             ISmsService smsService)
         {
-            _factory = factory;
-            _commandRepository = commandRepository;
+            _unitOfWork = unitOfWork;
             _smsService = smsService;
         }
 
-        public Task<Result<bool>> SendAsync<TCommand>(TCommand command) where TCommand : IApplicationCommand
+        public async Task<Result<bool>> SendAsync<TCommand>(TCommand command) where TCommand : IApplicationCommand
         {
             var commandMessage = command.Message;
-            _smsService.SendAsync(command.PhoneNumber, commandMessage);
-            throw new NotImplementedException();
-        }
-
-        public Task<Result<bool>> SendAsync<TCommand>(Func<IApplicationCommandFactory, TCommand> commandFactory) where TCommand : IApplicationCommand
-        {
-            var command = commandFactory(_factory);
-            return SendAsync(command);
+            await _smsService.SendAsync(command.PhoneNumber, commandMessage);
+            await _unitOfWork.CompleteAsync(ctx =>
+            {
+                var cmd = new Command(command.AgentId, command.CommandType, DateTime.Now);
+                cmd.SetData(command.Message);
+                ctx.Commands.Add(cmd);
+            });
+            return Result<bool>.Success();
         }
     }
 }

@@ -129,9 +129,9 @@ namespace SharedKernel.Constants
         
         public static class Station
         {
-            public const string Create = Constants.UserGroup.AllMainAdmins;
-            public const string Update = Constants.UserGroup.AllMainAdmins;
-            public const string Delete = Constants.UserGroup.AllMainAdmins;
+            public const string Create = Constants.UserGroup.AllRootAdmins;
+            public const string Update = Constants.UserGroup.AllRootAdmins;
+            public const string Delete = Constants.UserGroup.AllRootAdmins;
         }
 
         public static class Mission

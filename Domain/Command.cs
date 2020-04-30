@@ -10,10 +10,11 @@ namespace Domain
 {
     public class Command : AggregateRoot, IAgentTenant
     {
-        public Command(CommandType type, DateTime sentAt)
+        public Command(int agentId, CommandType type, DateTime sentAt)
         {
             Type = type;
             SentAt = sentAt;
+            AgentId = agentId;
         }
 
         private Command()
