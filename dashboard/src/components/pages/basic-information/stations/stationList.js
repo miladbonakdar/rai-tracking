@@ -15,7 +15,7 @@ const StationList = () => {
     const [editedItem, setEditedItem] = useState({})
 
     const toggle = () => {
-      debugger
+       
       setModal(!modal)
       if(edit) setEdit(!edit)
     }
@@ -50,7 +50,7 @@ const StationList = () => {
       dispatch({loading: true, type: 'SHOW_LOADING'});
         try {
         const response = await axiosInstance.get(`/Admins/v1/Station/10/0`);
-        debugger
+         
         dispatch({stations: response.data.data.list, type: 'SET_STATIONS'})
         
         } catch (error) {

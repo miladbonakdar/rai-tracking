@@ -11,6 +11,7 @@ import ChangePass from './actions/changePass';
 const AgentList = () => {
     const dispatch = useDispatch();
     const depos = useSelector(state => state.depos);
+    const permissions = useSelector(state => state.permissions);
     const agents = useSelector(state => state.agents);
     const [modal, setModal] = useState(false);
     const [passModal, setPassModal] = useState(false);
@@ -25,26 +26,28 @@ const AgentList = () => {
     const toggleModal = () => {
       setPassModal(!passModal);
     }
-    const notify = (value) => {
-      toast(<DeleteConfirmation getAgents={getAgents} id={value.id}/>)
-    }
+  
 
     const renderAgents = () => {
       return(
         agents && agents.length > 0 ?
         agents.map((value, index)=> {
+          if(depos.length > 0 )
+          {
+            
+           value['depoValue'] = depos.filter(i => i.id === value.depoId);
+          }
           return(
             <tr>
               <td>{index+1}</td>
               <td>{value.name} {value.lastname}</td>
               <td>{value.phoneNumber}</td>
               <td>{value.email}</td>
-              <td>{value.depoId}</td>
-              <td>{value.adminType}</td>
+              <td>{value.depoValue ? value.depoValue[0].name : ''}</td>
               <td>
-                <MDBIcon onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
-                <MDBIcon onClick={() => {toggleModal()}} icon="lock"/>
-                <MDBIcon onClick={() => {notify(value)}} icon="trash"/>
+                <MDBIcon onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon onClick={() => { checkAccess('resetPassword', value)}} icon="lock"/>
+                <MDBIcon onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )
@@ -62,8 +65,53 @@ const AgentList = () => {
             console.log(error);
         }
     }
+    const notify = (value) => {
+      permissions.permission.agent.delete ? 
+      toast(<DeleteConfirmation getAgents={getAgents} id={value.id}/>)
+      : toast.error('شما به این بخض دسترسی ندارید')
+    }
+    const showAccessError = () => {
+      toast.error('شما دسترسی به این بخش ندارید')
+    }
+    const showUpdateElements = (value) => {
+      debugger
+      setEdit(true)
+      toggle() 
+      setEditedItem(value)
+    }
+    const setEditItems = (value) => {
+      setEditedItem(value);
+      toggleModal();
+    }
+    const checkAccess = (key,value) => {
+      switch (key) {
+        case 'delete':
+          permissions.permission.agent.delete ? 
+          notify(value) : showAccessError()
+
+          break;
+        case 'resetPassword':
+          permissions.permission.agent.resetPassword ?
+          setEditItems(value) : showAccessError()
+          break;
+
+        case 'update':
+          permissions.permission.agent.update ? 
+          showUpdateElements(value) 
+          :showAccessError()
+          break;
+      
+        default:
+          break;
+      }
+    }
+    const getDepos = async () => {
+      const response = await axiosInstance.get('/Admins/v1/Depo/100/0');
+      dispatch({depos: response.data.data.list, type: 'SET_DEPOS'});
+    }
     useEffect(() => {
         getAgents();
+        if(depos.length === 0) getDepos();
     },[])
     return(
       <MDBContainer>
@@ -81,7 +129,6 @@ const AgentList = () => {
                   <th>شماره تماس</th>
                   <th>ایمیل</th>
                   <th>سازمان</th>
-                  <th>نوع ادمین</th>
                   <th>عملیات</th>
                 </tr>
               </MDBTableHead>

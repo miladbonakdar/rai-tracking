@@ -19,8 +19,10 @@ const ChangePass = (props) => {
     }
     const changePassFunc = async () => {
         try {
+          const data= change;
+          debugger
             const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
-            debugger;
+             props.openModal();
             toast.success(response.data.message);
         } catch (error) {
             console.log(error)
@@ -36,25 +38,6 @@ const ChangePass = (props) => {
                 noValidate
               >
                 <MDBRow>
-                  <MDBCol md="12" className="mb-3">
-                    <label
-                      htmlFor="defaultFormRegisterNameEx"
-                      className="grey-text"
-                    >
-                         رمز عبور فعلی
-                    </label>
-                    <input
-                      value={change.password}
-                      name="password"
-                      onChange={changeHandler}
-                      type="text"
-                      id="defaultFormRegisterNameEx"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                    <div className="invalid-feedback">این فیلد اجباری است.</div>
-                  </MDBCol>
                   <MDBCol md="12" className="mb-3">
                     <label
                       htmlFor="defaultFormRegisterEmailEx2"

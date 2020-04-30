@@ -23,9 +23,10 @@ const CreateOrEdit = (props) => {
         const create = async () => {
           try {
             const response = await axiosInstance.post('/Admins/v1/Agent',createForm);
-            debugger
-            toast.success(response.data.data.message);
+             
+            toast.success(response.data.message);
             props.getAgents();
+            props.openModal();
           } catch (error) {
             console.log(error);
           }  
@@ -36,10 +37,11 @@ const CreateOrEdit = (props) => {
               const data = createForm;
               data['password'] = "12345678";
               data['id'] = props.editItem.item.id;
-                const response = await axiosInstance.put('/Admins/v1/Agent', createForm);
-                debugger
+                const response = await axiosInstance.put('/Admins/v1/Agent', data);
+                 debugger
                 toast.success(response.data.message);
                 props.getAgents();
+                props.openModal();
             } catch (error) {
                 console.log(error);
                 
@@ -60,7 +62,7 @@ const CreateOrEdit = (props) => {
        
        
         const getAgent = () => {
-          debugger
+           
             setCreateForm({
                 ...createForm,
                 name: props.editItem.item.name,
@@ -68,10 +70,11 @@ const CreateOrEdit = (props) => {
                 password: props.editItem.item.password,
                 email: props.editItem.item.email,
                 phoneNumber: props.editItem.item.phoneNumber,
-                depoId: depos.filter(i=> i.id === props.editItem.item.depoId)[0]
+                depoId: depos.filter(i=> i.id === props.editItem.item.depoId)[0].id
             });
         }
         const getDepos = async () => {
+           
           const response = await axiosInstance.get('/Admins/v1/Depo/100/0');
           dispatch({depos: response.data.data.list, type: 'SET_DEPOS'});
         }
@@ -190,12 +193,12 @@ const CreateOrEdit = (props) => {
                         className="browser-default custom-select"
                         value={createForm.depoId}
                             onChange={(event) => {
+                               
                               setCreateForm({
                                 ...createForm,
                                 depoId: Number(event.target.value)
                               })
                             }}>
-                              <option value="0" key="0">choose</option>
 
                         {
                             depos.map((depo) => {

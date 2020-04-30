@@ -11,8 +11,8 @@ const CreateOrEdit = (props) => {
         const stations = useSelector(state => state.stations);
         const organizations = useSelector(state => state.organizations);
         const [location, setLocation] = useState({
-          latitude: 0,
-          longitude: 0
+          latitude: 1,
+          longitude: 1
         });
         const [createForm, setCreateForm] = useState({
           name: '',
@@ -31,10 +31,11 @@ const CreateOrEdit = (props) => {
             stationId: createForm.stationId
           }
           debugger
+           
           dispatch({loading: true, type: 'SHOW_LOADING'})
           try {
             const response = await axiosInstance.post('/Admins/v1/Depo',data);
-            debugger
+             
             toast.success(response.data.message);
             props.getDepos();
             props.openModal();
@@ -88,8 +89,8 @@ const CreateOrEdit = (props) => {
             setCreateForm({
                 ...createForm,
                 name: props.editItem.item.name,
-                stationId: props.editItem.item.stationId,
-                organizationId: organizations.filter(i=> i.id === props.editItem.item.organizationId)[0]
+                stationId: stations.filter(i=>i.id === props.editItem.item.stationId)[0].id,
+                organizationId: organizations.filter(i=> i.id === props.editItem.item.organizationId)[0].id
             });
         }
 
@@ -174,7 +175,7 @@ const CreateOrEdit = (props) => {
                       className="browser-default custom-select"
                       value={createForm.organizationId}
                           onChange={(event) => {
-                            debugger
+                             
                             setCreateForm({
                               ...createForm,
                               organizationId: Number(event.target.value)

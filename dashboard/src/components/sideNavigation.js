@@ -10,7 +10,6 @@ const TopNavigation = () => {
         id: ''
     })
     const toggleCollapse = (collapseid) => {
-        debugger
         setCollapseId({
             ...collapseID,
             id: collapseID.id !== collapseid ? collapseid : '' 

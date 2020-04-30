@@ -38,6 +38,7 @@ const Login = () => {
                 toast.success(response.data.message);
                 localStorage.setItem('userToken', response.data.data.token);
                 dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
+                await getUserData();
                 history.push('/dashboard');
               }
           dispatch({loading: false, type: 'SHOW_LOADING'});
@@ -45,6 +46,14 @@ const Login = () => {
           
           } catch (error) {
           }
+      }
+      const getUserData = async () => {
+        try {
+          const response = await axiosInstance.get('/Public/v1/Auth/Admin');
+          dispatch({user: response.data.data, type:'SET_USER_PERMISSIONS'});
+        } catch (error) {
+          
+        }        
       }
     return(
         <MDBContainer>

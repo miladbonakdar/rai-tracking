@@ -6,7 +6,6 @@ const Auth = () => {
     const [activeItemJustified , setActiveItemJustified ] = useState('1');
     const toggleJustified = (tab) => {
         if (activeItemJustified !== tab) {
-            debugger
           setActiveItemJustified(tab);
         }
       };

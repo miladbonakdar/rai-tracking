@@ -36,9 +36,18 @@ const App = () => {
     dispatch({loading: false, type: 'SHOW_LOADING'});
 
   }
+  const getUserData = async () => {
+    try {
+      const response = await axiosInstance.get('/Public/v1/Auth/Admin');
+      dispatch({user: response.data.data, type:'SET_USER_PERMISSIONS'});
+    } catch (error) {
+      
+    }        
+  }
   useEffect(() => {
     getAdminTypes();
     getOrganizations();
+    getUserData();
   },[]);
 
 

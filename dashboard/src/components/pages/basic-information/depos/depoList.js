@@ -11,6 +11,7 @@ import ChangePass from './actions/updateLocation';
 const DepoList = () => {
     const dispatch = useDispatch();
     const stations = useSelector(state => state.stations);
+    const permissions = useSelector(state => state.permissions);
     const depos = useSelector(state => state.depos);
     const [modal, setModal] = useState(false);
     const [passModal, setPassModal] = useState(false);
@@ -18,7 +19,7 @@ const DepoList = () => {
     const [editedItem, setEditedItem] = useState({})
 
     const toggle = () => {
-      debugger
+       
       setModal(!modal)
       if(edit) setEdit(!edit)
     }
@@ -27,9 +28,44 @@ const DepoList = () => {
       setPassModal(!passModal);
     }
     const notify = (value) => {
+      permissions.permission.depo.delete ? 
       toast(<DeleteConfirmation getDepos={getDepos} id={value.id}/>)
+      : toast.error('شما به این بخض دسترسی ندارید')
     }
+    const showAccessError = () => {
+      toast.error('شما دسترسی به این بخش ندارید')
+    }
+    const showUpdateElements = (value) => {
+      setEdit(true);
+      toggle();
+      setEditedItem(value)
+    }
+    const setEditItems = (value) => {
+      setEditedItem(value);
+      toggleModal();
+    }
+    const checkAccess = (key,value) => {
+      switch (key) {
+        case 'delete':
+          permissions.permission.depo.delete ? 
+          notify(value) : showAccessError()
 
+          break;
+        case 'updateLocation':
+          permissions.permission.depo.updateLocation ?
+          setEditItems(value) : showAccessError()
+          break;
+
+        case 'update':
+          permissions.permission.depo.update ? 
+          showUpdateElements(value) 
+          :showAccessError()
+          break;
+      
+        default:
+          break;
+      }
+    }
     const renderDepos = () => {
       return(
         depos && depos.length > 0 ?
@@ -43,9 +79,9 @@ const DepoList = () => {
               <td>{value.organizationId}</td>
               <td>{value.adminType}</td>
               <td>
-                <MDBIcon onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
-                <MDBIcon onClick={() => {toggleModal()}} icon="lock"/>
-                <MDBIcon onClick={() => {notify(value)}} icon="trash"/>
+                <MDBIcon onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon onClick={() => { checkAccess('updateLocation', value)}} icon="lock"/>
+                <MDBIcon onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )

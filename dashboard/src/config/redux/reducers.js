@@ -2,6 +2,7 @@ const initialState = {
     loading: false,
     token: localStorage.getItem('userToken') || null,
     user: localStorage.getItem('user') ? localStorage.getItem('user') : 'user',
+    permissions: {},
     admins: [],
     agents: [],
     depos: [],
@@ -21,6 +22,12 @@ const initialState = {
         return {
           ...state,
           user: action.user
+        }
+      }
+      case 'SET_USER_PERMISSIONS': {
+        return {
+          ...state,
+          permissions: action.user
         }
       }
       case 'SET_TOKEN': {
@@ -54,6 +61,7 @@ const initialState = {
         }
       }
       case 'SET_ADMINTYPES': {
+         
         return {
           ...state,
           adminTypes: action.adminTypes

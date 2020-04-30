@@ -13,6 +13,12 @@ export const userAuth = user => {
     user
   }
 }
+export const setUserPermissions = user => {
+  return{
+    type: SET_USER_PERMISSIONS,
+    user
+  }
+}
 export const setToken = token => {
   return {
     type: SET_TOKEN,

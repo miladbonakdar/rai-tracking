@@ -23,7 +23,7 @@ const CreateOrEdit = (props) => {
           dispatch({loading: true, type: 'SHOW_LOADING'})
           try {
             const response = await axiosInstance.post('/Admins/v1/station',createForm);
-            debugger
+             
             toast.success(response.data.message);
             props.getStations();
             props.openModal();
@@ -168,7 +168,7 @@ const CreateOrEdit = (props) => {
                       className="browser-default custom-select"
                       value={createForm.organizationId}
                           onChange={(event) => {
-                            debugger
+                             
                             setCreateForm({
                               ...createForm,
                               organizationId: Number(event.target.value)

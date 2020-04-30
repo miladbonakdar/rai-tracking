@@ -16,7 +16,7 @@ const CreateOrEdit = (props) => {
           phoneNumber: '',
           password: '',
           number: '',
-          adminType: 'UserType.SysAdmin', // select
+          adminType: 'UserType.Monitor', // select
           organizationId: '', //select
         });
 
@@ -27,7 +27,7 @@ const CreateOrEdit = (props) => {
           dispatch({loading: true, type: 'SHOW_LOADING'})
           try {
             const response = await axiosInstance.post('/Admins/v1/Admin',createForm);
-            debugger
+             
             toast.success(response.data.message);
             props.getAdmins();
             props.openModal();
@@ -77,8 +77,8 @@ const CreateOrEdit = (props) => {
                 email: props.editItem.item.email,
                 phoneNumber: props.editItem.item.phoneNumber,
                 number: props.editItem.item.number,
-                adminType: adminTypes.filter(i=> i.key === props.editItem.item.adminType)[0],
-                organizationId: organizations.filter(i=> i.id === props.editItem.item.organizationId)[0]
+                adminType:  adminTypes.filter(i=> i.key === props.editItem.item.adminType)[0].key,
+                organizationId: organizations.filter(i=> i.id === props.editItem.item.organizationId)[0].id
             });
         }
 
@@ -312,7 +312,7 @@ const CreateOrEdit = (props) => {
                       className="browser-default custom-select"
                       value={createForm.organizationId}
                           onChange={(event) => {
-                            debugger
+                             
                             setCreateForm({
                               ...createForm,
                               organizationId: Number(event.target.value)
