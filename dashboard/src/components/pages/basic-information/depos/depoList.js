@@ -6,17 +6,18 @@ import CreateOrEdit from './actions/createOrEdit';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import DeleteConfirmation from './actions/deleteOnfirmation';
-import ChangePass from './actions/updateLocation';
+import UpdateLocation from './actions/updateLocation';
 
 const DepoList = () => {
     const dispatch = useDispatch();
     const stations = useSelector(state => state.stations);
+    const organizations = useSelector(state => state.organizations);
     const permissions = useSelector(state => state.permissions);
     const depos = useSelector(state => state.depos);
     const [modal, setModal] = useState(false);
     const [passModal, setPassModal] = useState(false);
     const [edit, setEdit] = useState(false);
-    const [editedItem, setEditedItem] = useState({})
+    const [editedItem, setEditedItem] = useState({});
 
     const toggle = () => {
        
@@ -70,23 +71,28 @@ const DepoList = () => {
       return(
         depos && depos.length > 0 ?
         depos.map((value, index)=> {
+          if(depos.length > 0 )
+          {
+            
+           value['organizationValue'] = organizations.filter(i => i.id === value.organizationId);
+           value['stationValue'] = stations.filter(i => i.id === value.stationId);
+
+          }
           return(
             <tr>
               <td>{index+1}</td>
               <td>{value.name} {value.lastname}</td>
-              <td>{value.phoneNumber}</td>
-              <td>{value.email}</td>
-              <td>{value.organizationId}</td>
-              <td>{value.adminType}</td>
+              <td>{value.organizationValue[0].name}</td>
+              <td>{value.stationValue[0] ? value.stationValue[0].name : '-'}</td>
               <td>
-                <MDBIcon onClick={() => { checkAccess('update',value)}} icon="edit"/>
-                <MDBIcon onClick={() => { checkAccess('updateLocation', value)}} icon="lock"/>
-                <MDBIcon onClick={() => {checkAccess('delete', value)}} icon="trash"/>
+                <MDBIcon className="action-icons edit" onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon className="action-icons update-ac" onClick={() => { checkAccess('updateLocation', value)}} icon="map-marker-alt"/>
+                <MDBIcon className="action-icons delete" onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )
         })
-        :<tr>No Item</tr>  
+        :<tr>موردی یافت نشد</tr>  
       )
     }
     
@@ -133,8 +139,6 @@ const DepoList = () => {
                 <tr>
                   <th>#</th>
                   <th>نام و نام خانوادگی</th>
-                  <th>شماره تماس</th>
-                  <th>ایمیل</th>
                   <th>سازمان</th>
                   <th>نوع ادمین</th>
                   <th>عملیات</th>
@@ -158,10 +162,10 @@ const DepoList = () => {
             </MDBContainer>
             
             <MDBContainer>
-              <MDBModal size="sm" isOpen={passModal} toggle={toggleModal}>
-                <MDBModalHeader toggle={toggleModal}>تغییر رمز عبور</MDBModalHeader>
+              <MDBModal size="lg" isOpen={passModal} toggle={toggleModal}>
+                <MDBModalHeader toggle={toggleModal}>ویرایش موقعیت مکانی</MDBModalHeader>
                 <MDBModalBody>
-                  <ChangePass openModal={toggleModal} editItem={{item:editedItem }}/>
+                  <UpdateLocation getDepos={getDepos} openModal={toggleModal} editItem={{item:editedItem }}/>
                 </MDBModalBody>
               </MDBModal>
             </MDBContainer>

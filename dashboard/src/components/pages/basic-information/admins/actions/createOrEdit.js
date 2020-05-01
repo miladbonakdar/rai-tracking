@@ -17,7 +17,7 @@ const CreateOrEdit = (props) => {
           password: '',
           number: '',
           adminType: 'UserType.Monitor', // select
-          organizationId: '', //select
+          organizationId: 1, //select
         });
 
         const [repeatPassword, setRepeatPassword] = useState('');
@@ -27,7 +27,7 @@ const CreateOrEdit = (props) => {
           dispatch({loading: true, type: 'SHOW_LOADING'})
           try {
             const response = await axiosInstance.post('/Admins/v1/Admin',createForm);
-             
+            debugger
             toast.success(response.data.message);
             props.getAdmins();
             props.openModal();
@@ -110,7 +110,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterNameEx"
                       className="form-control"
-                      placeholder="علی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -129,7 +129,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
-                      placeholder="احمدی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -148,7 +148,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterConfirmEx3"
                       className="form-control"
                       name="email"
-                      placeholder="test@gmail.com"
+                      placeholder=""
                       required
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">
@@ -172,7 +172,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="phoneNumber"
-                      placeholder="09121234567"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -194,7 +194,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="number"
-                      placeholder="02112345678"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -312,7 +312,7 @@ const CreateOrEdit = (props) => {
                       className="browser-default custom-select"
                       value={createForm.organizationId}
                           onChange={(event) => {
-                             
+                            debugger
                             setCreateForm({
                               ...createForm,
                               organizationId: Number(event.target.value)
@@ -337,7 +337,7 @@ const CreateOrEdit = (props) => {
                   {props.editItem.edit ? 'ویرایش' : 'ایجاد'}
                 </MDBBtn>
                 <MDBBtn onClick={() => {props.openModal()}} color="primary" type="submit">
-                  close
+                  خروج
                 </MDBBtn>
               </form>
             

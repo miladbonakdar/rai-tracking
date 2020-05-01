@@ -110,7 +110,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterNameEx"
                       className="form-control"
-                      placeholder="علی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -129,7 +129,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
-                      placeholder="احمدی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -148,7 +148,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterConfirmEx3"
                       className="form-control"
                       name="email"
-                      placeholder="test@gmail.com"
+                      placeholder=""
                       required
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">
@@ -172,7 +172,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="phoneNumber"
-                      placeholder="09121234567"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -288,7 +288,7 @@ const CreateOrEdit = (props) => {
                   {props.editItem.edit ? 'ویرایش' : 'ایجاد'}
                 </MDBBtn>
                 <MDBBtn onClick={() => {props.openModal()}} color="primary" type="submit">
-                  close
+                  خروج
                 </MDBBtn>
               </form>
             

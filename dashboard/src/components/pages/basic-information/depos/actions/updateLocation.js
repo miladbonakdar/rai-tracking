@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
-import { MDBContainer, MDBRow, MDBCol, MDBBtn } from 'mdbreact';
+import { MDBContainer, MDBBtn } from 'mdbreact';
 import axiosInstance from '../../../../../config/axiosInstance';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
+import Map from './Map/Map';
 const UpdateLocation = (props) => {
     const dispatch = useDispatch();
     const [change, setChange] = useState({
-        latitude: '',
-        longitude: '',
+        latitude: props.editItem.item.latitude,
+        longitude: props.editItem.item.longitude,
         domainId: props.editItem.item.id
     });
     const submitHandler = event => {
@@ -24,6 +25,7 @@ const UpdateLocation = (props) => {
         dispatch({loading: true, type: 'SHOW_LOADING'})
         try {
             const response = await axiosInstance.patch('/Admins/v1/Depo/UpdateLocation', change );
+            props.getDepos();
             toast.success(response.data.message);
             props.openModal();
         } catch (error) {
@@ -32,56 +34,23 @@ const UpdateLocation = (props) => {
         dispatch({loading: false, type: 'SHOW_LOADING'})
 
     }
+    const setSelectedLocation = (loc) => {
+      setChange({
+        ...change,
+        latitude: loc.latitude,
+        longitude: loc.longitude
+      });
+    }
     return(
         <MDBContainer>
             <div>
-           <p className="h4 text-center py-4">فرم ورود</p>
           <form
                 className="needs-validation p-3"
                 onSubmit={submitHandler}
                 noValidate
               >
-                <MDBRow>
-                  <MDBCol md="12" className="mb-3">
-                    <label
-                      htmlFor="defaultFormRegisterNameEx"
-                      className="grey-text"
-                    >
-                         رمز عبور فعلی
-                    </label>
-                    <input
-                      value={change.oldPassword}
-                      name="oldPassword"
-                      onChange={changeHandler}
-                      type="text"
-                      id="defaultFormRegisterNameEx"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                    <div className="invalid-feedback">این فیلد اجباری است.</div>
-                  </MDBCol>
-                  <MDBCol md="12" className="mb-3">
-                    <label
-                      htmlFor="defaultFormRegisterEmailEx2"
-                      className="grey-text"
-                    >
-                      رمز عبور جدید
-                    </label>
-                    <input
-                      value={change.newPassword}
-                      name="newPassword"
-                      onChange={changeHandler}
-                      type="text"
-                      id="defaultFormRegisterEmailEx2"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                    <div className="invalid-feedback">این فیلد اجباری است.</div>
-                  </MDBCol>
-                  </MDBRow>
-                  <MDBBtn onClick={updateLocFunc} color="primary" type="submit">
+                <Map setSelectedLocation={(loc)=>{setSelectedLocation(loc)}} editItem={props.editItem.item}/>
+                <MDBBtn onClick={updateLocFunc} color="primary" type="submit">
                   ثبت
                 </MDBBtn>
               </form>

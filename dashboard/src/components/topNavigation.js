@@ -1,63 +1,73 @@
-import React, { Component } from 'react';
-import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBNavLink, MDBIcon } from 'mdbreact';
+import React, { Component, useState } from 'react';
+import { MDBNavbar, MDBNavbarBrand, MDBNavbarNav, MDBNavbarToggler, MDBCollapse, MDBNavItem, MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem, MDBIcon } from 'mdbreact';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 
-class TopNavigation extends Component {
-    state = {
-        collapse: false
+const TopNavigation =() => {
+    const dispatch = useDispatch();
+    const user = useSelector(state => state.user);
+    const history = useHistory();
+    const [dropdownOpen, setDropdwonOpen] = useState(false)
+    const [collapse, setCollapse] = useState(false);
+    const onClick = () => {
+        setCollapse(!collapse)
     }
 
-    onClick = () => {
-        this.setState({
-            collapse: !this.state.collapse,
-        });
+    const toggle = () => {
+        setDropdwonOpen(!dropdownOpen);
+    }
+    const logoutUser = () => {
+        localStorage.removeItem('user');
+        dispatch({user: '', type: 'SET_USER'});
+        localStorage.removeItem('userToken');
+        dispatch({token: '', type: 'SET_TOKEN'});
+        history.push('/');
     }
 
-    toggle = () => {
-        this.setState({
-            dropdownOpen: !this.state.dropdownOpen
-        });
-    }
 
-    render() {
         return (
             <MDBNavbar className="flexible-navbar" light expand="md" scrolling>
                 <MDBNavbarBrand href="/">
-                    <strong>MDB</strong>
+                    <strong>راه آهن</strong>
                 </MDBNavbarBrand>
-                <MDBNavbarToggler onClick = { this.onClick } />
-                <MDBCollapse isOpen = { this.state.collapse } navbar>
+                <MDBNavbarToggler onClick = { onClick } />
+                <MDBCollapse isOpen = { collapse } navbar>
                     <MDBNavbarNav left>
-                        <MDBNavItem active>
-                            <MDBNavLink to="#">Home</MDBNavLink>
-                        </MDBNavItem>
                         <MDBNavItem>
-                            <a rel="noopener noreferrer" className="nav-link Ripple-parent" href="https://mdbootstrap.com/docs/react/" target="_blank">About MDB</a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a rel="noopener noreferrer" className="nav-link Ripple-parent" href="https://mdbootstrap.com/docs/react/getting-started/download/" target="_blank">Free download</a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a rel="noopener noreferrer"  className="nav-link Ripple-parent" href="https://mdbootstrap.com/bootstrap-tutorial/" target="_blank">Free tutorials</a>
+                                <div className="notification">
+                                <MDBIcon className="bell-icon" icon="bell" />
+                                <span className="badge badge-danger badge-num ml-2">9</span>
+                                </div>
                         </MDBNavItem>
                     </MDBNavbarNav>
                     <MDBNavbarNav right>
+                    
                         <MDBNavItem>
-                            <a className="nav-link navbar-link" rel="noopener noreferrer" target="_blank" href="https://pl-pl.facebook.com/mdbootstrap/"><MDBIcon fab icon="facebook" /></a>
+                            
+                        <MDBDropdown>
+                            <MDBDropdownToggle>
+                            <div className="user-icon">
+                            <MDBIcon className="icons text-icons" icon="angle-down" />
+                                <span>{user}</span>
+                            <MDBIcon className="icons text-icons" icon="user"/>
+                            
+                            </div>
+                            </MDBDropdownToggle>
+                            <MDBDropdownMenu basic>
+                                <MDBDropdownItem><MDBIcon className="icons text-icons" icon="columns"/><span className="text-icons">پروفایل</span></MDBDropdownItem>
+                                <MDBDropdownItem divider />
+                                <MDBDropdownItem onClick={() => {logoutUser()}}><MDBIcon className="icons text-icons" icon="sign-out-alt"/><span className="text-icons">خروج</span></MDBDropdownItem>
+                            </MDBDropdownMenu>
+                        </MDBDropdown>
                         </MDBNavItem>
                         <MDBNavItem>
-                            <a className="nav-link navbar-link" rel="noopener noreferrer" target="_blank" href="https://twitter.com/mdbootstrap"><MDBIcon fab icon="twitter" /></a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://github.com/mdbootstrap/React-Bootstrap-with-Material-Design" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>MDB GitHub</a>
-                        </MDBNavItem>
-                        <MDBNavItem>
-                            <a className="border border-light rounded mr-1 nav-link Ripple-parent" rel="noopener noreferrer" href="https://mdbootstrap.com/products/react-ui-kit/" target="_blank"><MDBIcon fab icon="github" className="mr-2"/>Go Pro</a>
-                        </MDBNavItem>
+                    </MDBNavItem>
+                    <MDBNavItem>
+                    </MDBNavItem>
                     </MDBNavbarNav>
                 </MDBCollapse>
             </MDBNavbar>
         );
-    }
 }
 
 export default TopNavigation;

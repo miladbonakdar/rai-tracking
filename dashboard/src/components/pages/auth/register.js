@@ -30,10 +30,10 @@ const Register = () => {
         //return true : valid
         //return false: not valid
         const checkValidation = () => {
-          if(regForm.name === '' || regForm.lastname === '' || regForm.password === ''
+          if(regForm.name === '' || regForm.lastname === '' || regForm.password.length < 8
            || regForm.phoneNumber=== '' || regForm.number=== ''
-            || regForm.email=== '' || regForm.organizationId=== '' || regForm.adminType=== ''
-             || regForm.adminEmailAddress=== '')
+            || regForm.email=== '' || !regForm.email.includes('@') || regForm.organizationId=== '' || regForm.adminType=== ''
+             || regForm.adminEmailAddress=== '' || regForm.password!== repeatPassword)
              return false;
             else return true;
         }
@@ -48,13 +48,16 @@ const Register = () => {
               toast.success(response.data.message);
               localStorage.setItem('userToken', response.data.data.token);
               dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
+            dispatch({loading: false, type: 'SHOW_LOADING'});
+
               history.push('/dashboard');
             }
-            dispatch({loading: false, type: 'SHOW_LOADING'});
             
           } catch (error) {
             console.log(error);
           }  
+          dispatch({loading: false, type: 'SHOW_LOADING'});
+
         }
 
         const submitHandler = event => {
@@ -101,7 +104,7 @@ useEffect(() =>{
                       type="text"
                       id="defaultFormRegisterNameEx"
                       className="form-control"
-                      placeholder="علی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -120,7 +123,7 @@ useEffect(() =>{
                       type="text"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
-                      placeholder="احمدی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -139,7 +142,7 @@ useEffect(() =>{
                       id="defaultFormRegisterConfirmEx3"
                       className="form-control"
                       name="email"
-                      placeholder="test@gmail.com"
+                      placeholder=""
                       required
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">
@@ -163,7 +166,7 @@ useEffect(() =>{
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="phoneNumber"
-                      placeholder="09121234567"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -185,7 +188,7 @@ useEffect(() =>{
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="number"
-                      placeholder="02112345678"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -330,7 +333,7 @@ useEffect(() =>{
                         id="defaultFormRegisterPasswordEx4"
                         className="form-control"
                         name="adminEmailAddress"
-                        placeholder="نام کاربری root"
+                        placeholder=""
                         required
                       />
                       <div className="invalid-feedback">
@@ -348,11 +351,11 @@ useEffect(() =>{
                       <input
                         value={regForm.rootPassword}
                         onChange={changeHandler}
-                        type="text"
+                        type="password"
                         id="defaultFormRegisterPasswordEx4"
                         className="form-control"
                         name="rootPassword"
-                        placeholder="رمزعبور root"
+                        placeholder=""
                         required
                       />
                       <div className="invalid-feedback">

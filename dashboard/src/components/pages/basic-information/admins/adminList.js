@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../../config/axiosInstance';
-import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBCard, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
+import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBCard, MDBBadge, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
 import BreadcrumSection from '../../sections/BreadcrumSection';
 import CreateOrEdit from './actions/createOrEdit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -76,6 +76,7 @@ const AdminList = () => {
         admins.map((value, index)=> {
           if(adminTypes.length >0 && organizations.length > 0 )
           {
+            
             value['adminTypeValue'] = adminTypes.filter(i => i.key === value.adminType);
           value['organizationValue'] = organizations.filter(i => i.id === value.organizationId);
            
@@ -91,16 +92,16 @@ const AdminList = () => {
               <td>{value.phoneNumber}</td>
               <td>{value.email}</td>
               <td>{value.organizationValue[0].name}</td>
-              <td>{value.adminTypeValue[0].value}</td>
+              <td><MDBBadge color="default">{value.adminTypeValue[0].value}</MDBBadge></td>
               <td>
-                <MDBIcon onClick={() => { checkAccess('update',value)}} icon="edit"/>
-                <MDBIcon onClick={() => { checkAccess('updatePassword', value)}} icon="lock"/>
-                <MDBIcon onClick={() => {checkAccess('delete', value)}} icon="trash"/>
+                <MDBIcon className="action-icons edit" onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon className="action-icons update-ac" onClick={() => { checkAccess('updatePassword', value)}} icon="lock"/>
+                <MDBIcon className="action-icons delete" onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )
         })
-        :<tr>No Item</tr>  
+        :<tr>موردی یافت نشد</tr>  
       )
     }
     
@@ -109,6 +110,7 @@ const AdminList = () => {
  
         try {
         const response = await axiosInstance.get(`/Admins/v1/Admin/10/0`);
+        debugger
         dispatch({admins: response.data.data.list, type: 'SET_ADMINS'})
         
         } catch (error) {

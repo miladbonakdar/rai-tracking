@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../../config/axiosInstance';
-import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBCard, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
+import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBBadge, MDBCol, MDBCard, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
 import BreadcrumSection from '../../sections/BreadcrumSection';
 import CreateOrEdit from './actions/createOrEdit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -43,20 +43,21 @@ const AgentList = () => {
               <td>{value.name} {value.lastname}</td>
               <td>{value.phoneNumber}</td>
               <td>{value.email}</td>
-              <td>{value.depoValue ? value.depoValue[0].name : ''}</td>
+              <td> <MDBBadge color="default">{value.depoValue ? value.depoValue[0].name : ''}</MDBBadge></td>
               <td>
-                <MDBIcon onClick={() => { checkAccess('update',value)}} icon="edit"/>
-                <MDBIcon onClick={() => { checkAccess('resetPassword', value)}} icon="lock"/>
-                <MDBIcon onClick={() => {checkAccess('delete', value)}} icon="trash"/>
+                <MDBIcon className="action-icons edit" onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon className="action-icons update-ac" onClick={() => { checkAccess('resetPassword', value)}} icon="lock"/>
+                <MDBIcon className="action-icons delete" onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )
         })
-        :<tr>No Item</tr>  
+        :<tr>موردی یافت نشد</tr>  
       )
     }
     
     const getAgents = async () => {
+      dispatch({loading: true, type: 'SHOW_LOADING'})
         try {
         const response = await axiosInstance.get(`/Admins/v1/Agent/10/0`);
         dispatch({agents: response.data.data.list, type: 'SET_AGENTS'})
@@ -64,6 +65,8 @@ const AgentList = () => {
         } catch (error) {
             console.log(error);
         }
+      dispatch({loading: false, type: 'SHOW_LOADING'})
+
     }
     const notify = (value) => {
       permissions.permission.agent.delete ? 
@@ -128,7 +131,7 @@ const AgentList = () => {
                   <th>نام و نام خانوادگی</th>
                   <th>شماره تماس</th>
                   <th>ایمیل</th>
-                  <th>سازمان</th>
+                  <th>depo</th>
                   <th>عملیات</th>
                 </tr>
               </MDBTableHead>

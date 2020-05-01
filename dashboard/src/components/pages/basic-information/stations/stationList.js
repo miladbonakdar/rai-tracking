@@ -36,13 +36,13 @@ const StationList = () => {
               <td>{value.postStationId}</td>
               <td>{value.organizationId}</td>
               <td>
-                <MDBIcon onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
-                <MDBIcon onClick={() => {notify(value)}} icon="trash"/>
+                <MDBIcon className="action-icons edit" onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
+                <MDBIcon className="action-icons delete" onClick={() => {notify(value)}} icon="trash"/>
               </td>
             </tr>
           )
         })
-        :<tr>No Item</tr>  
+        :<tr>موردی یافت نشد</tr>  
       )
     }
     

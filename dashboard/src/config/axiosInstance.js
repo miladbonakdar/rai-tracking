@@ -20,7 +20,7 @@ let axiosInstance = axios.create({
       toast.error(error.response.data.Message);
     }
     if (error.response.status === 401) {
-      // window.location.href = "/rtl/auth/login";
+      window.location.href = "/";
     }
     if (error.response.status === 404) {
         toast.error(error.response.data.Message);

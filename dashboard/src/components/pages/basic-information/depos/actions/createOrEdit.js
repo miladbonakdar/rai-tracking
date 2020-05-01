@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {toast} from 'react-toastify';
 import {MDBContainer,MDBBtn, MDBRow, MDBCol, MDBTabPane, MDBTabContent, MDBNav, MDBNavItem, MDBNavLink, MDBIcon } from "mdbreact";
-
+import Map from './Map/Map';
 import axiosInstance from '../../../../../config/axiosInstance';
 const CreateOrEdit = (props) => {
 
@@ -16,8 +16,8 @@ const CreateOrEdit = (props) => {
         });
         const [createForm, setCreateForm] = useState({
           name: '',
-          stationId: 0,
-          organizationId: 0, //select
+          stationId:1 ,
+          organizationId:1 , //select
         });
 
         const [repeatPassword, setRepeatPassword] = useState('');
@@ -66,6 +66,15 @@ const CreateOrEdit = (props) => {
                 
             }
             dispatch({loading: false, type: 'SHOW_LOADING'})
+        }
+        const setSelectedLocation = (loc) => {
+          const test = loc;
+          debugger
+          setLocation({
+            ...location,
+            latitude: loc.latitude,
+            longitude: loc.longitude
+          });
         }
 
         const submitHandler = event => {
@@ -122,14 +131,12 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterNameEx"
                       className="form-control"
-                      placeholder="علی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
                   </MDBCol>
-                  </MDBRow>
-                
-               <MDBRow>
+                  
                 <MDBCol md="4" className="mb-3">
                       <label
                         htmlFor="defaultFormRegisterPasswordEx4"
@@ -194,13 +201,22 @@ const CreateOrEdit = (props) => {
                       </div>
                     </MDBCol>
                     
-                </MDBRow>
+                  </MDBRow>
+                {
+                  !props.editItem.edit ? 
+                    <MDBRow>
+                      <MDBCol md={12}>
+                        <Map selectedLocation={location} setSelectedLocation={(loc)=>{setSelectedLocation(loc)}}/>
+                      </MDBCol>
+                    </MDBRow>
+                : ''
+                }
                 
                 <MDBBtn onClick={props.editItem.edit ? edit : create} color="primary" type="submit">
                   {props.editItem.edit ? 'ویرایش' : 'ایجاد'}
                 </MDBBtn>
                 <MDBBtn onClick={() => {props.openModal()}} color="primary" type="submit">
-                  close
+                  خروج
                 </MDBBtn>
               </form>
             

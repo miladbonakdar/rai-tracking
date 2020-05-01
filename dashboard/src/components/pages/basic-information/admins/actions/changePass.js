@@ -37,7 +37,6 @@ const ChangePass = (props) => {
     return(
         <MDBContainer>
             <div>
-           <p className="h4 text-center py-4">فرم ورود</p>
           <form
                 className="needs-validation p-3"
                 onSubmit={submitHandler}

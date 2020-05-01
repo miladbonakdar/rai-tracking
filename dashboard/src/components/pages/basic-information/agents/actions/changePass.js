@@ -18,12 +18,15 @@ const ChangePass = (props) => {
            });
     }
     const changePassFunc = async () => {
+        
         try {
-          const data= change;
-          debugger
-            const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
+          if(change.password.length<8) toast.error('پسورد باید شامل 8 کاراکتر باشد.');
+          else
+            {
+              const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
              props.openModal();
             toast.success(response.data.message);
+            }
         } catch (error) {
             console.log(error)
         }
@@ -31,7 +34,6 @@ const ChangePass = (props) => {
     return(
         <MDBContainer>
             <div>
-           <p className="h4 text-center py-4">فرم ورود</p>
           <form
                 className="needs-validation p-3"
                 onSubmit={submitHandler}
@@ -49,7 +51,7 @@ const ChangePass = (props) => {
                       value={change.password}
                       name="password"
                       onChange={changeHandler}
-                      type="text"
+                      type="password"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
                       placeholder=""
