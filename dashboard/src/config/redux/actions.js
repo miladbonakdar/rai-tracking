@@ -4,13 +4,18 @@ export const SET_TOKEN = 'SET_TOKEN'
 export const showLoading = loading => {
   return {
     type: SHOW_LOADING,
-    loading,
-    admins
+    loading
   };
 };
 export const userAuth = user => {
   return {
     type: SET_USER,
+    user
+  }
+}
+export const setUserPermissions = user => {
+  return{
+    type: SET_USER_PERMISSIONS,
     user
   }
 }
@@ -36,6 +41,12 @@ export const setDepos = depos => {
   return {
     type: SET_DEPOS,
     depos
+  }
+} 
+export const setStations = stations => {
+  return {
+    type: SET_STATIONS,
+    stations
   }
 } 
 export const setAdminTypes = adminTypes => {

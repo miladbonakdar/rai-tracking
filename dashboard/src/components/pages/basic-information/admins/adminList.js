@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axiosInstance from '../../../../config/axiosInstance';
-import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBCard, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
+import {MDBTable, MDBTableHead, MDBTableBody, MDBRow, MDBCol, MDBCard, MDBBadge, MDBModal, MDBModalBody, MDBModalHeader, MDBModalFooter, MDBCardBody, MDBIcon, MDBCardHeader, MDBBtn, MDBContainer} from 'mdbreact'
 import BreadcrumSection from '../../sections/BreadcrumSection';
 import CreateOrEdit from './actions/createOrEdit';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,14 +10,18 @@ import ChangePass from './actions/changePass';
 
 const AdminList = () => {
     const dispatch = useDispatch();
+    const permissions = useSelector(state => state.permissions);
     const admins = useSelector(state => state.admins);
     const [modal, setModal] = useState(false);
     const [passModal, setPassModal] = useState(false);
     const [edit, setEdit] = useState(false);
-    const [editedItem, setEditedItem] = useState({})
+    const [editedItem, setEditedItem] = useState({});
+    const organizations = useSelector(state => state.organizations);
+    const adminTypes = useSelector(state => state.adminTypes);
+
 
     const toggle = () => {
-      debugger
+       
       setModal(!modal)
       if(edit) setEdit(!edit)
     }
@@ -26,38 +30,87 @@ const AdminList = () => {
       setPassModal(!passModal);
     }
     const notify = (value) => {
+       
+      permissions.permission.admin.delete ? 
       toast(<DeleteConfirmation getAdmins={getAdmins} id={value.id}/>)
+      : toast.error('شما به این بخض دسترسی ندارید')
+    }
+    const showAccessError = () => {
+      toast.error('شما دسترسی به این بخش ندارید')
+    }
+    const showUpdateElements = (value) => {
+      setEdit(true)
+      toggle() 
+      setEditedItem(value)
+    }
+    const setEditItems = (value) => {
+      setEditedItem(value);
+      toggleModal();
+    }
+    const checkAccess = (key,value) => {
+      switch (key) {
+        case 'delete':
+          permissions.permission.admin.delete ? 
+          notify(value) : showAccessError()
+
+          break;
+        case 'updatePassword':
+          permissions.permission.admin.updatePassword ?
+          setEditItems(value) : showAccessError()
+          break;
+
+        case 'update':
+          permissions.permission.admin.update ? 
+          showUpdateElements(value) 
+          :showAccessError()
+          break;
+      
+        default:
+          break;
+      }
     }
 
     const renderAdmins = () => {
       return(
         admins && admins.length > 0 ?
         admins.map((value, index)=> {
+          if(adminTypes.length >0 && organizations.length > 0 )
+          {
+            
+            value['adminTypeValue'] = adminTypes.filter(i => i.key === value.adminType);
+          value['organizationValue'] = organizations.filter(i => i.id === value.organizationId);
+           
+          }
+          else {
+            value['adminTypeValue'] = '';
+            value['organizationValue'] = '';
+          }
           return(
             <tr>
               <td>{index+1}</td>
               <td>{value.name} {value.lastname}</td>
               <td>{value.phoneNumber}</td>
               <td>{value.email}</td>
-              <td>{value.organizationId}</td>
-              <td>{value.adminType}</td>
+              <td>{value.organizationValue[0].name}</td>
+              <td><MDBBadge color="default">{value.adminTypeValue[0].value}</MDBBadge></td>
               <td>
-                <MDBIcon onClick={() => {setEdit(true); toggle(); setEditedItem(value)}} icon="edit"/>
-                <MDBIcon onClick={() => {toggleModal()}} icon="lock"/>
-                <MDBIcon onClick={() => {notify(value)}} icon="trash"/>
+                <MDBIcon className="action-icons edit" onClick={() => { checkAccess('update',value)}} icon="edit"/>
+                <MDBIcon className="action-icons update-ac" onClick={() => { checkAccess('updatePassword', value)}} icon="lock"/>
+                <MDBIcon className="action-icons delete" onClick={() => {checkAccess('delete', value)}} icon="trash"/>
               </td>
             </tr>
           )
         })
-        :<tr>No Item</tr>  
+        :<tr>موردی یافت نشد</tr>  
       )
     }
     
     const getAdmins = async () => {
       dispatch({loading: true, type: 'SHOW_LOADING'})
-
+ 
         try {
         const response = await axiosInstance.get(`/Admins/v1/Admin/10/0`);
+        debugger
         dispatch({admins: response.data.data.list, type: 'SET_ADMINS'})
         
         } catch (error) {
@@ -66,6 +119,7 @@ const AdminList = () => {
         dispatch({loading: false, type: 'SHOW_LOADING'})
 
       }
+      
     useEffect(() => {
         getAdmins();
     },[])
@@ -73,8 +127,9 @@ const AdminList = () => {
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title={edit ? 'ویرایش ادمین':'ایحاد ادمین'} openModal={toggle} />
-
+        
+          <BreadcrumSection title= 'ایحاد ادمین' openModal={toggle} />
+        
         <MDBCard className="mt-2">
           <MDBCardBody>
         <MDBTable>

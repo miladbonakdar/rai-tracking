@@ -9,3 +9,93 @@
     width: 100%;
     height: 100%;
   }
+  .notification {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    cursor: pointer;
+  }
+  .badge-num {
+    border-radius: 15px;
+    position: absolute;
+    top: 10px;
+
+  }
+  .bell-icon {
+    font-size: 18px;
+  }
+  .btn-secondary {
+    background-color: unset !important;
+
+color: black;
+
+padding: 0;
+
+box-shadow: none;
+
+margin-left: 47px;
+  }
+  .Ripple-parent:hover {
+    color: blue;
+    box-shadow: none;
+  }
+  .Ripple-parent:focus {
+    color: blue;
+    box-shadow: none;
+  }
+  .user-icon{
+    flex-direction: row;
+    display: flex;
+    flex-direction: space-between;
+  }
+  .icons {
+    padding: 2px 7px 0;
+  }
+  .text-icons {
+    font-size: 14px;
+    color: gray;
+  }
+  .action-icons {
+    padding: 0 5px 0;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .edit {
+    color: green;
+  }
+  .update-ac {
+    color: orange;
+  }
+  .delete {
+    color: red;
+  }
+  thead{
+    color: white;
+  }
+  td {
+    color: #717171;
+  }
+  .parent-route {
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .child-route {
+    font-size: 14px;
+    margin-right: 5px;
+  }
+  .nav-auth {
+    background-color: #42c0f1;
+    color: white;
+    border-radius: 5px;
+  }
+  .nav-auth-selected {
+    color: #44c5f3 !important;
+  }
+  .auth-style {
+    padding-left: 0;
+  }
+  .logo {
+    width: 180px;
+    height: 150px;
+  }
+

@@ -23,7 +23,9 @@ const ChangePass = (props) => {
     const changePassFunc = async () => {
         dispatch({loading: true, type: 'SHOW_LOADING'})
         try {
-            const response = await axiosInstance.patch('/Admins/v1/Admin/UpdatePassword', change );
+          const data = change;
+          data['domainId']=props.editItem.item.id
+            const response = await axiosInstance.patch('/Admins/v1/Admin/UpdatePassword', data );
             toast.success(response.data.message);
             props.openModal();
         } catch (error) {
@@ -35,7 +37,6 @@ const ChangePass = (props) => {
     return(
         <MDBContainer>
             <div>
-           <p className="h4 text-center py-4">فرم ورود</p>
           <form
                 className="needs-validation p-3"
                 onSubmit={submitHandler}

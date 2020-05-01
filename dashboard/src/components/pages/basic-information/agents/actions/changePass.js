@@ -4,8 +4,7 @@ import axiosInstance from '../../../../../config/axiosInstance';
 import { toast } from 'react-toastify';
 const ChangePass = (props) => {
     const [change, setChange] = useState({
-        oldPassword: '',
-        newPassword: '',
+        password: '',
         domainId: props.editItem.item.id
     });
     const submitHandler = event => {
@@ -19,10 +18,15 @@ const ChangePass = (props) => {
            });
     }
     const changePassFunc = async () => {
+        
         try {
-            const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
-            debugger;
+          if(change.password.length<8) toast.error('پسورد باید شامل 8 کاراکتر باشد.');
+          else
+            {
+              const response = await axiosInstance.patch('/Admins/v1/Agent/ResetPassword', change );
+             props.openModal();
             toast.success(response.data.message);
+            }
         } catch (error) {
             console.log(error)
         }
@@ -30,7 +34,6 @@ const ChangePass = (props) => {
     return(
         <MDBContainer>
             <div>
-           <p className="h4 text-center py-4">فرم ورود</p>
           <form
                 className="needs-validation p-3"
                 onSubmit={submitHandler}
@@ -39,35 +42,16 @@ const ChangePass = (props) => {
                 <MDBRow>
                   <MDBCol md="12" className="mb-3">
                     <label
-                      htmlFor="defaultFormRegisterNameEx"
-                      className="grey-text"
-                    >
-                         رمز عبور فعلی
-                    </label>
-                    <input
-                      value={change.oldPassword}
-                      name="oldPassword"
-                      onChange={changeHandler}
-                      type="text"
-                      id="defaultFormRegisterNameEx"
-                      className="form-control"
-                      placeholder=""
-                      required
-                    />
-                    <div className="invalid-feedback">این فیلد اجباری است.</div>
-                  </MDBCol>
-                  <MDBCol md="12" className="mb-3">
-                    <label
                       htmlFor="defaultFormRegisterEmailEx2"
                       className="grey-text"
                     >
-                      رمز عبور جدید
+                      رمزعبور جدید
                     </label>
                     <input
-                      value={change.newPassword}
-                      name="newPassword"
+                      value={change.password}
+                      name="password"
                       onChange={changeHandler}
-                      type="text"
+                      type="password"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
                       placeholder=""

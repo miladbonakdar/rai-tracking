@@ -12,13 +12,14 @@ import './App.css';
 
 const App = () => {
 
+  const token = useSelector(state => state.token);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
   const getAdminTypes = async () => {
 
     dispatch({loading: true, type: 'SHOW_LOADING'});
     try {
-      const response = await axiosInstance.get('/Public/v1/Auth/AdminTypes');
+      const response = await axiosInstance.get('/Public/v1/Application/UserTypes');
       dispatch({adminTypes: response.data.data, type: 'SET_ADMINTYPES'});
     } catch (error) {
       
@@ -36,9 +37,20 @@ const App = () => {
     dispatch({loading: false, type: 'SHOW_LOADING'});
 
   }
+  const getUserData = async () => {
+    try {
+      const response = await axiosInstance.get('/Public/v1/Auth/Admin');
+      dispatch({user: response.data.data, type:'SET_USER_PERMISSIONS'});
+    } catch (error) {
+      
+    }        
+  }
   useEffect(() => {
     getAdminTypes();
     getOrganizations();
+    if(token) 
+    getUserData();
+
   },[]);
 
 
@@ -46,14 +58,18 @@ const App = () => {
         <React.Fragment>
           <div className={`flexible-content rtl ${loading ? 'app-loading' : ''}`}>
          
-         <TopNavigation />
-         <SideNavigation />
-         <main id="content" className="p-5">
+         {
+           token ? 
+           <React.Fragment>
+             <TopNavigation />
+              <SideNavigation />
+           </React.Fragment>
+         : null
+         }
+         <main className={token ? 'p-5 content' : 'content-auth'}>
            <Routes />
            
          </main>
-         <Footer />
-        
        </div>
        <Loader
        className="loading"

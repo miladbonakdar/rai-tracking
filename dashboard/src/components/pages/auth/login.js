@@ -29,7 +29,6 @@ const Login = () => {
         else return true;
       }
       const login = async () => {
-          dispatch({loading: true, type: 'SHOW_LOADING'});
           try {
               if(checkValidation()){
                 const response = await axiosInstance.post('/Public/v1/Auth/SignInAdmin', loginForm);
@@ -38,13 +37,23 @@ const Login = () => {
                 toast.success(response.data.message);
                 localStorage.setItem('userToken', response.data.data.token);
                 dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
-                history.push('/dashboard');
+                await getUserData();
+                history.push('/dashboard')
+
               }
-          dispatch({loading: false, type: 'SHOW_LOADING'});
 
           
           } catch (error) {
           }
+
+      }
+      const getUserData = async () => {
+        try {
+          const response = await axiosInstance.get('/Public/v1/Auth/Admin');
+          dispatch({user: response.data.data, type:'SET_USER_PERMISSIONS'});
+        } catch (error) {
+          
+        }        
       }
     return(
         <MDBContainer>
@@ -86,7 +95,7 @@ const Login = () => {
                       value={loginForm.password}
                       name="password"
                       onChange={changeHandler}
-                      type="text"
+                      type="password"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
                       placeholder=""

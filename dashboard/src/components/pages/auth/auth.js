@@ -6,14 +6,13 @@ const Auth = () => {
     const [activeItemJustified , setActiveItemJustified ] = useState('1');
     const toggleJustified = (tab) => {
         if (activeItemJustified !== tab) {
-            debugger
           setActiveItemJustified(tab);
         }
       };
     return(
         <MDBContainer>
-            <MDBNav tabs className="nav-justified" color='indigo'>
-            <MDBNavItem>
+            <MDBNav tabs className="nav-justified nav-auth">
+            <MDBNavItem >
                 <MDBNavLink link to="#" active={activeItemJustified === "1"} onClick={() => {toggleJustified('1')}} role="tab" >
                 <MDBIcon icon="user" /> ثبت نام
                 </MDBNavLink>

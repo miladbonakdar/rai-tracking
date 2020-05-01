@@ -14,7 +14,6 @@ const CreateOrEdit = (props) => {
           email: '',
           phoneNumber: '',
           password: '',
-          number: '',
           depoId: 1, //select
         });
 
@@ -24,8 +23,10 @@ const CreateOrEdit = (props) => {
         const create = async () => {
           try {
             const response = await axiosInstance.post('/Admins/v1/Agent',createForm);
-            toast.success(response.data.data.message);
+             
+            toast.success(response.data.message);
             props.getAgents();
+            props.openModal();
           } catch (error) {
             console.log(error);
           }  
@@ -33,9 +34,14 @@ const CreateOrEdit = (props) => {
 
         const edit = async () => {
             try {
-                const response = await axiosInstance.put('Admins/v1/Agent', createForm);
-                toast.success(response.data.data.message);
+              const data = createForm;
+              data['password'] = "12345678";
+              data['id'] = props.editItem.item.id;
+                const response = await axiosInstance.put('/Admins/v1/Agent', data);
+                 debugger
+                toast.success(response.data.message);
                 props.getAgents();
+                props.openModal();
             } catch (error) {
                 console.log(error);
                 
@@ -56,6 +62,7 @@ const CreateOrEdit = (props) => {
        
        
         const getAgent = () => {
+           
             setCreateForm({
                 ...createForm,
                 name: props.editItem.item.name,
@@ -63,11 +70,11 @@ const CreateOrEdit = (props) => {
                 password: props.editItem.item.password,
                 email: props.editItem.item.email,
                 phoneNumber: props.editItem.item.phoneNumber,
-                number: props.editItem.item.number,
-                depoId: depos.filter(i=> i.id === props.editItem.item.depoId)[0]
+                depoId: depos.filter(i=> i.id === props.editItem.item.depoId)[0].id
             });
         }
         const getDepos = async () => {
+           
           const response = await axiosInstance.get('/Admins/v1/Depo/100/0');
           dispatch({depos: response.data.data.list, type: 'SET_DEPOS'});
         }
@@ -103,7 +110,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterNameEx"
                       className="form-control"
-                      placeholder="علی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -122,7 +129,7 @@ const CreateOrEdit = (props) => {
                       type="text"
                       id="defaultFormRegisterEmailEx2"
                       className="form-control"
-                      placeholder="احمدی"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
@@ -141,7 +148,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterConfirmEx3"
                       className="form-control"
                       name="email"
-                      placeholder="test@gmail.com"
+                      placeholder=""
                       required
                     />
                     {/* <small id="emailHelp" className="form-text text-muted">
@@ -165,7 +172,7 @@ const CreateOrEdit = (props) => {
                       id="defaultFormRegisterPasswordEx4"
                       className="form-control"
                       name="phoneNumber"
-                      placeholder="09121234567"
+                      placeholder=""
                       required
                     />
                     <div className="invalid-feedback">
@@ -174,28 +181,40 @@ const CreateOrEdit = (props) => {
                     {/* <div className="valid-feedback">Looks good!</div> */}
                   </MDBCol>
                   <MDBCol md="4" className="mb-3">
-                    <label
-                      htmlFor="defaultFormRegisterPasswordEx4"
-                      className="grey-text"
-                    >
-                     شماره تماس
-                    </label>
-                    <input
-                      value={createForm.number}
-                      onChange={changeHandler}
-                      type="text"
-                      id="defaultFormRegisterPasswordEx4"
-                      className="form-control"
-                      name="number"
-                      placeholder="02112345678"
-                      required
-                    />
-                    <div className="invalid-feedback">
-                    این فیلد اجباری است.
-                    </div>
-                    {/* <div className="valid-feedback">Looks good!</div> */}
-                  </MDBCol>
-                   </MDBRow>
+                      
+                      <label
+                          htmlFor="defaultFormRegisterPasswordEx4"
+                          className="grey-text"
+                        >
+                          depo
+                        </label>
+                        <select 
+                        
+                        className="browser-default custom-select"
+                        value={createForm.depoId}
+                            onChange={(event) => {
+                               
+                              setCreateForm({
+                                ...createForm,
+                                depoId: Number(event.target.value)
+                              })
+                            }}>
+
+                        {
+                            depos.map((depo) => {
+                              return(
+                              <option value={depo.id} key={depo.id}>{depo.name}</option>
+                              )
+                            })
+                          }
+                        </select>
+                        <div className='invalid-feedback'>
+                        این فیلد اجباری است.
+                        </div>
+                      </MDBCol>
+                  
+                  
+                  </MDBRow>
                    <MDBRow>
                {
                   !props.editItem.edit ? 
@@ -260,37 +279,7 @@ const CreateOrEdit = (props) => {
                     </React.Fragment>
                   : null  
               }
-              <MDBCol md="4" className="mb-3">
-                      
-                      <label
-                          htmlFor="defaultFormRegisterPasswordEx4"
-                          className="grey-text"
-                        >
-                          depo
-                        </label>
-                        <select 
-                        
-                        className="browser-default custom-select"
-                        value={createForm.depoId}
-                            onChange={(event) => {
-                              setCreateForm({
-                                ...createForm,
-                                depoId: event.target.value
-                              })
-                            }}>
-                        {
-                            depos.map((depo) => {
-                              return(
-                              <option value={depo.name} key={depo.id}>{depo.name}</option>
-                              )
-                            })
-                          }
-                        </select>
-                        <div className='invalid-feedback'>
-                        این فیلد اجباری است.
-                        </div>
-                      </MDBCol>
-                      
+                  
               </MDBRow>
             
                
@@ -299,7 +288,7 @@ const CreateOrEdit = (props) => {
                   {props.editItem.edit ? 'ویرایش' : 'ایجاد'}
                 </MDBBtn>
                 <MDBBtn onClick={() => {props.openModal()}} color="primary" type="submit">
-                  close
+                  خروج
                 </MDBBtn>
               </form>
             

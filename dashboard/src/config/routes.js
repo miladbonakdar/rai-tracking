@@ -6,6 +6,8 @@ import MapsPage from "../components/pages/MapsPage";
 import Auth from '../components/pages/auth/auth';
 import AdminList from '../components/pages/basic-information/admins/adminList';
 import AgentList from '../components/pages/basic-information/agents/agentList';
+import StationList from '../components/pages/basic-information/stations/stationList';
+import DepoList from '../components/pages/basic-information/depos/depoList';
 const routes = [
     {
         path: '/dashboard',
@@ -14,7 +16,8 @@ const routes = [
         component: DashboardPage,
         exact: true,
         meta: {
-            icon: 'fa-dashboard',
+            needAuth: false,
+            icon: 'columns',
             parent: false,
         }
     },
@@ -25,7 +28,8 @@ const routes = [
         component: ProfilePage,
         exact: true,
         meta: {
-            icon: 'fa-dashboard',
+            needAuth: false,
+            icon: 'house-damage',
             parent: false
         }
     },
@@ -36,7 +40,8 @@ const routes = [
         component: TablesPage,
         exact: true,
         meta: {
-            icon: 'fa-dashboard',
+            needAuth: false,
+            icon: 'envelope',
             parent: false
         }
     },
@@ -46,7 +51,8 @@ const routes = [
         perName: 'اطلاعات پایه',
         component: DashboardPage,
         meta: {
-            icon: 'fa-dashboard',
+            needAuth: false,
+            icon: 'info',
             parent: true
         },
         child: [
@@ -56,7 +62,7 @@ const routes = [
                 perName: 'ادمین ها',
                 component: AdminList,
                 meta: {
-                    icon: 'fa-dashboard'
+                    needAuth: false,
                 }
             },
             {
@@ -65,29 +71,39 @@ const routes = [
                 perName: 'تعمیرکاران',
                 component: AgentList,
                 meta: {
-                    icon: 'fa-dashboard'
+                    needAuth: false,
                 }
             },
             {
-                path: '/basic-information/test2',
-                name: 'test',
-                perName: 'test',
-                component: TablesPage,
+                path: '/basic-information/depos',
+                name: 'depos',
+                perName: 'depos',
+                component: DepoList,
                 meta: {
-                    icon: 'fa-dashboard'
+                    needAuth: false,
+                }
+            },
+            {
+                path: '/basic-information/stations',
+                name: 'stations',
+                perName: 'ایستگاهها',
+                component: StationList,
+                meta: {
+                    needAuth: false,
                 }
             }
         ]
     },
     {
-        path: '/auth/userAuth',
+        path: '/',
         name: 'register',
         perName: 'ثبت نام',
         component: Auth,
         exact: true,
         meta: {
             icon: 'fa-lock',
-            parent: false
+            parent: false,
+            needAuth: true
         }
     }
 ];
