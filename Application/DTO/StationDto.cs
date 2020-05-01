@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using Domain;
 
 namespace Application.DTO
@@ -9,11 +10,15 @@ namespace Application.DTO
         public double Latitude { get; set; }
         public double Longitude { get; set; }
         public double Altitude { get; set; }
-        public string Name { get; private set; }
+        [Required]
+        public string Name { get; set; }
 
         public int? PreStationId { get; set; }
         public int? PostStationId { get; set; }
+        [Required]
         public int OrganizationId { get; set; }
+
+        public bool ForceUpdateNeighbors { get; set; } = false;
 
 
         private static readonly Func<Station, StationDto> DefaultConverter =

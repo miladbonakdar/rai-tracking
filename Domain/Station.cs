@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations;
 using Domain.Interfaces;
 using Domain.ValueObjects;
 using SharedKernel;
+using SharedKernel.Constants;
 
 namespace Domain
 {
@@ -12,20 +13,19 @@ namespace Domain
         {
         }
 
-        public Station(string name, int organizationId,
-            int? preStationId = null, int? postStationId = null)
+        public Station(string name, int organizationId)
         {
             Name = name;
-            PreStationId = preStationId;
-            PostStationId = postStationId;
             OrganizationId = organizationId;
         }
 
         public Station(int id, double latitude, double longitude, double altitude, string name, int organizationId,
             int? preStationId = null, int? postStationId = null)
-            : this(name, organizationId, preStationId, postStationId)
+            : this(name, organizationId)
         {
             Id = id;
+            PreStationId = preStationId;
+            PostStationId = postStationId;
             Latitude = latitude;
             Altitude = altitude;
             Longitude = longitude;
@@ -38,13 +38,55 @@ namespace Domain
             Altitude = altitude;
             return this;
         }
-        
-        public void Update(string name, in int organizationId, int? preStationId, int? postStationId)
+
+        public void Update(string name, in int organizationId)
         {
             Name = name;
-            PreStationId = preStationId;
-            PostStationId = postStationId;
             OrganizationId = organizationId;
+        }
+        
+        public void DetachPreStation() => PreStationId = null;
+        public void DetachPostStation() => PostStationId = null;
+
+        public Station SetPostStation(Station postStation, bool force, bool arrangeNeighbor = true)
+        {
+            if (postStation is null) return this;
+            if (PostStationId == postStation.Id) return this;
+            if (force)
+            {
+                PostStationId = postStation.Id;
+                if (arrangeNeighbor)
+                    postStation.SetPreStation(this, true, false);
+                return this;
+            }
+
+            if (PostStationId != null)
+                throw new ApplicationException($"ایسگاه {Name} در حال حاضر دارای ایسگاه بعدی می باشد");
+            PostStationId = postStation.Id;
+            if (arrangeNeighbor)
+                postStation.SetPreStation(this, false, false);
+            return this;
+        }
+
+
+        public Station SetPreStation(Station preStation, bool force, bool arrangeNeighbor = true)
+        {
+            if (preStation is null) return this;
+            if (PreStationId == preStation.Id) return this;
+            if (force)
+            {
+                PreStationId = preStation.Id;
+                if (arrangeNeighbor)
+                    preStation.SetPostStation(this, true, false);
+                return this;
+            }
+
+            if (PreStationId != null)
+                throw new ApplicationException($"ایسگاه {Name} در حال حاضر دارای ایسگاه قبلی می باشد");
+            PreStationId = preStation.Id;
+            if (arrangeNeighbor)
+                preStation.SetPreStation(this, false, false);
+            return this;
         }
 
         [Required] [MaxLength(150)] public string Name { get; private set; }
@@ -61,6 +103,5 @@ namespace Domain
 
         public int OrganizationId { get; private set; }
         public Organization Organization { get; private set; }
-
     }
 }
