@@ -56,7 +56,9 @@ namespace RaiTracking.Middleware
                             break;
                     }
 
-                    var error = Result<string>.Create(contextFeature.Error.Message, context.Response.StatusCode, false, env.IsDevelopment() ? contextFeature.Error.ToString() : "");
+                    var error = Result<string>.Create(contextFeature.Error.Message,
+                        context.Response.StatusCode, false,
+                        env.IsDevelopment() ? contextFeature.Error.ToString() : "");
                     await context.Response.WriteAsync(error.ToString());
                 }
             }

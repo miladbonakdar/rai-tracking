@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Application.Interfaces;
+using SharedKernel.Interfaces;
 
 namespace Application.Configurations
 {

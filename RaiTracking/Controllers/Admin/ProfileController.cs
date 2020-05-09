@@ -18,7 +18,7 @@ namespace RaiTracking.Controllers.Admin
             _profileService = profileService;
         }
         
-        [NeedTest]
+        [WasFine]
         [HttpPut]
         public async Task<Result<AdminDto>> Update([FromBody] AdminDto dto)
         {
@@ -26,7 +26,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<AdminDto>.Success(data: admin);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPatch(nameof(UpdatePassword))]
         public async Task<Result> UpdatePassword([FromBody] PasswordUpdateDto dto)
         {
@@ -34,7 +34,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{id}")]
         public async Task<Result<AdminProfileDto>> Get(int id)
         {

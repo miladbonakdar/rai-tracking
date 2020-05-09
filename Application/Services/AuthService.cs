@@ -12,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using SharedKernel;
 using SharedKernel.Constants;
 using SharedKernel.Exceptions;
+using SharedKernel.Interfaces;
 
 namespace Application.Services
 {
@@ -92,7 +93,7 @@ namespace Application.Services
                 : _unitOfWork.Admins.SingleOrDefaultAsync(a => a.PhoneNumber == dto.EmailOrPhoneNumber);
             var admin = await adminTask;
 
-            if (admin is null) throw new NotFoundException("کاربر مورد نظر یافت نشد. لطفا ورودی خود را چک کنید.");
+            if (admin is null) throw new NotFoundException(dto.EmailOrPhoneNumber,"کاربر مورد نظر یافت نشد. لطفا ورودی خود را بررسی کنید.");
             if (!_passwordService.Verify(dto.Password, admin.Password))
                 throw new BadRequestException("password", "پسوورد اشتباه می باشد.");
 

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Serilog;
+using SharedKernel.Interfaces;
 
 namespace RaiTracking.Extensions
 {

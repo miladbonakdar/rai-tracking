@@ -8,5 +8,6 @@ namespace Application.Interfaces
     public interface IAdminRepository : IRepository<Admin>
     {
         Task GuardForDuplicateEmailAddress(string email, int? currentItemId = null);
+        Task<AdminProfileDto> GetUserProfile(int id);
     }
 }

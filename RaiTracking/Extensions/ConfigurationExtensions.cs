@@ -44,7 +44,9 @@ namespace RaiTracking.Extensions
                 configuration.GetSection(nameof(AppInformation)));
             services.Configure<CorsSetting>(
                 configuration.GetSection(nameof(CorsSetting)));
-
+            services.Configure<SmsServiceSetting>(
+                configuration.GetSection("SmsService"));
+            
             return services;
         }
 
