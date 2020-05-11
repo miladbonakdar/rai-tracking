@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Application.DTO;
 using Application.Interfaces;
-using Application.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;

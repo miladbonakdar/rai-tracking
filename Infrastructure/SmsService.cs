@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Application.Configurations;
+using Application.DTO;
 using Application.Interfaces;
-using Kavenegar;
-using Kavenegar.Core.Exceptions;
-using Serilog.Core;
+using Serilog;
 using SharedKernel;
 
 namespace Infrastructure
@@ -14,10 +12,10 @@ namespace Infrastructure
     class SmsService : ISmsService
     {
         private readonly SmsServiceSetting _setting;
-        private readonly Logger _logger;
+        private readonly ILogger _logger;
         private readonly KavenegarApi _api;
 
-        public SmsService(SmsServiceSetting setting, Logger logger)
+        public SmsService(SmsServiceSetting setting, ILogger logger)
         {
             _setting = setting;
             _logger = logger;
@@ -28,19 +26,13 @@ namespace Infrastructure
         {
             try
             {
-                var result
-                    = await _api.Send(_setting.ServiceNumber, new List<string> {number}, content);
+                await _api.Send(_setting.ServiceNumber, number, content);
                 return Result<bool>.Success("اس ام اس ارسال شد");
             }
-            catch (ApiException ex)
+            catch (KavehnegarApiException ex)
             {
                 _logger.Error(ex, "problem in sending message to number" + number);
                 throw;
-            }
-            catch (HttpException ex)
-            {
-                _logger.Error(ex, "problem in connecting to the sms service");
-                throw new ApplicationException("سرویس اس ام اس در دسترس نمی باشد.");
             }
             catch (Exception e)
             {
@@ -53,25 +45,31 @@ namespace Infrastructure
         {
             try
             {
-                var result
-                    = await _api.Send(_setting.ServiceNumber, numbers.ToList(), content);
+                await _api.SendMany(_setting.ServiceNumber, numbers, content);
                 return Result<bool>.Success("اس ام اس ارسال شد");
             }
-            catch (ApiException ex)
+            catch (KavehnegarApiException ex)
             {
                 _logger.Error(ex, "problem in sending bulk message");
                 throw;
-            }
-            catch (HttpException ex)
-            {
-                _logger.Error(ex, "problem in connecting to the sms service");
-                throw new ApplicationException("سرویس اس ام اس در دسترس نمی باشد.");
             }
             catch (Exception e)
             {
                 _logger.Fatal(e, "something bad happen when sending bulk message");
                 throw;
             }
+        }
+
+
+        public async Task<SmsServiceInfoDto> GetStatusAsync()
+        {
+            var information = await _api.AccountInfo();
+            return new SmsServiceInfoDto
+            {
+                ExpireDate = information.ExpireDate,
+                Type = information.Type,
+                RemainingCredit = information.RemainingCredit,
+            };
         }
     }
 }
