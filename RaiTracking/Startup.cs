@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RaiTracking.Extensions;
 using RaiTracking.Middleware;
+using SharedKernel.Interfaces;
 
 namespace RaiTracking
 {
@@ -57,7 +58,6 @@ namespace RaiTracking
             app.UseSwagger();
             app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Rai tracking API"));
             app.UseCors(corsOptions.PolicyName);
-            var cachePeriod = env.IsDevelopment() ? "600" : "604800"; //6 min and 7 days 
             app.UseApplicationStaticFiles(env);
         }
         public void ConfigureContainer(ContainerBuilder builder)

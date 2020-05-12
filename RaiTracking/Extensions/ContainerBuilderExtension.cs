@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Persistence;
 using Serilog;
+using SharedKernel.Interfaces;
 
 namespace RaiTracking.Extensions
 {
@@ -39,6 +40,8 @@ namespace RaiTracking.Extensions
                 (s => s.Resolve<IOptions<CorsSetting>>().Value).SingleInstance();
             builder.Register<ISerilogSetting>
                 (s => s.Resolve<IOptions<SerilogSetting>>().Value).SingleInstance();
+            builder.Register
+                (s => s.Resolve<IOptions<SmsServiceSetting>>().Value).SingleInstance();
         }
 
         private static void RegisterApplicationModules(this ContainerBuilder builder) =>

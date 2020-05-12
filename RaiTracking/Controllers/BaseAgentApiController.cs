@@ -11,6 +11,6 @@ namespace RaiTracking.Controllers
     [Authorize(Roles = Constants.UserType.Agent)]
     public abstract class BaseAgentApiController : BaseApiController
     {
-        public const string RouteBase = "Agents/v1/[controller]";
+        protected const string RouteBase = "Agents/v1/[controller]";
     }
 }

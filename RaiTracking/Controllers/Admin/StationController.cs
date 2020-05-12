@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Application.DTO;
 using Application.Interfaces;
-using Application.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SharedKernel;
@@ -20,7 +19,7 @@ namespace RaiTracking.Controllers.Admin
             _stationService = stationService;
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPost]
         [Authorize(Roles = PermissionSet.Station.Create)]
         public async Task<Result<StationDto>> Create([FromBody] StationDto dto)
@@ -29,7 +28,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<StationDto>.Success(data: item);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpPut]
         [Authorize(Roles = PermissionSet.Station.Update)]
         public async Task<Result<StationDto>> Update([FromBody] StationDto dto)
@@ -38,7 +37,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<StationDto>.Success(data: item);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpDelete("{id}")]
         [Authorize(Roles = PermissionSet.Station.Delete)]
         public async Task<Result> Delete(int id)
@@ -47,7 +46,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{id}")]
         public async Task<Result<StationDto>> Get(int id)
         {
@@ -55,7 +54,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<StationDto>.Success(data: res);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("{pageSize}/{pageNumber}")]
         public async Task<Result<PageDto<StationDto>>> Get(int pageSize, int pageNumber)
         {
@@ -63,7 +62,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<PageDto<StationDto>>.Success(data: res);
         }
 
-        [NeedTest]
+        [WasFine]
         [HttpGet("by_organization/{id}")]
         public async Task<Result<IEnumerable<StationDto>>> GetByOrganization(int id)
         {
@@ -71,7 +70,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<IEnumerable<StationDto>>.Success(data: res);
         }
         
-        [NeedTest]
+        [WasFine]
         [HttpGet("by_station/{id}")]
         public async Task<Result<IEnumerable<StationDto>>> GetByStation(int id)
         {

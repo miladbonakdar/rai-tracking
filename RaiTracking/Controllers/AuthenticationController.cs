@@ -28,7 +28,7 @@ namespace RaiTracking.Controllers
         public async Task<Result<AuthenticatedClientDto>> SignUpAdmin([FromBody] RegisterAdminDto dto)
             => await _authService.SignUpAdminAsync(dto);
 
-        [NeedTest]
+        [WasFine]
         [HttpPost(nameof(SignInAgent))]
         public async Task<Result<AuthenticatedClientDto>> SignInAgent([FromBody] SignInDto dto)
             => await _authService.SignInAgentAsync(dto);
@@ -38,8 +38,8 @@ namespace RaiTracking.Controllers
         public async Task<Result<AuthenticatedClientDto>> SignInAdmin([FromBody] SignInDto dto)
             => await _authService.SignInAdminAsync(dto);
 
-        [NeedTest]
-        [Authorize(Roles = Constants.UserType.Agent)]
+        [WasFine]
+        [Authorize]
         [HttpGet(nameof(Agent))]
         public Result<AgentDto> Agent()
             => Result<AgentDto>.Success(data: new AgentDto
@@ -51,7 +51,7 @@ namespace RaiTracking.Controllers
             });
 
         [WasFine]
-        [Authorize]
+        [Authorize(Roles = Constants.UserGroup.AllAdmins)]
         [HttpGet(nameof(Admin))]
         public Result<AuthorizedAdminDto> Admin()
             => Result<AuthorizedAdminDto>.Success(data: new AuthorizedAdminDto(new AdminDto

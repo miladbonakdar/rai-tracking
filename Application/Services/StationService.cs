@@ -23,12 +23,17 @@ namespace Application.Services
         public async Task<StationDto> CreateAsync(StationDto dto)
         {
             await _unitOfWork.Stations.GuardForDuplicateDepoName(dto.Name);
-            var station = new Station(dto.Name, dto.OrganizationId,
-                dto.PreStationId, dto.PostStationId);
-
+            var station = new Station(dto.Name, dto.OrganizationId);
+            var sideStations = await _unitOfWork.Stations.GetAsync(s => s.Id == dto.PreStationId
+                                                                        || s.Id == dto.PostStationId);
             station.SetPosition(dto.Latitude, dto.Longitude, dto.Altitude);
+            station.SetId(await _unitOfWork.Stations.NextIdAsync());
 
             await _unitOfWork.CompleteAsync(ctx => ctx.Stations.AddAsync(station));
+
+            station.SetPreStation(sideStations.FirstOrDefault(s => s.Id == dto.PreStationId), dto.ForceUpdateNeighbors)
+                .SetPostStation(sideStations.FirstOrDefault(s => s.Id == dto.PostStationId), dto.ForceUpdateNeighbors);
+            await _unitOfWork.CompleteAsync();
             dto.Id = station.Id;
             return dto;
         }
@@ -37,10 +42,16 @@ namespace Application.Services
         {
             await _unitOfWork.Stations.GuardForDuplicateDepoName(dto.Name, dto.Id);
             var station = await Get(dto.Id);
+            var sideStations = await _unitOfWork.Stations.GetAsync(s => s.Id == dto.PreStationId
+                                                                        || s.Id == dto.PostStationId);
+
             await Task.WhenAll(_unitOfWork.CompleteAsync(ctx =>
                 {
-                    station.Update(dto.Name, dto.OrganizationId, dto.PreStationId, dto.PostStationId);
-                    station.SetPosition(dto.Latitude, dto.Longitude, dto.Altitude);
+                    station.Update(dto.Name, dto.OrganizationId);
+
+                    station.SetPosition(dto.Latitude, dto.Longitude, dto.Altitude)
+                        .SetPreStation(sideStations.FirstOrDefault(s => s.Id == dto.PreStationId), dto.ForceUpdateNeighbors)
+                        .SetPostStation(sideStations.FirstOrDefault(s => s.Id == dto.PostStationId), dto.ForceUpdateNeighbors);
                 }),
                 _cacheStore.RemoveAsync(GetCacheKey(dto.Id)));
             return dto;
@@ -49,7 +60,7 @@ namespace Application.Services
         public async Task DeleteAsync(int id)
         {
             var station = await Get(id);
-            await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Stations.Remove(station)),
+            await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Stations.DetachAndDelete(station)),
                 _cacheStore.RemoveAsync(GetCacheKey(id)));
         }
 

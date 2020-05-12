@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using Application.Services;
+using Application.Services.Contracts;
 using Autofac;
 using Domain.Interfaces;
 using DomainEvent.Extensions;
@@ -24,6 +25,7 @@ namespace Application
             builder.RegisterType<StationService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<MissionService>().AsImplementedInterfaces().InstancePerLifetimeScope();
             builder.RegisterType<IdentityProvider>().AsImplementedInterfaces().InstancePerLifetimeScope();
+            builder.RegisterType<AdminProfileService>().AsImplementedInterfaces().InstancePerLifetimeScope();
         }
     }
 }

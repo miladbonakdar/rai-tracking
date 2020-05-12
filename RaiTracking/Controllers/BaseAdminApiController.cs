@@ -11,6 +11,6 @@ namespace RaiTracking.Controllers
     [Authorize(Roles = Constants.UserGroup.AllAdmins)]
     public abstract class BaseAdminApiController : BaseApiController
     {
-        public const string RouteBase = "Admins/v1/[controller]";
+        protected const string RouteBase = "Admins/v1/[controller]";
     }
 }

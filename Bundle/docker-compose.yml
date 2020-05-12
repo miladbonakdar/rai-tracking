@@ -1,0 +1,59 @@
+version: "3.5"
+
+services:
+  postgres:
+    container_name: postgres_container
+    image: postgres:12.1-alpine
+    restart: always
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-Xx123456P@ssw0rd}
+      PGDATA: /data/postgres
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - PG_net
+
+  pgadmin:
+    container_name: pgadmin_container
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: ${PGADMIN_DEFAULT_EMAIL:-miladbonak@gmail.com}
+      PGADMIN_DEFAULT_PASSWORD: ${PGADMIN_DEFAULT_PASSWORD:-miladbonak}
+    volumes:
+      - pgadmin:/root/.pgadmin
+    ports:
+      - "${PGADMIN_PORT:-9999}:80"
+    networks:
+      - PG_net
+    restart: always
+
+  redis:
+    restart: always
+    image: redis:5.0.7-alpine
+    command: ["redis-server", "--appendonly", "yes"]
+    networks:
+      - redis_net
+    ports:
+      - "${REDIS_PORT:-6379}:6379"
+    volumes:
+      - redis-data:/data
+
+  redis_ui:
+    restart: always
+    image: marian/rebrow
+    networks:
+      - redis_net
+    ports:
+      - "9998:5001"
+  
+volumes:
+  postgres:
+  pgadmin:
+  redis-data:
+    
+networks:
+  PG_net:
+  redis_net:

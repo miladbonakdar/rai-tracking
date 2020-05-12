@@ -1,5 +1,5 @@
 ﻿using System;
-using Application.Interfaces;
+using SharedKernel.Interfaces;
 
 namespace Application.Configurations
 {

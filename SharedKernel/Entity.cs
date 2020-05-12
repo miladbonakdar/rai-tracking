@@ -25,5 +25,8 @@ namespace SharedKernel
 
         public bool Equals(Entity other) 
             => other != null && Id.Equals(other.Id);
+        
+        public void SetId(int id) 
+            => Id = id;
     }
 }
