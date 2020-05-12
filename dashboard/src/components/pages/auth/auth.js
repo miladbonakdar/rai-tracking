@@ -3,7 +3,7 @@ import {MDBNav, MDBNavItem, MDBNavLink, MDBIcon, MDBContainer, MDBTabContent, MD
 import Register from './register';
 import Login from './login';
 const Auth = () => {
-    const [activeItemJustified , setActiveItemJustified ] = useState('1');
+    const [activeItemJustified , setActiveItemJustified ] = useState('2');
     const toggleJustified = (tab) => {
         if (activeItemJustified !== tab) {
           setActiveItemJustified(tab);
@@ -14,12 +14,12 @@ const Auth = () => {
             <MDBNav tabs className="nav-justified nav-auth">
             <MDBNavItem >
                 <MDBNavLink link to="#" active={activeItemJustified === "1"} onClick={() => {toggleJustified('1')}} role="tab" >
-                <MDBIcon icon="user" /> ثبت نام
+                <MDBIcon icon="user-plus" /> ثبت نام
                 </MDBNavLink>
             </MDBNavItem>
             <MDBNavItem>
                 <MDBNavLink link to="#" active={activeItemJustified === "2"} onClick={() => {toggleJustified("2")}} role="tab" >
-                <MDBIcon icon="heart" /> ورود
+                <MDBIcon icon="sign-in-alt" /> ورود
                 </MDBNavLink>
             </MDBNavItem>
             </MDBNav>

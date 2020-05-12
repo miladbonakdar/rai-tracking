@@ -77,7 +77,7 @@ const routes = [
             {
                 path: '/basic-information/depos',
                 name: 'depos',
-                perName: 'depos',
+                perName: 'دپوها',
                 component: DepoList,
                 meta: {
                     needAuth: false,

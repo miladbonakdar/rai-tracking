@@ -66,7 +66,7 @@ const StationList = () => {
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title= 'ایحاد ایستگاه' openModal={toggle} />
+      <BreadcrumSection title= 'ایجاد ایستگاه' openModal={toggle} />
 
         <MDBCard className="mt-2">
           <MDBCardBody>

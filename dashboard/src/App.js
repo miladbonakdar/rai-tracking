@@ -9,48 +9,62 @@ import Loader from 'react-loader-spinner';
 import { useDispatch, useSelector } from 'react-redux';
 import axiosInstance from './config/axiosInstance';
 import './App.css';
+import { useHistory } from 'react-router-dom';
 
 const App = () => {
-
+  const history = useHistory();
   const token = useSelector(state => state.token);
   const dispatch = useDispatch();
   const loading = useSelector(state => state.loading);
   const getAdminTypes = async () => {
 
-    dispatch({loading: true, type: 'SHOW_LOADING'});
     try {
+     handleLoading(true)
+
       const response = await axiosInstance.get('/Public/v1/Application/UserTypes');
       dispatch({adminTypes: response.data.data, type: 'SET_ADMINTYPES'});
-    } catch (error) {
+      handleLoading(false)
       
+    } catch (error) {
+      handleLoading(false)
     }
-    dispatch({loading: false, type: 'SHOW_LOADING'});
   }
   const getOrganizations = async () => {
-    dispatch({loading: true, type: 'SHOW_LOADING'});
     try {
+      handleLoading(true)
       const response = await axiosInstance.get('/Public/v1/Organization/Organizations');
       dispatch({organizations: response.data.data, type: 'SET_ORGANIZATIONS'});
+    handleLoading(false)
+
     } catch (error) {
+    handleLoading(false)
+
       console.log(error)
     }
-    dispatch({loading: false, type: 'SHOW_LOADING'});
 
   }
   const getUserData = async () => {
     try {
+    handleLoading(true)
+
       const response = await axiosInstance.get('/Public/v1/Auth/Admin');
       dispatch({user: response.data.data, type:'SET_USER_PERMISSIONS'});
+    handleLoading(false)
+
     } catch (error) {
+    handleLoading(false)
       
     }        
+  }
+  const handleLoading = (loadingStatus) => {
+    dispatch({loading: loadingStatus, type: 'SHOW_LOADING'});
   }
   useEffect(() => {
     getAdminTypes();
     getOrganizations();
     if(token) 
     getUserData();
-
+    else history.push('/');
   },[]);
 
 

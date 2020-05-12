@@ -130,7 +130,7 @@ const DepoList = () => {
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title= 'ایحاد depo' openModal={toggle} />
+      <BreadcrumSection title= 'ایجاد دپو' openModal={toggle} />
 
         <MDBCard className="mt-2">
           <MDBCardBody>

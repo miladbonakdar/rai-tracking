@@ -12,6 +12,7 @@ const Login = () => {
         emailOrPhoneNumber: '',
         password: ''
     });
+    const [showloginBtn, setShowLoginBtn] = useState(false);
     const submitHandler = event => {
         event.preventDefault();
         event.target.className += " was-validated";
@@ -29,8 +30,10 @@ const Login = () => {
         else return true;
       }
       const login = async () => {
+        dispatch({loading: true, type: 'SHOW_LOADING'});
           try {
               if(checkValidation()){
+                setShowLoginBtn(true)
                 const response = await axiosInstance.post('/Public/v1/Auth/SignInAdmin', loginForm);
                 localStorage.setItem('user', `${response.data.data.client.name} ${response.data.data.client.lastname}`);
                 dispatch({user: `${response.data.data.client.name} ${response.data.data.client.lastname}`, type: 'SET_USER'});
@@ -38,12 +41,17 @@ const Login = () => {
                 localStorage.setItem('userToken', response.data.data.token);
                 dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
                 await getUserData();
-                history.push('/dashboard')
+                history.push('/dashboard');
+                dispatch({loading: false, type: 'SHOW_LOADING'});
 
+                setShowLoginBtn(false);
               }
-
-          
+         
           } catch (error) {
+            dispatch({loading: false, type: 'SHOW_LOADING'});
+            setShowLoginBtn(false);
+
+
           }
 
       }
@@ -104,7 +112,7 @@ const Login = () => {
                     <div className="invalid-feedback">این فیلد اجباری است.</div>
                   </MDBCol>
                   </MDBRow>
-                  <MDBBtn onClick={login} color="primary" type="submit">
+                  <MDBBtn onClick={login} disabled={showloginBtn} color="primary" type="submit">
                   ورود
                 </MDBBtn>
               </form>

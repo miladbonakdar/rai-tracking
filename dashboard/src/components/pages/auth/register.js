@@ -24,7 +24,7 @@ const Register = () => {
           adminEmailAddress: '',
           rootPassword: ''
         });
-
+        const [showRegBtn, setShowRegBtn] = useState(false)
         const [repeatPassword, setRepeatPassword] = useState('')
         const [repeatError, setRepeatError] = useState(false)
         //return true : valid
@@ -42,21 +42,23 @@ const Register = () => {
           try {
             if(checkValidation())
             {
+              setShowRegBtn(true)
               const response = await axiosInstance.post('/Public/v1/Auth/SignUpAdmin',regForm);
               localStorage.setItem('user', `${response.data.data.client.name} ${response.data.data.client.lastname}`);
               dispatch({user: `${response.data.data.client.name} ${response.data.data.client.lastname}`, type: 'SET_USER'});
               toast.success(response.data.message);
               localStorage.setItem('userToken', response.data.data.token);
               dispatch({token: response.data.data.token, type: 'SET_TOKEN'});
-            dispatch({loading: false, type: 'SHOW_LOADING'});
-
+              dispatch({loading: false, type: 'SHOW_LOADING'});
               history.push('/dashboard');
+              setShowRegBtn(false);
             }
             
           } catch (error) {
+            dispatch({loading: false, type: 'SHOW_LOADING'});
+            setShowRegBtn(false);
             console.log(error);
           }  
-          dispatch({loading: false, type: 'SHOW_LOADING'});
 
         }
 
@@ -364,25 +366,7 @@ useEffect(() =>{
                       {/* <div className="valid-feedback">Looks good!</div> */}
                     </MDBCol>
                 </MDBRow>
-                
-                <MDBCol md="4" className="mb-3">
-                  <div className="custom-control custom-checkbox pl-3">
-                    <input
-                      className="custom-control-input"
-                      type="checkbox"
-                      value=""
-                      id="invalidCheck"
-                      required
-                    />
-                    <label className="custom-control-label" htmlFor="invalidCheck">
-                      با قوانین و مقررات موافق هستم.
-                    </label>
-                    <div className="invalid-feedback">
-                      شما قبل از ثبت نام باید موافقت خود را با قوانین و مقررات اعلام نمایید.
-                    </div>
-                  </div>
-                </MDBCol>
-                <MDBBtn onClick={register} color="primary" type="submit">
+                <MDBBtn onClick={register} disabled={showRegBtn} color="primary" type="submit">
                   ثبت نام
                 </MDBBtn>
               </form>

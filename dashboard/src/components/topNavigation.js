@@ -28,7 +28,7 @@ const TopNavigation =() => {
         return (
             <MDBNavbar className="flexible-navbar" light expand="md" scrolling>
                 <MDBNavbarBrand href="/">
-                    <strong>راه آهن</strong>
+                    <strong>رهگیری</strong>
                 </MDBNavbarBrand>
                 <MDBNavbarToggler onClick = { onClick } />
                 <MDBCollapse isOpen = { collapse } navbar>

@@ -120,7 +120,7 @@ const AgentList = () => {
       <MDBContainer>
       <MDBRow>
       <MDBCol md="12">
-      <BreadcrumSection title={edit ? 'ویرایش تعمیرکار':'ایحاد تعمیر کار'} openModal={toggle} />
+      <BreadcrumSection title={edit ? 'ویرایش تعمیرکار':'ایجاد تعمیر کار'} openModal={toggle} />
 
         <MDBCard className="mt-2">
           <MDBCardBody>
