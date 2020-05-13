@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logo from "../assets/rai-tracking.jpeg";
+import logo from "../assets/Logo.png";
 import { MDBListGroup, MDBListGroupItem, MDBIcon,MDBCollapse, MDBBtn } from 'mdbreact';
 import { NavLink, history, useHistory } from 'react-router-dom';
 import routes from '../config/routes';

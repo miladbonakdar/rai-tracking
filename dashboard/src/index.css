@@ -67,8 +67,10 @@ main {
 
 
 .sidebar-fixed .logo-wrapper img{
-  width: 100%;
-  padding: 2.5rem;
+  width: 140px;
+  padding: 20px;
+  max-width: 140px;
+  margin-right: 25px;
 }
 
 .list-group-item {
