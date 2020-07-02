@@ -15,7 +15,7 @@ namespace Domain
         }
 
         public Mission(int agentId, int remainingTime, int stationOneId,
-            int? stationTwoId = null, string description = null)
+            Zone zone, string description, int? stationTwoId = null)
         {
             AgentId = agentId;
             RemainingTime = remainingTime;
@@ -25,6 +25,7 @@ namespace Domain
             Phase = MissionPhase.NotStarted;
             Locations = new List<MissionLocation>();
             Events = new List<MissionEvent>();
+            ProbableFailureZone = zone;
         }
 
         public void Start()
@@ -42,6 +43,12 @@ namespace Domain
         {
             if (FailureLocation is null) FailureLocation = location;
             else FailureLocation.UpdateFrom(location);
+        }
+        
+        public void UpdateFailureZone(Zone zone)
+        {
+            if (ProbableFailureZone is null) ProbableFailureZone = zone;
+            else ProbableFailureZone.UpdateFrom(zone);
         }
 
         public void UpdateMission(int remainingTime, int stationOneId,

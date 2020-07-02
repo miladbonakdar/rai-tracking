@@ -14,7 +14,7 @@ namespace Application.Services
         private readonly IIdentityProvider _identityProvider;
         private readonly ICommandFactory _commandFactory;
 
-        public MissionService(IUnitOfWork unitOfWork, ICommander commander,IIdentityProvider identityProvider,
+        public MissionService(IUnitOfWork unitOfWork, ICommander commander, IIdentityProvider identityProvider,
             ICommandFactory commandFactory)
         {
             _unitOfWork = unitOfWork;
@@ -23,16 +23,16 @@ namespace Application.Services
             _commandFactory = commandFactory;
         }
 
-        public async Task<MissionDto> CreateAsync(MissionDto dto)
+        public async Task<MissionDto> CreateAsync(CreateMissionDto dto)
         {
             await _unitOfWork.Missions.GuardForValidMission(dto);
-            var mission = new Mission(dto.AgentId, dto.RemainingTime, dto.StationOneId, dto.StationTwoId
-                , dto.Description);
+            var mission = new Mission(dto.AgentId, dto.RemainingTime, dto.StationOneId
+                , dto.Zone.ToDomain(), dto.Description, dto.StationTwoId);
             await _unitOfWork.CompleteAsync(ctx => ctx.Missions.AddAsync(mission));
-            dto.Id = mission.Id;
-            var command = await _commandFactory.CreateNewMissionCommand(dto.Id);
+            var missionDto = dto.ToMissionDto(mission.Id);
+            var command = await _commandFactory.CreateNewMissionCommand(missionDto.Id);
             await _commander.SendAsync(command);
-            return dto;
+            return missionDto;
         }
 
         public async Task<UpdateMissionDto> UpdateAsync(UpdateMissionDto dto)

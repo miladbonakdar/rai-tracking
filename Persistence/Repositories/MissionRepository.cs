@@ -18,7 +18,7 @@ namespace Persistence.Repositories
         {
         }
 
-        public async Task GuardForValidMission(MissionDto dto)
+        public async Task GuardForValidMission(CreateMissionDto dto)
         {
             var mission = await DbSet.Where(m => m.Phase == MissionPhase.Started &&
                                                  m.AgentId == dto.AgentId).FirstOrDefaultAsync();

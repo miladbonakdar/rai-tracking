@@ -12,22 +12,9 @@ namespace RaiTracking.Controllers
     [Route("Public/v1/[controller]")]
     public class ApplicationController : BaseApiController
     {
-        private readonly ISmsService _service;
-
-        public ApplicationController(ISmsService service)
-        {
-            _service = service;
-        }
-
         [WasFine]
         [HttpGet]
         public Result<string> Index() => Result<string>.Success(data: "yeah it is the main page");
-
-        [HttpGet("test")]
-        public async Task Test()
-        {
-            var status = await _service.GetStatusAsync();
-        }
 
         [WasFine]
         [HttpGet(nameof(UserTypes))]

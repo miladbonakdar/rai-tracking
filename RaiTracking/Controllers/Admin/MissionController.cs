@@ -19,16 +19,16 @@ namespace RaiTracking.Controllers.Admin
             _missionService = missionService;
         }
 
-        [WasFine]
+        [NeedTest]
         [HttpPost]
         [Authorize(Roles = PermissionSet.Mission.Create)]
-        public async Task<Result<MissionDto>> Create([FromBody] MissionDto dto)
+        public async Task<Result<MissionDto>> Create([FromBody] CreateMissionDto dto)
         {
             var mission = await _missionService.CreateAsync(dto);
             return Result<MissionDto>.Success(data: mission);
         }
 
-        [WasFine]
+        [NeedTest]
         [HttpPut]
         [Authorize(Roles = PermissionSet.Mission.Update)]
         public async Task<Result<UpdateMissionDto>> Update([FromBody] UpdateMissionDto dto)
@@ -37,7 +37,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<UpdateMissionDto>.Success(data: mission);
         }
 
-        [WasFine]
+        [NeedTest]
         [HttpDelete("{id}")]
         [Authorize(Roles = PermissionSet.Mission.Delete)]
         public async Task<Result> Delete(int id)
@@ -46,7 +46,7 @@ namespace RaiTracking.Controllers.Admin
             return Result.Success();
         }
 
-        [WasFine]
+        [NeedTest]
         [HttpGet("{id}")]
         public async Task<Result<MissionDto>> Get(int id)
         {
@@ -54,7 +54,7 @@ namespace RaiTracking.Controllers.Admin
             return Result<MissionDto>.Success(data: res);
         }
 
-        [WasFine]
+        [NeedTest]
         [HttpGet("{pageSize}/{pageNumber}")]
         public async Task<Result<PageDto<MissionListDto>>> Get(int pageSize, int pageNumber)
         {

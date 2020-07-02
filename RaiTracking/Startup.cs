@@ -35,11 +35,7 @@ namespace RaiTracking
                 .ConfigureAppCorsSection(Configuration)
                 .ConfigureAppAuthentication(Configuration);
             services.ConfigureSerilog(Configuration);
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1"
-                    , new OpenApiInfo {Title = "Rai Tracking API", Version = "v1"});
-            });
+            services.AddSwaggerDocumentation();
             
             Persistence.PersistenceModule.PgConnectionString = Configuration.GetConnectionString("postgres");
             Infrastructure.InfrastructureModule.RedisConnectionString = Configuration.GetConnectionString("redis");

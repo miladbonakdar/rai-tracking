@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -9,7 +10,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using Serilog;
+using Swashbuckle.AspNetCore.SwaggerGen;
 
 namespace RaiTracking.Extensions
 {
@@ -20,14 +23,14 @@ namespace RaiTracking.Extensions
         {
             var loggerSetting = configuration.GetSection(nameof(SerilogSetting))
                 .Get<SerilogSetting>();
-            
+
             Log.Logger = new LoggerConfiguration()
                 .WriteTo.File(
                     Path.Combine(WebHostDefaults.ContentRootKey, loggerSetting.Path, loggerSetting.LogFileName),
                     rollingInterval: (RollingInterval) loggerSetting.RollingInterval)
                 .WriteTo.Console()
                 .CreateLogger();
-            
+
             return services;
         }
 
@@ -46,7 +49,7 @@ namespace RaiTracking.Extensions
                 configuration.GetSection(nameof(CorsSetting)));
             services.Configure<SmsServiceSetting>(
                 configuration.GetSection("SmsService"));
-            
+
             return services;
         }
 
@@ -113,6 +116,38 @@ namespace RaiTracking.Extensions
                     };
                 });
             return services;
+        }
+
+        public static void AddSwaggerDocumentation(this IServiceCollection services)
+        {
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1"
+                    , new OpenApiInfo {Title = "Rai Tracking API", Version = "v1"});
+                c.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, new OpenApiSecurityScheme
+                {
+                    Type = SecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    BearerFormat = "JWT",
+                    In = ParameterLocation.Header,
+                    Scheme = JwtBearerDefaults.AuthenticationScheme,
+                });
+                c.OperationFilter<AuthenticationRequirementsOperationFilter>();
+            });
+        }
+    }
+    
+    public class AuthenticationRequirementsOperationFilter : IOperationFilter
+    {
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            operation.Security ??= new List<OpenApiSecurityRequirement>();
+
+            var scheme = new OpenApiSecurityScheme { Reference = new OpenApiReference { Type = ReferenceType.SecurityScheme, Id = JwtBearerDefaults.AuthenticationScheme } };
+            operation.Security.Add(new OpenApiSecurityRequirement
+            {
+                [scheme] = new List<string>()
+            });
         }
     }
 }

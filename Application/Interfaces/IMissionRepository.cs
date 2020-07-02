@@ -7,7 +7,7 @@ namespace Application.Interfaces
 {
     public interface IMissionRepository : IRepository<Mission>
     {
-        Task GuardForValidMission(MissionDto dto);
+        Task GuardForValidMission(CreateMissionDto dto);
         Task<NewMissionCommandAdo> GetMissionForNewProjectCommand(int missionId);
     }
 }

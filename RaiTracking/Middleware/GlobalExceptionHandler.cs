@@ -58,15 +58,14 @@ namespace RaiTracking.Middleware
 
                     var error = Result<string>.Create(contextFeature.Error.Message,
                         context.Response.StatusCode, false,
-                        env.IsDevelopment() ? contextFeature.Error.ToString() : "");
+                        env.IsDevelopment() && context.Response.StatusCode == (int) HttpStatusCode.InternalServerError
+                            ? contextFeature.Error.ToString()
+                            : contextFeature.Error.Message);
                     await context.Response.WriteAsync(error.ToString());
                 }
             }
 
-            app.UseExceptionHandler(appError =>
-            {
-                appError.Run(Handler);
-            });
+            app.UseExceptionHandler(appError => { appError.Run(Handler); });
         }
     }
 }
