@@ -9,5 +9,10 @@ namespace Application.Interfaces
     {
         Task GuardForValidMission(CreateMissionDto dto);
         Task<NewMissionCommandAdo> GetMissionForNewProjectCommand(int missionId);
+        Task<EditMissionCommandAdo> GetMissionForEditProjectCommand(int missionId);
+
+        Task GuardForEditMission(int missionId);
+        Task GuardForDeleteMission(int id);
+        Task<Agent> GetMissionAgent(int missionId);
     }
 }

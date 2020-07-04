@@ -7,15 +7,20 @@ namespace Domain.Commands
 {
     public class FinishProjectCommandRequest : ApplicationCommand
     {
-        protected FinishProjectCommandRequest(string phoneNumber, string createdBy, int? adminId, int agentId)
-            : base(CommandType.FinishMission, Dic.CommandNames.FinishProject, 
-                phoneNumber, createdBy, adminId, agentId)
+        private readonly int _missionId;
+
+        private readonly string _template = 
+            "{\"c\":\"{{command}}\",\"mid\":{{missionId}},\"aid\":{{adminId}}}";
+        public FinishProjectCommandRequest(string phoneNumber, int adminId, int agentId, int missionId)
+            : base(CommandType.FinishMission,
+                phoneNumber,adminId, agentId)
         {
+            _missionId = missionId;
         }
 
-        protected override string GenerateMessage()
-        {
-            throw new NotImplementedException();
-        }
+        protected override string GenerateMessage() =>
+            _template.Replace("{{command}}", Map[CommandType])
+                .Replace("{{missionId}}", _missionId.ToString())
+                .Replace("{{adminId}}", AdminId.ToString());
     }
 }

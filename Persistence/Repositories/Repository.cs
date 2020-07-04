@@ -7,6 +7,7 @@ using Application.DTO;
 using Application.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using SharedKernel.Exceptions;
 using SharedKernel.Interfaces;
 
 namespace Persistence.Repositories
@@ -64,6 +65,14 @@ namespace Persistence.Repositories
             return await DbSet.FindAsync(id);
         }
 
+        public virtual async Task<T> FindOrThrowAsync(int id)
+        {
+            var item = await DbSet.FindAsync(id);
+            if(item is null)
+                throw new NotFoundException(id.ToString());
+            return item;
+        }
+
         public virtual T First(Expression<Func<T, bool>> @where)
         {
             return BaseQuery.First(where);
@@ -119,22 +128,44 @@ namespace Persistence.Repositories
         public virtual async Task<Tuple<IList<T>, int>> GetPageAsync(int pageSize, int pageNumber,
             Expression<Func<T, bool>> @where = null)
         {
-            void PageParameterGuard(ref int pageSize, ref int pageNumber)
+
+            var query = GetPagingBaseQuery(pageSize, pageNumber, where);
+            var listItems = await query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
+                .Take(pageSize).ToListAsync();
+            var total = await query.CountAsync();
+
+            return new Tuple<IList<T>, int>(listItems, total);
+        }
+        
+        public virtual async Task<Tuple<IList<TSelected>, int>> GetPageAndSelectAsync<TSelected>(int pageSize, int pageNumber,
+            Expression<Func<T, TSelected>> selector ,Expression<Func<T, bool>> @where = null)
+        {
+            
+            var query = GetPagingBaseQuery(pageSize, pageNumber, where);
+
+            var listItems = await query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
+                .Take(pageSize).Select(selector).ToListAsync();
+            var total = await query.CountAsync();
+
+            return new Tuple<IList<TSelected>, int>(listItems, total);
+        }
+
+        private IQueryable<T> GetPagingBaseQuery(int pageSize, int pageNumber
+            ,Expression<Func<T, bool>> @where = null)
+        {
+            
+            void PageParameterGuard(ref int size, ref int number)
             {
-                pageSize = Math.Min(Math.Max(pageSize, 1), 50);
-                pageNumber = Math.Max(pageNumber, 0);
+                size = Math.Min(Math.Max(size, 1), 50);
+                number = Math.Max(number, 0);
             }
 
             PageParameterGuard(ref pageSize, ref pageNumber);
             var query = BaseQuery;
             if (@where != null)
                 query = query.Where(@where);
-
-            var listItems = await query.OrderBy(i => i.Id).Skip(pageSize * pageNumber)
-                .Take(pageSize).ToListAsync();
-            var total = await query.CountAsync();
-
-            return new Tuple<IList<T>, int>(listItems, total);
+            
+            return query;
         }
 
 

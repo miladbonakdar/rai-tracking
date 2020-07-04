@@ -1,5 +1,4 @@
-﻿using System;
-using System.Net;
+﻿using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics;
@@ -46,7 +45,7 @@ namespace RaiTracking.Middleware
                             logger.Error($"Unauthorized : {contextFeature.Error}");
                             context.Response.StatusCode = (int) HttpStatusCode.Unauthorized;
                             break;
-                        case ApplicationException _:
+                        case ConflictedException _:
                             logger.Error($"App Invalid Operation : {contextFeature.Error}");
                             context.Response.StatusCode = (int) HttpStatusCode.Conflict;
                             break;

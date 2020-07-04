@@ -6,7 +6,6 @@ using Application.Services.Contracts;
 using Domain;
 using Domain.ValueObjects;
 using SharedKernel;
-using SharedKernel.Constants;
 using SharedKernel.Exceptions;
 
 namespace Application.Services
@@ -17,15 +16,19 @@ namespace Application.Services
         private readonly IUnitOfWork _unitOfWork;
         private readonly ICacheStore _cacheStore;
         private readonly IIdentityProvider _identityProvider;
+        private readonly ICommander _commander;
+        private readonly ICommandFactory _commandFactory;
 
         public AgentService(IPasswordService hasher, IUnitOfWork unitOfWork
             , ICacheStore cacheStore
-            , IIdentityProvider identityProvider)
+            , IIdentityProvider identityProvider, ICommander commander, ICommandFactory commandFactory)
         {
             _hasher = hasher;
             _unitOfWork = unitOfWork;
             _cacheStore = cacheStore;
             _identityProvider = identityProvider;
+            _commander = commander;
+            _commandFactory = commandFactory;
         }
 
         [WasFine]
@@ -49,7 +52,7 @@ namespace Application.Services
         {
             var agentDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var agent = await Get(id);
+                var agent = await _unitOfWork.Agents.FindOrThrowAsync(id);
                 return AgentDto.FromDomain(agent);
             });
             return agentDto;
@@ -58,7 +61,7 @@ namespace Application.Services
         [WasFine]
         public async Task<AgentDto> DeleteAsync(int id)
         {
-            var agent = await Get(id);
+            var agent = await _unitOfWork.Agents.FindOrThrowAsync(id);
             await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Agents.Remove(agent)),
                 _cacheStore.RemoveAsync(GetCacheKey(id)));
             return AgentDto.FromDomain(agent);
@@ -79,7 +82,7 @@ namespace Application.Services
             await _unitOfWork.Agents.GuardForDuplicateEmailAddress(dto.Email, dto.Id);
             await _unitOfWork.Agents.GuardForDuplicatePhoneNumber(dto.PhoneNumber, dto.Id);
 
-            var agent = await Get(dto.Id);
+            var agent = await _unitOfWork.Agents.FindOrThrowAsync(dto.Id);
             agent.Update(dto.Email, dto.PhoneNumber, dto.Name, dto.Lastname);
 
             await Task.WhenAll(_unitOfWork.CompleteAsync(), _cacheStore.RemoveAsync(GetCacheKey(dto.Id)));
@@ -92,7 +95,7 @@ namespace Application.Services
             if (!_identityProvider.HasValue || !_identityProvider.IsAdmin)
                 throw new ForbiddenException();
 
-            var agent = await Get(dto.DomainId);
+            var agent = await _unitOfWork.Agents.FindOrThrowAsync(dto.DomainId);
 
             agent.UpdatePassword(_hasher.HashPassword(dto.Password));
 
@@ -102,15 +105,21 @@ namespace Application.Services
         [WasFine]
         public async Task UpdateSettingAsync(UpdateAgentSettingDto dto)
         {
-            var agent = await Get(dto.AgentId);
+            var agent = await _unitOfWork.Agents.FindOrThrowAsync(dto.AgentId);
+            var agentSetting = new AgentSetting(dto.Version);
             await Task.WhenAll(_unitOfWork.CompleteAsync(ctx =>
-                    agent.UpdateSetting(new AgentSetting(dto.Version))),
+                    agent.UpdateSetting(agentSetting)),
                 _cacheStore.RemoveAsync(GetCacheKey(dto.AgentId)));
+
+            var command = await _commandFactory.CreateSetSettingCommand(agent.Id, agentSetting, _identityProvider.Id);
+            await _commander.SendAsync(command);
         }
 
-        private async Task<Agent> Get(int id) =>
-            await _unitOfWork.Agents.SingleOrDefaultAsync(a => a.Id == id)
-            ?? throw new NotFoundException(id.ToString());
+        public async Task SendUpdateStatusCommand(int agentId)
+        {
+            var command = await _commandFactory.CreateUpdateStatusCommand(agentId, _identityProvider.Id);
+            await _commander.SendAsync(command);
+        }
 
         private static string GetCacheKey(int id) => $"Agent_{id}";
     }

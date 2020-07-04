@@ -7,7 +7,7 @@ namespace Application.Services.Contracts
 {
     public interface IMissionService
     {
-        Task<UpdateMissionDto> UpdateAsync(UpdateMissionDto dto);
+        Task<MissionDto> UpdateAsync(UpdateMissionDto dto);
         Task<MissionDto> CreateAsync(CreateMissionDto dto);
         Task DeleteAsync(int id);
         Task<MissionDto> GetAsync(int id);
@@ -16,6 +16,9 @@ namespace Application.Services.Contracts
         Task StartMission(int missionId);
         Task StopMission(int missionId);
         Task CancelMission(int missionId);
+        Task SendCancelCommand(int missionId);
+        Task SendFinishCommand(int missionId);
+        Task SendSetOtdrCommand(int missionId,int otdr);
         Task UpdateFailureLocation(int missionId, LocationDto dto);
     }
 }

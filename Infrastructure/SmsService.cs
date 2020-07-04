@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Application.Configurations;
 using Application.DTO;
@@ -27,6 +28,7 @@ namespace Infrastructure
             try
             {
                 await _api.Send(_setting.ServiceNumber, number, content);
+                _logger.Information($"sms send to number {number} and content is {content}");
                 return Result<bool>.Success("اس ام اس ارسال شد");
             }
             catch (KavehnegarApiException ex)
@@ -45,8 +47,10 @@ namespace Infrastructure
         {
             try
             {
-                await _api.SendMany(_setting.ServiceNumber, numbers, content);
-                return Result<bool>.Success("اس ام اس ارسال شد");
+                var enumerable = numbers.ToList();
+                await _api.SendMany(_setting.ServiceNumber, enumerable, content);
+                _logger.Information($"bulk sms send to numbers {string.Join(',',enumerable)} and content is {content}");
+                return Result<bool>.Success("اس ام اس ها ارسال شد");
             }
             catch (KavehnegarApiException ex)
             {

@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using Domain.Enums;
 using Domain.Interfaces;
-using Domain.ValueObjects;
 using JetBrains.Annotations;
 using SharedKernel;
 

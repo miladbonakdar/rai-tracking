@@ -36,7 +36,7 @@ namespace Application.Services
         {
             GuardForJustTheProfileOwner(dto.DomainId);
 
-            var user = await Get(dto.DomainId);
+            var user = await _unitOfWork.Admins.FindOrThrowAsync(dto.DomainId);
 
             if (!_hasher.Verify(dto.OldPassword, user.Password))
                 throw new BadRequestException(nameof(dto.OldPassword), "پسورد قدیمی اشتباه می باشد");
@@ -52,7 +52,7 @@ namespace Application.Services
             GuardForJustTheProfileOwner(dto.Id);
             await _unitOfWork.Admins.GuardForDuplicateEmailAddress(dto.Email, dto.Id);
 
-            var admin = await Get(dto.Id);
+            var admin = await _unitOfWork.Admins.FindOrThrowAsync(dto.Id);
 
             admin.UpdateInfo(dto.PhoneNumber, dto.Name, dto.Lastname,
                     dto.About, dto.Number)
@@ -71,13 +71,7 @@ namespace Application.Services
             return await _cacheStore.StoreAndGetAsync(GetCacheKey(id),
                 async () => await _unitOfWork.Admins.GetUserProfile(id));
         }
-
-
-        private async Task<Admin> Get(int id) =>
-            await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == id) ??
-            throw new NotFoundException(id.ToString());
-
-
+        
         private static string GetCacheKey(int id) => $"Profile_{id}";
     }
 }

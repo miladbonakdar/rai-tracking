@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
+using Domain;
 using Domain.Enums;
 using Domain.ValueObjects;
 
@@ -16,5 +18,25 @@ namespace Application.DTO
         public int? StationTwoId { get; set; }
         public int AgentId { get; set; }
         public ZoneDto Zone { get; set; } 
+        
+        private static readonly Func<Mission, MissionDto> DefaultConverter =
+            mission => new MissionDto()
+            {
+                Description = mission.Description,
+                Id = mission.Id,
+                Phase = mission.Phase,
+                Zone = ZoneDto.FromDomain(mission.ProbableFailureZone),
+                AgentId = mission.AgentId,
+                RemainingTime = mission.RemainingTime,
+                StationOneId = mission.StationOneId,
+                StationTwoId = mission.StationTwoId
+            };
+
+        public static MissionDto FromDomain(Mission mission
+            , Func<Mission, MissionDto> converter = null)
+        {
+            converter ??= DefaultConverter;
+            return converter(mission);
+        }
     }
 }

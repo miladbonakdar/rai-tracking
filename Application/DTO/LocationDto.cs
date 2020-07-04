@@ -18,9 +18,10 @@ namespace Application.DTO
         public static LocationDto FromDomain(Location location
             , Func<Location, LocationDto> converter = null)
         {
-            if (converter is null)
-                converter = DefaultConverter;
+            converter ??= DefaultConverter;
             return converter(location);
         }
+
+        public Location ToDomain() => new Location(Latitude,Longitude);
     }
 }

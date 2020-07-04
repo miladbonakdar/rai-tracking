@@ -2,6 +2,7 @@
 using Application.Interfaces;
 using Autofac;
 using Infrastructure.Interfaces;
+using Microsoft.Extensions.Hosting;
 using Module = Autofac.Module;
 
 namespace Infrastructure
@@ -9,6 +10,7 @@ namespace Infrastructure
     public class InfrastructureModule : Module
     {
         private static string _redisConnectionString = null;
+        public static bool IsDevelopment = false;
 
         public static string RedisConnectionString
         {
@@ -26,9 +28,13 @@ namespace Infrastructure
                 .SingleInstance();
             builder.RegisterType<CacheStore>().As<ICacheStore>()
                 .SingleInstance();
-
-            builder.RegisterType<SmsService>().As<ISmsService>()
-                .InstancePerLifetimeScope();
+            
+            if (IsDevelopment)
+                builder.RegisterType<DebugSmsService>().As<ISmsService>()
+                    .InstancePerLifetimeScope();
+            else
+                builder.RegisterType<SmsService>().As<ISmsService>()
+                    .InstancePerLifetimeScope();
 
             builder.RegisterType<Commander>().As<ICommander>()
                 .InstancePerLifetimeScope();

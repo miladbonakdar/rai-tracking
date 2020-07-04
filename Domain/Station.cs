@@ -1,9 +1,8 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using Domain.Interfaces;
-using Domain.ValueObjects;
 using SharedKernel;
-using SharedKernel.Constants;
+using SharedKernel.Exceptions;
 
 namespace Domain
 {
@@ -61,7 +60,7 @@ namespace Domain
             }
 
             if (PostStationId != null)
-                throw new ApplicationException($"ایسگاه {Name} در حال حاضر دارای ایسگاه بعدی می باشد");
+                throw new ConflictedException($"ایسگاه {Name} در حال حاضر دارای ایسگاه بعدی می باشد");
             PostStationId = postStation.Id;
             if (arrangeNeighbor)
                 postStation.SetPreStation(this, false, false);
@@ -82,7 +81,7 @@ namespace Domain
             }
 
             if (PreStationId != null)
-                throw new ApplicationException($"ایسگاه {Name} در حال حاضر دارای ایسگاه قبلی می باشد");
+                throw new ConflictedException($"ایسگاه {Name} در حال حاضر دارای ایسگاه قبلی می باشد");
             PreStationId = preStation.Id;
             if (arrangeNeighbor)
                 preStation.SetPreStation(this, false, false);

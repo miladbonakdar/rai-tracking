@@ -27,7 +27,7 @@ namespace Application.Services
         public async Task<DepoDto> UpdateAsync(DepoDto dto)
         {
             await _unitOfWork.Depos.GuardForDuplicateDepoName(dto.Name, dto.Id);
-            var depo = await Get(dto.Id);
+            var depo = await _unitOfWork.Depos.FindOrThrowAsync(dto.Id);
             await Task.WhenAll(_unitOfWork.CompleteAsync(ctx =>
                     depo.Update(dto.Name, dto.OrganizationId, dto.StationId)),
                 _cacheStore.RemoveAsync(GetCacheKey(dto.Id)));
@@ -37,7 +37,7 @@ namespace Application.Services
         [WasFine]
         public async Task UpdateLocationAsync(LocationUpdateDto dto)
         {
-            var depo = await Get(dto.DomainId);
+            var depo = await _unitOfWork.Depos.FindOrThrowAsync(dto.DomainId);
             var location = new Location(dto.Latitude, dto.Longitude);
             depo.UpdateLocation(location);
             await Task.WhenAll(_unitOfWork.CompleteAsync(), _cacheStore.RemoveAsync(GetCacheKey(dto.DomainId)));
@@ -62,7 +62,7 @@ namespace Application.Services
         [WasFine]
         public async Task DeleteAsync(int id)
         {
-            var depo = await Get(id);
+            var depo = await _unitOfWork.Depos.FindOrThrowAsync(id);
             await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Depos.Remove(depo)),
                 _cacheStore.RemoveAsync(GetCacheKey(id)));
         }
@@ -72,7 +72,7 @@ namespace Application.Services
         {
             var depoDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var depo = await Get(id);
+                var depo = await _unitOfWork.Depos.FindOrThrowAsync(id);
                 return DepoDto.FromDomain(depo);
             });
             return depoDto;
@@ -95,10 +95,6 @@ namespace Application.Services
             page.SetData(items.Item2, items.Item1.Select(i => DepoDto.FromDomain(i)).ToList());
             return page;
         }
-
-        private async Task<Depo> Get(int id) =>
-            await _unitOfWork.Depos.SingleOrDefaultAsync(a => a.Id == id)
-            ?? throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Depo_{id}";
     }

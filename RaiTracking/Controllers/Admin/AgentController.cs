@@ -79,5 +79,13 @@ namespace RaiTracking.Controllers.Admin
             var res = await _agentService.GetPageAsync(pageSize, pageNumber);
             return Result<PageDto<AgentDto>>.Success(data: res);
         }
+        
+        [NeedTest]
+        [HttpGet("update-status-request/{id}")]
+        public async Task<Result> UpdateStatusRequest(int id)
+        {
+            await _agentService.SendUpdateStatusCommand(id);
+            return Result.Success(data: true);
+        }
     }
 }

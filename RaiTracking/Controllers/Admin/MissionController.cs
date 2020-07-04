@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Application.DTO;
 using Application.Services.Contracts;
 using Microsoft.AspNetCore.Authorization;
@@ -10,7 +9,7 @@ using SharedKernel.Constants;
 namespace RaiTracking.Controllers.Admin
 {
     [Route(RouteBase)]
-    public class MissionController: BaseAdminApiController
+    public class MissionController : BaseAdminApiController
     {
         private readonly IMissionService _missionService;
 
@@ -31,10 +30,10 @@ namespace RaiTracking.Controllers.Admin
         [NeedTest]
         [HttpPut]
         [Authorize(Roles = PermissionSet.Mission.Update)]
-        public async Task<Result<UpdateMissionDto>> Update([FromBody] UpdateMissionDto dto)
+        public async Task<Result<MissionDto>> Update([FromBody] UpdateMissionDto dto)
         {
             var mission = await _missionService.UpdateAsync(dto);
-            return Result<UpdateMissionDto>.Success(data: mission);
+            return Result<MissionDto>.Success(data: mission);
         }
 
         [NeedTest]
@@ -60,6 +59,30 @@ namespace RaiTracking.Controllers.Admin
         {
             var res = await _missionService.GetPageAsync(pageSize, pageNumber);
             return Result<PageDto<MissionListDto>>.Success(data: res);
+        }
+
+        [NeedTest]
+        [HttpPut("cancel-mission-request/{id}")]
+        public async Task<Result> CancelMissionRequest(int id)
+        {
+            await _missionService.SendCancelCommand(id);
+            return Result.Success(data: true);
+        }
+
+        [NeedTest]
+        [HttpPut("finish-mission-request/{id}")]
+        public async Task<Result> FinishMissionRequest(int id)
+        {
+            await _missionService.SendFinishCommand(id);
+            return Result.Success(data: true);
+        }
+
+        [NeedTest]
+        [HttpPut("set-otdr-request/{id}/{otdr}")]
+        public async Task<Result> SetOtdrRequest(int id, int otdr)
+        {
+            await _missionService.SendSetOtdrCommand(id, otdr);
+            return Result.Success(data: true);
         }
     }
 }

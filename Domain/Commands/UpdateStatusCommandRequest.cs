@@ -7,15 +7,16 @@ namespace Domain.Commands
 {
     public class UpdateStatusCommandRequest : ApplicationCommand
     {
-        protected UpdateStatusCommandRequest(string phoneNumber, string createdBy, int? adminId, int agentId)
-            : base(CommandType.UpdateStatus, Dic.CommandNames.UpdateStatus, 
-                phoneNumber, createdBy, adminId, agentId)
+        private readonly string _template = 
+            "{\"c\":\"{{command}}\",\"aid\":{{adminId}}}";
+        public UpdateStatusCommandRequest(string phoneNumber,int adminId, int agentId)
+            : base(CommandType.UpdateStatus, 
+                phoneNumber, adminId, agentId)
         {
         }
 
-        protected override string GenerateMessage()
-        {
-            throw new NotImplementedException();
-        }
+        protected override string GenerateMessage() =>
+            _template.Replace("{{command}}", Map[CommandType])
+                .Replace("{{adminId}}", AdminId.ToString());
     }
 }

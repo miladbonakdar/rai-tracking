@@ -59,6 +59,7 @@ namespace Persistence
         public static IEnumerable<Type> OwnedProperties()
         {
             yield return typeof(Location);
+            yield return typeof(Zone);
             yield return typeof(PersonName);
             yield return typeof(AgentInfo);
             yield return typeof(AgentSetting);

@@ -51,13 +51,14 @@ namespace Domain
             else ProbableFailureZone.UpdateFrom(zone);
         }
 
-        public void UpdateMission(int remainingTime, int stationOneId,
+        public void UpdateMission(int remainingTime, int stationOneId,Zone zone,
             int? stationTwoId = null, string description = null)
         {
             RemainingTime = remainingTime;
             StationOneId = stationOneId;
             StationTwoId = stationTwoId;
             Description = description;
+            UpdateFailureZone(zone);
         }
 
         public int RemainingTime { get; private set; }

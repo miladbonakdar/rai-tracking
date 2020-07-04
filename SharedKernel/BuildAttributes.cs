@@ -13,4 +13,9 @@ namespace SharedKernel
     public class NeedTestAttribute : Attribute
     {
     }
+    
+    [Obsolete("Implementation is not completed")]
+    public class NotImplementationAttribute : Attribute
+    {
+    }
 }

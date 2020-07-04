@@ -44,6 +44,7 @@ namespace RaiTracking
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ICorsSetting corsOptions)
         {
+            Infrastructure.InfrastructureModule.IsDevelopment = env.IsDevelopment();
             if (env.IsDevelopment()) app.UseDeveloperExceptionPage();
             app.ConfigureExceptionHandler(env);
             app.UseRouting();

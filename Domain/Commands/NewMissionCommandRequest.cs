@@ -14,12 +14,12 @@ namespace Domain.Commands
         private readonly int _remainingType;
         private readonly Zone _zone;
 
-        private string _template = 
+        private readonly string _template = 
             "{\"c\":\"{{command}}\",\"mid\":{{missionId}},\"aid\":{{adminId}},\"des\":\"{{description}}\",\"rt\": {{remainingTime}},\"r\":{{radius}},\"p\":{\"lat\":{{latitude}},\"lon\":{{longitude}}}}";
-        public NewMissionCommandRequest(string phoneNumber, string createdBy, int adminId, int agentId,
+        public NewMissionCommandRequest(string phoneNumber, int adminId, int agentId,
             int missionId,string description,int remainingType,Zone zone)
-            : base(CommandType.NewMission, Dic.CommandNames.NewProject, 
-                phoneNumber, createdBy, adminId, agentId)
+            : base(CommandType.NewMission,  
+                phoneNumber, adminId, agentId)
         {
             _missionId = missionId;
             _description = description;

@@ -39,7 +39,7 @@ namespace Application.Services
                 : _unitOfWork.Agents.GetWithDepoAsync(a => a.PhoneNumber == dto.EmailOrPhoneNumber);
             var agent = await agentTask;
 
-            if (agent is null) throw new NotFoundException("کاربر مورد نظر یافت نشد. لطفا ورودی خود را چک کنید.");
+            if (agent is null) throw new NotFoundException("Email or PhoneNumber","کاربر مورد نظر یافت نشد. لطفا ورودی خود را چک کنید.");
             if (!_passwordService.Verify(dto.Password, agent.Password))
                 throw new BadRequestException("password", "پسوورد اشتباه می باشد.");
 

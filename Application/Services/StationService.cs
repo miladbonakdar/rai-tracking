@@ -41,7 +41,7 @@ namespace Application.Services
         public async Task<StationDto> UpdateAsync(StationDto dto)
         {
             await _unitOfWork.Stations.GuardForDuplicateDepoName(dto.Name, dto.Id);
-            var station = await Get(dto.Id);
+            var station = await _unitOfWork.Stations.FindOrThrowAsync(dto.Id);
             var sideStations = await _unitOfWork.Stations.GetAsync(s => s.Id == dto.PreStationId
                                                                         || s.Id == dto.PostStationId);
 
@@ -59,7 +59,7 @@ namespace Application.Services
 
         public async Task DeleteAsync(int id)
         {
-            var station = await Get(id);
+            var station = await _unitOfWork.Stations.FindOrThrowAsync(id);
             await Task.WhenAll(_unitOfWork.CompleteAsync((ctx) => ctx.Stations.DetachAndDelete(station)),
                 _cacheStore.RemoveAsync(GetCacheKey(id)));
         }
@@ -68,7 +68,7 @@ namespace Application.Services
         {
             var dto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var item = await Get(id);
+                var item = await _unitOfWork.Stations.FindOrThrowAsync(id);
                 return StationDto.FromDomain(item);
             });
             return dto;
@@ -108,11 +108,6 @@ namespace Application.Services
 
             return ConvertToDtoList(items);
         }
-
-
-        private async Task<Station> Get(int id) =>
-            await _unitOfWork.Stations.SingleOrDefaultAsync(a => a.Id == id)
-            ?? throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Station_{id}";
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using Application.Interfaces;
+using JetBrains.Annotations;
 using Microsoft.EntityFrameworkCore;
 using Persistence.Repositories;
 using Serilog;
@@ -18,6 +19,12 @@ namespace Persistence
         public IOrganizationRepository Organizations => _organizationsLazy.Value;
         public IStationRepository Stations => _stationsLazy.Value;
         public IAdminRepository Admins => _adminsLazy.Value;
+        public T GetProperty<T>(
+            [NotNull] object entity,
+            [NotNull] string propertyName)
+        {
+            return EF.Property<T>(entity, propertyName);
+        }
 
         private readonly Lazy<IAgentRepository> _agentsLazy;
         private readonly Lazy<ICommandRepository> _commandsLazy;

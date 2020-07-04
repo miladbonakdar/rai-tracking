@@ -1,21 +1,24 @@
-﻿using System;
-using Domain.Enums;
-using SharedKernel;
-using SharedKernel.Constants;
+﻿using Domain.Enums;
 
 namespace Domain.Commands
 {
     public class CancelProjectCommandRequest : ApplicationCommand
     {
-        protected CancelProjectCommandRequest(string phoneNumber, string createdBy, int? adminId, int agentId)
-            : base(CommandType.CancelMission, Dic.CommandNames.CancelProject, 
-                phoneNumber, createdBy, adminId, agentId)
+        private readonly int _missionId;
+
+        private readonly string _template = 
+            "{\"c\":\"{{command}}\",\"mid\":{{missionId}},\"aid\":{{adminId}}}";
+        public CancelProjectCommandRequest(string phoneNumber, int adminId, int agentId,int missionId)
+            : base(CommandType.CancelMission, 
+                phoneNumber, adminId, agentId)
         {
+            _missionId = missionId;
         }
 
-        protected override string GenerateMessage()
-        {
-            throw new NotImplementedException();
-        }
+
+        protected override string GenerateMessage() =>
+            _template.Replace("{{command}}", Map[CommandType])
+                .Replace("{{missionId}}", _missionId.ToString())
+                .Replace("{{adminId}}", AdminId.ToString());
     }
 }

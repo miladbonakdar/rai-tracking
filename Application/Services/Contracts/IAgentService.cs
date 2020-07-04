@@ -12,5 +12,6 @@ namespace Application.Services.Contracts
         Task<AgentDto> UpdateAsync(AgentDto dto);
         Task ResetPasswordAsync(ResetPasswordDto dto);
         Task UpdateSettingAsync(UpdateAgentSettingDto dto);
+        Task SendUpdateStatusCommand(int agentId);
     }
 }

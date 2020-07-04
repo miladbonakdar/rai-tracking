@@ -18,6 +18,8 @@ namespace Application.Interfaces
         TAggregateRoot Find(int id);
         Task<TAggregateRoot> FindAsync(int id);
 
+        Task<TAggregateRoot> FindOrThrowAsync(int id);
+
         TAggregateRoot First(Expression<Func<TAggregateRoot, bool>> where);
         Task<TAggregateRoot> FirstAsync(Expression<Func<TAggregateRoot, bool>> where);
 
@@ -36,6 +38,9 @@ namespace Application.Interfaces
         Task<Tuple<IList<TAggregateRoot>, int>> GetPageAsync(int pageSize, int pageNumber,
             Expression<Func<TAggregateRoot, bool>> @where = null);
 
+        Task<Tuple<IList<TSelected>, int>> GetPageAndSelectAsync<TSelected>(int pageSize, int pageNumber,
+            Expression<Func<TAggregateRoot, TSelected>> selector, Expression<Func<TAggregateRoot, bool>> @where = null);
+        
         void Remove(TAggregateRoot entity);
         void RemoveRange(IEnumerable<TAggregateRoot> entities);
 

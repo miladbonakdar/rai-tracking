@@ -70,6 +70,14 @@ namespace Infrastructure
             }
         }
 
+        public async Task<TCache> GetAsync<TCache>(string key)
+        {
+            string oldCache = await _multiplexer.Db.StringGetAsync(key);
+            return string.IsNullOrWhiteSpace(oldCache)
+                ? default
+                : JsonSerializer.Deserialize<TCache>(oldCache, _serializerOptions);
+        }
+
 
         public async Task<bool> RemoveAsync(string key)
         {

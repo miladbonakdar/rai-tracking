@@ -35,8 +35,8 @@
             public const string LowSpeed = "سرعت تعمیر کار کم می باشد";
             public const string GotOutOfFailureZone = "تعمیر کار از محل خرابی خارج شد";
             public const string GotOutOfDepoZone = "تعمیر کار از محل دپو خارج شد";
-            public const string ResumedAfterPhoneRestart = "پروژه بعد از روشن شدن دوباره از سر گرفته شد";
-            public const string MissionFinishedAutomatically = "پروژه به صورت اتوماتیک پایان یافت";
+            public const string ResumedAfterPhoneRestart = "عملیات بعد از روشن شدن دوباره از سر گرفته شد";
+            public const string MissionFinishedAutomatically = "عملیات به صورت اتوماتیک پایان یافت";
             public const string TheFailureLocationDetectedAutomatically = "محل خرابی به صورت اتوماتیک پیدا شد";
             public const string IncomingCallFromWhitelist = "تماس دریافتی مجاز";
             public const string OutgoingCallToWhitelist = "برقراری تماس با شماره ی مجاز";

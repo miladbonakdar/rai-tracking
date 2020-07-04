@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using JetBrains.Annotations;
 
 namespace Application.Interfaces
 {
@@ -13,5 +14,9 @@ namespace Application.Interfaces
         IOrganizationRepository Organizations { get; }
         IStationRepository Stations { get; }
         IAdminRepository Admins { get; }
+
+        T GetProperty<T>(
+            [NotNull] object entity,
+            [NotNull] string propertyName);
     }
 }

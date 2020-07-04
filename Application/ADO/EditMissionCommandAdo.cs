@@ -2,7 +2,7 @@
 
 namespace Application.ADO
 {
-    public class NewMissionCommandAdo
+    public class EditMissionCommandAdo
     {
         public int MissionId { get; set; }
         public string AgentNumber { get; set; }

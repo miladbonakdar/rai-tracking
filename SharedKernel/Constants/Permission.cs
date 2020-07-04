@@ -43,11 +43,13 @@ namespace SharedKernel.Constants
                 Create = PermissionSet.Mission.Create.Contains(userType);
                 Update = PermissionSet.Mission.Update.Contains(userType);
                 Delete = PermissionSet.Mission.Delete.Contains(userType);
+                CancelMission = PermissionSet.Mission.CancelMission.Contains(userType);
             }
 
             public bool Create { get; }
             public bool Update { get; }
             public bool Delete { get; }
+            public bool CancelMission { get; }
         }
 
         public class DepoPermission
@@ -83,7 +85,7 @@ namespace SharedKernel.Constants
             public bool UpdateSetting { get; }
             public bool Delete { get; }
         }
-        
+
         public class StationPermission
         {
             public StationPermission(string userType)
@@ -126,7 +128,7 @@ namespace SharedKernel.Constants
             public const string Delete = Constants.UserGroup.AllMainAdmins;
             public const string UpdateLocation = Constants.UserGroup.AllMainAdmins;
         }
-        
+
         public static class Station
         {
             public const string Create = Constants.UserGroup.AllRootAdmins;
@@ -139,6 +141,7 @@ namespace SharedKernel.Constants
             public const string Create = Constants.UserGroup.AllMainAdmins;
             public const string Update = Constants.UserGroup.AllMainAdmins;
             public const string Delete = Constants.UserGroup.AllMainAdmins;
+            public const string CancelMission = Constants.UserGroup.AllMainAdmins;
         }
     }
 }

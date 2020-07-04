@@ -35,7 +35,7 @@ namespace Application.Services
                 && _identityProvider.Id != dto.Id)
                 throw new ForbiddenException("شما نمی توانید اطلاعات شخص دیگری را تغییر دهید");
 
-            var admin = await Get(dto.Id);
+            var admin = await _unitOfWork.Admins.FindOrThrowAsync(dto.Id);
 
             admin.UpdateInfo(dto.PhoneNumber, dto.Name, dto.Lastname,
                     dto.About, dto.Number)
@@ -51,7 +51,7 @@ namespace Application.Services
         [WasFine]
         public async Task UpdatePasswordAsync(PasswordUpdateDto dto)
         {
-            var admin = await Get(dto.DomainId);
+            var admin = await _unitOfWork.Admins.FindOrThrowAsync(dto.DomainId);
 
             if (!_hasher.Verify(dto.OldPassword, admin.Password))
                 throw new BadRequestException(nameof(dto.OldPassword), "پسورد قدیمی اشتباه می باشد");
@@ -80,7 +80,7 @@ namespace Application.Services
         [WasFine]
         public async Task<AdminDto> DeleteAsync(int id)
         {
-            var admin = await Get(id);
+            var admin = await _unitOfWork.Admins.FindOrThrowAsync(id);
             await _unitOfWork.CompleteAsync((ctx) => ctx.Admins.Remove(admin));
             await _cacheStore.RemoveAsync(GetCacheKey(id));
             return AdminDto.FromDomain(admin);
@@ -91,7 +91,7 @@ namespace Application.Services
         {
             var adminDto = await _cacheStore.StoreAndGetAsync(GetCacheKey(id), async () =>
             {
-                var admin = await Get(id);
+                var admin = await _unitOfWork.Admins.FindOrThrowAsync(id);
                 return AdminDto.FromDomain(admin);
             });
             return adminDto;
@@ -105,10 +105,6 @@ namespace Application.Services
             page.SetData(items.Item2, items.Item1.Select(i => AdminDto.FromDomain(i)).ToList());
             return page;
         }
-
-        private async Task<Admin> Get(int id) =>
-            await _unitOfWork.Admins.SingleOrDefaultAsync(a => a.Id == id) ??
-            throw new NotFoundException(id.ToString());
 
         private static string GetCacheKey(int id) => $"Admin_{id}";
     }
